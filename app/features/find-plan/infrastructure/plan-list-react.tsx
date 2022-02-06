@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { FlatList, StyleSheet, Text } from "react-native";
 import { Button } from "../../../components";
 import { Category, Plan } from "../../../core/shared/domain/plan";
 import { PersistedObject } from "../../../core/types/persisted-object";
@@ -30,16 +30,31 @@ const PlanList = (props: PlanListProps) => {
     findAll();
   }, []);
 
+  const test = () => {};
+
   return (
     <>
       <Button text="Find Walk Plans" onPress={findWalkPlans} />
-      {planList.map(plan => (
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={planList}
+        renderItem={({ item }) => {
+          return (
+            <Section title={item.title} key={item.id}>
+              The plan is a <Text style={styles.highlight}>{item.category}</Text> at{" "}
+              <Text style={styles.highlight}>{item.location.address}</Text> around{" "}
+              <Text style={styles.highlight}>{new Date(item.time).toLocaleDateString()}</Text>.
+            </Section>
+          );
+        }}
+      />
+      {/* {planList.map(plan => (
         <Section title={plan.title} key={plan.id}>
           The plan is a <Text style={styles.highlight}>{plan.category}</Text> at{" "}
           <Text style={styles.highlight}>{plan.location.address}</Text> around{" "}
           <Text style={styles.highlight}>{new Date(plan.time).toLocaleDateString()}</Text>.
         </Section>
-      ))}
+      ))} */}
     </>
   );
 };
