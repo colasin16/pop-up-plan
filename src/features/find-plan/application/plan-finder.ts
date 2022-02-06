@@ -1,6 +1,6 @@
-import { Category } from "../../../../app/core/shared/domain/plan";
-import { CustomLocation } from "../../../../app/core/types/location";
-import { Timestamp } from "../../../../app/core/types/timestamp";
+import { Category } from "../../../core/shared/domain/plan";
+import { CustomLocation } from "../../../core/types/location";
+import { Timestamp } from "../../../core/types/timestamp";
 import { PlanListRepository } from "../domain/plan-list-repository";
 
 export class PlanFinder {

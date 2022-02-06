@@ -1,6 +1,6 @@
-import { Plan } from "../../../../app/core/shared/domain/plan";
-import { User } from "../../../../app/core/shared/domain/user";
-import { PersistedObject } from "../../../../app/core/types/persisted-object";
+import { Plan } from "../../../core/shared/domain/plan";
+import { User } from "../../../core/shared/domain/user";
+import { PersistedObject } from "../../../core/types/persisted-object";
 import { PlanCreationData } from "./plan-creation-data";
 
 export interface PlanCreatorRepository {

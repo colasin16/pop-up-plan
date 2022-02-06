@@ -13,12 +13,12 @@ import {
 } from "../../components";
 import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
-import { Timestamp } from "../../core/types/timestamp";
-import { CustomLocation } from "../../core/types/location";
+import { Timestamp } from "../../../src/core/types/timestamp";
+import { CustomLocation } from "../../../src/core/types/location";
 import { PlanCreator } from "../../../src/features/create-plan/application/plan-creator";
 import { PlanCreatorHttpRepository } from "../../../src/features/create-plan/infrastructure/plan-creator-http-repository";
 import { PlanCreationData } from "../../../src/features/create-plan/domain/plan-creation-data";
-import { Category, Privacy } from "../../core/shared/domain/plan";
+import { Category, Privacy } from "../../../src/core/shared/domain/plan";
 import { savePlan } from "../../../src/features/create-plan/infrastructure/state/plan-creator-state";
 
 export const logoIgnite = require("./logo-ignite.png");

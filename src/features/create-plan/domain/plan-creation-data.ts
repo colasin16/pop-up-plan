@@ -1,4 +1,4 @@
-import { Plan } from "../../../../app/core/shared/domain/plan";
+import { Plan } from "../../../core/shared/domain/plan";
 
 export type PlanCreationData = Pick<
   Plan,

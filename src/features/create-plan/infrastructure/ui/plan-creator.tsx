@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, StyleSheet, Text, TextInput } from "react-native";
-import { Category, Privacy } from "../../../../../app/core/shared/domain/plan";
-import { CustomLocation } from "../../../../../app/core/types/location";
+import { Category, Privacy } from "../../../../core/shared/domain/plan";
+import { CustomLocation } from "../../../../core/types/location";
 import { PlanCreator } from "../../application/plan-creator";
 import { PlanCreationData } from "../../domain/plan-creation-data";
 import { PlanCreatorHttpRepository } from "../plan-creator-http-repository";

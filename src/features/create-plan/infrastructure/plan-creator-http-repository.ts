@@ -1,6 +1,6 @@
-import { Plan, BoringPlan } from "../../../../app/core/shared/domain/plan";
-import { User } from "../../../../app/core/shared/domain/user";
-import { PersistedObject } from "../../../../app/core/types/persisted-object";
+import { Plan, BoringPlan } from "../../../core/shared/domain/plan";
+import { User } from "../../../core/shared/domain/user";
+import { PersistedObject } from "../../../core/types/persisted-object";
 import { PlanCreationData } from "../domain/plan-creation-data";
 import { PlanCreatorRepository } from "../domain/plan-creator-repository";
 

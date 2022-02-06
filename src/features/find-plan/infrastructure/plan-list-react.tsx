@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
 import { Button } from "../../../../app/components";
-import { Category, Plan } from "../../../../app/core/shared/domain/plan";
-import { PersistedObject } from "../../../../app/core/types/persisted-object";
+import { Category, Plan } from "../../../core/shared/domain/plan";
+import { PersistedObject } from "../../../core/types/persisted-object";
 import { PlanFinder } from "../application/plan-finder";
 import { PlanListHttpRepository } from "./plan-list-http-repository";
 import { Section } from "./ui/section";
