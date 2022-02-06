@@ -101,12 +101,6 @@
     "ts-jest": "26",
     "typescript": "4.2.3"
   },
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": false,
-    "trailingComma": "all"
-  },
   "detox": {
     "test-runner": "jest",
     "configurations": {
