@@ -1,10 +1,15 @@
+import { inject, injectable } from "tsyringe";
+import { PLAN_LIST_REPOSITORY } from "../../../core/dependency-injection/injection-tokens";
 import { Category } from "../../../core/shared/domain/plan";
 import { CustomLocation } from "../../../core/types/location";
 import { Timestamp } from "../../../core/types/timestamp";
-import { PlanListRepository } from "../domain/plan-list-repository";
+import type { PlanListRepository } from "../domain/plan-list-repository";
 
+@injectable()
 export class PlanFinder {
-  constructor(private readonly planListRepository: PlanListRepository) {}
+  constructor(
+    @inject(PLAN_LIST_REPOSITORY) private readonly planListRepository: PlanListRepository,
+  ) {}
 
   public async findAll() {
     return await this.planListRepository.findAll();

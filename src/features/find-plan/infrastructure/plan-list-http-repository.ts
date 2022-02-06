@@ -1,3 +1,4 @@
+import { injectable } from "tsyringe";
 import {
   BoringPlan,
   AmazingPlan,
@@ -8,7 +9,7 @@ import {
 } from "../../../core/shared/domain/plan";
 import { CustomLocation } from "../../../core/types/location";
 import { PersistedObject } from "../../../core/types/persisted-object";
-import { PlanListRepository } from "../domain/plan-list-repository";
+import type { PlanListRepository } from "../domain/plan-list-repository";
 
 const plans = [BoringPlan, AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
 const allPlans = plans.map((plan, index) => ({
@@ -16,6 +17,7 @@ const allPlans = plans.map((plan, index) => ({
   ...plan,
 }));
 
+@injectable()
 export class PlanListHttpRepository implements PlanListRepository {
   findAll(): Promise<PersistedObject<Plan>[]> {
     return Promise.resolve(allPlans);

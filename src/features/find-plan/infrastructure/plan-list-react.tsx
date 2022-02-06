@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import { Button } from "../../../../app/components";
+import { container } from "../../../core/dependency-injection/container";
 import { Category, Plan } from "../../../core/shared/domain/plan";
 import { PersistedObject } from "../../../core/types/persisted-object";
 import { PlanFinder } from "../application/plan-finder";
-import { PlanListHttpRepository } from "./plan-list-http-repository";
 import { Section } from "./ui/section";
 
 interface PlanListProps {}
@@ -12,31 +12,29 @@ interface PlanListProps {}
 const PlanList = (props: PlanListProps) => {
   const [planList, setPlanList] = useState<PersistedObject<Plan>[]>([]);
 
-  const findAll = async (): Promise<void> => {
-    const planFinder = new PlanFinder(new PlanListHttpRepository());
-    const allPlans = await planFinder.findAll();
+  useEffect(() => {
+    getData();
+  }, []);
 
+  const getData = async () => {
+    const planFinder = container.resolve(PlanFinder);
+    const allPlans = await planFinder.findAll();
+    console.log(allPlans);
     setPlanList(allPlans);
   };
 
   const findWalkPlans = async (): Promise<void> => {
-    const planFinder = new PlanFinder(new PlanListHttpRepository());
+    const planFinder = container.resolve(PlanFinder);
     const walkPlans = await planFinder.findByCategory(Category.WALK);
 
     setPlanList(walkPlans);
   };
 
-  React.useMemo(() => {
-    findAll();
-  }, []);
-
   return (
     <>
       <Button text="Find Walk Plans" onPress={findWalkPlans} />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={planList}
-        renderItem={({ item }) => {
+      <ScrollView>
+        {planList.map(item => {
           return (
             <Section title={item.title} key={item.id}>
               The plan is a <Text style={styles.highlight}>{item.category}</Text> at{" "}
@@ -44,8 +42,8 @@ const PlanList = (props: PlanListProps) => {
               <Text style={styles.highlight}>{new Date(item.time).toLocaleDateString()}</Text>.
             </Section>
           );
-        }}
-      />
+        })}
+      </ScrollView>
     </>
   );
 };
