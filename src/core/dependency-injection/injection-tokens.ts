@@ -1,0 +1,1 @@
+export const PLAN_LIST_REPOSITORY = Symbol("PLAN_LIST_REPOSITORY");
