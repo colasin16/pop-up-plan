@@ -147,21 +147,21 @@ export const CreatePlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> 
           <Text style={TITLE} preset="header" text="HC What do you fill like doing today?" />
           <Text style={TAGLINE} text="HC Create a new plan" />
           <TextField
-            inputStyle={{ borderRadius: 4, padding: 8, marginTop: 8 }}
+            inputStyle={{ padding: 8, marginTop: 8 }}
             onChangeText={value => setTitle(value)}
             value={title}
             label="Title"
             placeholder="Plan title"
           />
           <TextField
-            inputStyle={{ borderRadius: 4, padding: 8, marginTop: 8 }}
+            inputStyle={{ padding: 8, marginTop: 8 }}
             onChangeText={value => setLocation({ address: value })}
             value={location.address}
             label="Location"
             placeholder="Plan location"
           />
           <TextField
-            inputStyle={{ borderRadius: 4, padding: 8, marginTop: 8 }}
+            inputStyle={{ padding: 8, marginTop: 8 }}
             onChangeText={value => setTime(new Date().valueOf())}
             value={time ? `${time}` : ""}
             label="Time"
