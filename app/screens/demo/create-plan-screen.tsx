@@ -15,11 +15,11 @@ import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
 import { Timestamp } from "../../core/types/timestamp";
 import { CustomLocation } from "../../core/types/location";
-import { PlanCreator } from "../../features/create-plan/application/plan-creator";
-import { PlanCreatorHttpRepository } from "../../features/create-plan/infrastructure/plan-creator-http-repository";
-import { PlanCreationData } from "../../features/create-plan/domain/plan-creation-data";
+import { PlanCreator } from "../../../src/features/create-plan/application/plan-creator";
+import { PlanCreatorHttpRepository } from "../../../src/features/create-plan/infrastructure/plan-creator-http-repository";
+import { PlanCreationData } from "../../../src/features/create-plan/domain/plan-creation-data";
 import { Category, Privacy } from "../../core/shared/domain/plan";
-import { savePlan } from "../../features/create-plan/infrastructure/state/plan-creator-state";
+import { savePlan } from "../../../src/features/create-plan/infrastructure/state/plan-creator-state";
 
 export const logoIgnite = require("./logo-ignite.png");
 export const heart = require("./heart.png");

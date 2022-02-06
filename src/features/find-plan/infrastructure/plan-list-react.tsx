@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
-import { Button } from "../../../components";
-import { Category, Plan } from "../../../core/shared/domain/plan";
-import { PersistedObject } from "../../../core/types/persisted-object";
+import { Button } from "../../../../app/components";
+import { Category, Plan } from "../../../../app/core/shared/domain/plan";
+import { PersistedObject } from "../../../../app/core/types/persisted-object";
 import { PlanFinder } from "../application/plan-finder";
 import { PlanListHttpRepository } from "./plan-list-http-repository";
 import { Section } from "./ui/section";
@@ -30,8 +30,6 @@ const PlanList = (props: PlanListProps) => {
     findAll();
   }, []);
 
-  const test = () => {};
-
   return (
     <>
       <Button text="Find Walk Plans" onPress={findWalkPlans} />
@@ -48,13 +46,6 @@ const PlanList = (props: PlanListProps) => {
           );
         }}
       />
-      {/* {planList.map(plan => (
-        <Section title={plan.title} key={plan.id}>
-          The plan is a <Text style={styles.highlight}>{plan.category}</Text> at{" "}
-          <Text style={styles.highlight}>{plan.location.address}</Text> around{" "}
-          <Text style={styles.highlight}>{new Date(plan.time).toLocaleDateString()}</Text>.
-        </Section>
-      ))} */}
     </>
   );
 };

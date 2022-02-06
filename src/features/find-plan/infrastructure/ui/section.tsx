@@ -1,14 +1,12 @@
 import React, { PropsWithChildren } from "react";
-import { StyleSheet, Text, useColorScheme, View } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { palette } from "../../../../theme/palette";
+import { StyleSheet, Text, View } from "react-native";
+import { palette } from "../../../../../app/theme/palette";
 
 interface Props {
   title: string;
 }
 
 export const Section = ({ children, title }: PropsWithChildren<Props>) => {
-  const isDarkMode = useColorScheme() === "dark";
   return (
     <View style={styles.sectionContainer}>
       <Text style={[styles.sectionTitle, { color: palette.white }]}>{title}</Text>

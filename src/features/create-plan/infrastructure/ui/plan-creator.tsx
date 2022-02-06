@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Button, StyleSheet, Text, TextInput } from "react-native";
-import { Category, Privacy } from "../../../../core/shared/domain/plan";
-import { CustomLocation } from "../../../../core/types/location";
-import { Timestamp } from "../../../../core/types/timestamp";
+import { Category, Privacy } from "../../../../../app/core/shared/domain/plan";
+import { CustomLocation } from "../../../../../app/core/types/location";
 import { PlanCreator } from "../../application/plan-creator";
 import { PlanCreationData } from "../../domain/plan-creation-data";
 import { PlanCreatorHttpRepository } from "../plan-creator-http-repository";
@@ -15,9 +14,9 @@ interface PlanCreatorProps {}
 const PlanCreatorScreen = (props: PlanCreatorProps) => {
   const [title, setTitle] = useState<string>();
   const [location, setLocation] = useState<CustomLocation>();
-  const [time, setTime] = useState<Timestamp>(new Date().valueOf());
-  const [category, setCategory] = useState<Category>(Category.RUN);
-  const [privacy, setPrivacy] = useState<Privacy>(Privacy.PUBLIC);
+  const time = new Date().valueOf();
+  const category = Category.RUN;
+  const privacy = Privacy.PUBLIC;
 
   const submit = async (): Promise<void> => {
     const planCreator = new PlanCreator(new PlanCreatorHttpRepository());
@@ -42,17 +41,12 @@ const PlanCreatorScreen = (props: PlanCreatorProps) => {
       <Text>{"Title"}</Text>
       <TextInput style={styles.textInput} onChange={e => setTitle(e.nativeEvent.text)} />
       <Text>{"Time"}</Text>
-      <TextInput
-        style={styles.textInput}
-        // onChange={e => setTime(Number(e.nativeEvent.text))}
-      />
+      <TextInput style={styles.textInput} />
       <Text>{"Location"}</Text>
       <TextInput
         style={styles.textInput}
         onChange={e => setLocation({ address: e.nativeEvent.text })}
       />
-      {/* <TextInput onChange={e => setTitle(e.target.toString())} /> */}
-      {/* <TextInput onChange={e => setTitle(e.target.toString())} /> */}
       <Button title="Submit" onPress={submit}></Button>
     </>
   );
