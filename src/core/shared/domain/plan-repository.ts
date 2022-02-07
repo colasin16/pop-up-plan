@@ -1,12 +1,11 @@
 import { Id } from "../../types/id";
 import { CustomLocation } from "../../types/location";
-import { PersistedObject } from "../../types/persisted-object";
 import { Timestamp } from "../../types/timestamp";
 import { Plan } from "./plan";
 import { User } from "./user";
 
 export interface PlanRepository {
-  create(plan: Plan): Promise<PersistedObject<Plan>>;
+  create(plan: Plan): Promise<Plan>;
   delete(id: Id): Promise<void>;
   addAtendee(planId: Id, user: User): Promise<void>;
   removeAtendee(planId: Id, userId: Id): Promise<void>;

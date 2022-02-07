@@ -3,14 +3,13 @@ import { ScrollView, StyleSheet, Text } from "react-native";
 import { Button } from "../../../../app/components";
 import { container } from "../../../core/dependency-injection/container";
 import { Category, Plan } from "../../../core/shared/domain/plan";
-import { PersistedObject } from "../../../core/types/persisted-object";
 import { PlanFinder } from "../application/plan-finder";
 import { Section } from "./ui/section";
 
 interface PlanListProps {}
 
 const PlanList = (props: PlanListProps) => {
-  const [planList, setPlanList] = useState<PersistedObject<Plan>[]>([]);
+  const [planList, setPlanList] = useState<Plan[]>([]);
 
   useEffect(() => {
     getData();
