@@ -12,6 +12,7 @@ import {
 } from "../../components";
 import { color, spacing, typography } from "../../theme";
 import { NavigatorParamList } from "../../navigators";
+import { useStores } from "../../models";
 
 const bowserLogo = require("./bowser.png");
 
@@ -88,6 +89,7 @@ const FOOTER_CONTENT: ViewStyle = {
 
 export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
   ({ navigation }) => {
+    const { userPlansStore } = useStores();
     const nextScreen = () => navigation.navigate("demo");
     const createNewPlanScreen = () => navigation.navigate("createPlan");
     const findAPlanScreen = () => navigation.navigate("findPlan");
@@ -127,6 +129,12 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
               text="HC EXPLORE"
               onPress={findAPlanScreen}
             />
+          </View>
+          <View>
+            <Text>Current plans in store:</Text>
+            {userPlansStore.plans.map(plan => {
+              return <Text key={`${plan.id}-${plan.title}`}>{plan.title}</Text>;
+            })}
           </View>
         </Screen>
         <SafeAreaView style={FOOTER}>

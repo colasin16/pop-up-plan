@@ -1,3 +1,1 @@
-export interface CustomLocation {
-  address: string;
-}
+export type CustomLocation = string;

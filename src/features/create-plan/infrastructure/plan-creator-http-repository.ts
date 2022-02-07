@@ -7,7 +7,7 @@ import { PlanCreatorRepository } from "../domain/plan-creator-repository";
 export class PlanCreatorHttpRepository implements PlanCreatorRepository {
   create(owner: User, plan: PlanCreationData): Promise<Plan> {
     return Promise.resolve({
-      id: "1644013149667",
+      id: new Date().valueOf(),
       ...BoringPlan, // TODO: Remove this since is only for the missing data from screen
       ...plan,
       owner,
