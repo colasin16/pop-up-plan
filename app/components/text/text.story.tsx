@@ -1,23 +1,23 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-native/no-color-literals */
 
-import * as React from "react"
-import { View, ViewStyle } from "react-native"
-import { storiesOf } from "@storybook/react-native"
-import { StoryScreen, Story, UseCase } from "../../../storybook/views"
-import { color } from "../../theme"
-import { Text } from "./text"
+import * as React from "react";
+import { View, ViewStyle } from "react-native";
+import { storiesOf } from "@storybook/react-native";
+import { StoryScreen, Story, UseCase } from "../../../storybook/views";
+import { color } from "../../theme";
+import { Text } from "./text";
 
-declare let module
+declare let module;
 
 const VIEWSTYLE = {
   flex: 1,
   backgroundColor: color.storybookDarkBg,
-}
-const viewStyleArray: ViewStyle[] = [VIEWSTYLE, { backgroundColor: "#7fff00" }]
+};
+const viewStyleArray: ViewStyle[] = [VIEWSTYLE, { backgroundColor: "#7fff00" }];
 
 storiesOf("Text", module)
-  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
+  .addDecorator(fn => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="default" usage="Used for normal body text.">
@@ -48,8 +48,7 @@ storiesOf("Text", module)
     <Story>
       <UseCase
         text="text"
-        usage="Used when you want to pass a value but don't want to open a child."
-      >
+        usage="Used when you want to pass a value but don't want to open a child.">
         <View style={VIEWSTYLE}>
           <Text text="Heyo!" />
         </View>
@@ -62,8 +61,7 @@ storiesOf("Text", module)
       </UseCase>
       <UseCase
         text="children"
-        usage="Used like you would normally use a React Native <Text> component."
-      >
+        usage="Used like you would normally use a React Native <Text> component.">
         <View style={VIEWSTYLE}>
           <Text>Passing strings as children.</Text>
         </View>
@@ -89,4 +87,4 @@ storiesOf("Text", module)
         </View>
       </UseCase>
     </Story>
-  ))
+  ));
