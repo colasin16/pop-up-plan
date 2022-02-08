@@ -17,7 +17,9 @@ export enum Category {
 export interface Plan extends Entity {
   owner: User;
   title: string;
-  location: CustomLocation;
+  description?: string;
+  location: CustomLocation; // Location / area, meybe radius?
+  capacity?: number;
   time: Timestamp;
   privacy: Privacy;
   category: Category;

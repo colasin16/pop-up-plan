@@ -1,39 +1,59 @@
-import React, { useState, useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
-import { Button } from "../../../../app/components";
+import { Button, FormRow } from "../../../../app/components";
+import { useStores } from "../../../../app/models";
+import { palette } from "../../../../app/theme/palette";
 import { container } from "../../../core/dependency-injection/container";
-import { Category, Plan } from "../../../core/shared/domain/plan";
+import { Category } from "../../../core/shared/domain/plan";
 import { PlanFinder } from "../application/plan-finder";
 import { Section } from "./ui/section";
 
 interface PlanListProps {}
 
-const PlanList = (props: PlanListProps) => {
-  const [planList, setPlanList] = useState<Plan[]>([]);
+const PlanList = observer((props: PlanListProps) => {
+  const { searchPlansStore } = useStores();
 
   useEffect(() => {
+    async function getData() {
+      const planFinder = container.resolve(PlanFinder);
+      const allPlans = await planFinder.findAll();
+      searchPlansStore.savePlans(allPlans);
+    }
+
     getData();
   }, []);
-
-  const getData = async () => {
-    const planFinder = container.resolve(PlanFinder);
-    const allPlans = await planFinder.findAll();
-    console.log(allPlans);
-    setPlanList(allPlans);
-  };
 
   const findWalkPlans = async (): Promise<void> => {
     const planFinder = container.resolve(PlanFinder);
     const walkPlans = await planFinder.findByCategory(Category.WALK);
+    searchPlansStore.savePlans(walkPlans);
+  };
 
-    setPlanList(walkPlans);
+  const findRunPlans = async (): Promise<void> => {
+    const planFinder = container.resolve(PlanFinder);
+    const walkPlans = await planFinder.findByCategory(Category.RUN);
+    searchPlansStore.savePlans(walkPlans);
   };
 
   return (
     <>
-      <Button text="Find Walk Plans" onPress={findWalkPlans} />
+      <FormRow preset={"clear"}>
+        <Button
+          textStyle={{ color: palette.black, fontSize: 18 }}
+          text="Walk Plans"
+          onPress={findWalkPlans}
+        />
+      </FormRow>
+      <FormRow preset={"clear"}>
+        <Button
+          textStyle={{ color: palette.black, fontSize: 18 }}
+          text="Run Plans"
+          onPress={findRunPlans}
+        />
+      </FormRow>
       <ScrollView>
-        {planList.map(item => {
+        {searchPlansStore.plans.map(item => {
           return (
             <Section title={item.title} key={item.id}>
               The plan is a <Text style={styles.highlight}>{item.category}</Text> at{" "}
@@ -45,7 +65,7 @@ const PlanList = (props: PlanListProps) => {
       </ScrollView>
     </>
   );
-};
+});
 
 export default PlanList;
 
