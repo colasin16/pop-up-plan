@@ -2,6 +2,7 @@
 
 class Plan
 class User
+class Profile
 
 PlanList o--> Plan : aggregation
 
@@ -16,5 +17,8 @@ Plan *--> "1" Category
 Plan *--> Atendees
 
 Atendees o--> User
+User *--> Profile
+Profile o--> "1" PlanList
+
 
 @enduml

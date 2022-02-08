@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { View, ViewStyle, TextStyle, ImageStyle, SafeAreaView } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
@@ -73,6 +73,7 @@ const CONTENT: TextStyle = {
 const CONTINUE: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
+  marginVertical: spacing[4],
   backgroundColor: color.palette.deepPurple,
 };
 const CONTINUE_TEXT: TextStyle = {
@@ -89,10 +90,15 @@ const FOOTER_CONTENT: ViewStyle = {
 
 export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
   ({ navigation }) => {
-    const { userPlansStore } = useStores();
-    const nextScreen = () => navigation.navigate("demo");
+    const store = useStores();
+    // const nextScreen = () => navigation.navigate("demo");
     const createNewPlanScreen = () => navigation.navigate("createPlan");
     const findAPlanScreen = () => navigation.navigate("findPlan");
+    const userProfileScreen = () => navigation.navigate("userProfileScreen");
+
+    useEffect(() => {
+      store.setUser({ id: "1644013242380", name: { firstName: "Jordi", lastName: "Colas" } });
+    });
 
     return (
       <View testID="WelcomeScreen" style={FULL}>
@@ -114,7 +120,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
             For everyone else, this is where you'll see a live preview of your fully functioning app
             using Ignite.
           </Text>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", flexWrap: "wrap" }}>
             <Button
               testID="next-screen-button-1"
               style={CONTINUE}
@@ -129,15 +135,16 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
               text="HC EXPLORE"
               onPress={findAPlanScreen}
             />
-          </View>
-          <View>
-            <Text>Current plans in store:</Text>
-            {userPlansStore.plans.map(plan => {
-              return <Text key={`${plan.id}-${plan.title}`}>{plan.title}</Text>;
-            })}
+            <Button
+              testID="next-screen-button-3"
+              style={CONTINUE}
+              textStyle={CONTINUE_TEXT}
+              text="HC PROFILE"
+              onPress={userProfileScreen}
+            />
           </View>
         </Screen>
-        <SafeAreaView style={FOOTER}>
+        {/* <SafeAreaView style={FOOTER}>
           <View style={FOOTER_CONTENT}>
             <Button
               testID="next-screen-button"
@@ -147,7 +154,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
               onPress={nextScreen}
             />
           </View>
-        </SafeAreaView>
+        </SafeAreaView> */}
       </View>
     );
   },
