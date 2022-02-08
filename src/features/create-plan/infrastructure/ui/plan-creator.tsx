@@ -39,21 +39,27 @@ interface Props {
 export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
   const { userPlansStore } = useStores();
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [location, setLocation] = useState<CustomLocation>("");
   const [time, setTime] = useState<Timestamp>(0);
-  const category = Category.RUN;
-  const privacy = Privacy.PUBLIC;
+  const [category, setCategory] = useState<Category>();
+  const [privacy, setPrivacy] = useState<Privacy>();
+
+  const isReadyToSubmit = () => {
+    return !!title && !!location && !!time && !!category && !!privacy;
+  };
 
   const submit = async (): Promise<void> => {
     const planCreator = new PlanCreator(new PlanCreatorHttpRepository());
 
-    if (!!title && !!location && !!time) {
+    if (isReadyToSubmit()) {
       const planData: PlanCreationData = {
         owner: user,
         title,
         location,
         time,
         category,
+        description,
         privacy,
       };
 
@@ -74,6 +80,13 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
       />
       <TextField
         inputStyle={{ padding: 8, marginTop: 8 }}
+        onChangeText={value => setDescription(value)}
+        value={description}
+        label="Description"
+        placeholder="This plan will about..."
+      />
+      <TextField
+        inputStyle={{ padding: 8, marginTop: 8 }}
         onChangeText={value => setLocation(value)}
         value={location}
         label="Location"
@@ -86,9 +99,53 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
         label="Time"
         placeholder="Plan time"
       />
+      <View>
+        <Text preset="fieldLabel">Select the plan type:</Text>
+        <View style={{ flexDirection: "row" }}>
+          {Object.values(Category).map((cat, index) => (
+            <Button
+              textStyle={{ fontSize: 16, color: color.palette.black }}
+              style={{
+                margin: 8,
+                backgroundColor: color.palette.lighterGrey,
+                borderWidth: 3,
+                borderColor: category === cat ? color.palette.orange : color.palette.lighterGrey,
+              }}
+              onPress={() => setCategory(cat)}
+              key={cat}
+              text={cat}
+            />
+          ))}
+        </View>
+      </View>
+      <View>
+        <Text preset="fieldLabel">Select the plan privacy:</Text>
+        <View style={{ flexDirection: "row" }}>
+          {Object.values(Privacy).map(p => (
+            <Button
+              textStyle={{ fontSize: 16, color: color.palette.black }}
+              style={{
+                margin: 8,
+                backgroundColor: color.palette.lighterGrey,
+                borderWidth: 3,
+                borderColor: privacy === p ? color.palette.orange : color.palette.lighterGrey,
+              }}
+              onPress={() => setPrivacy(p)}
+              key={p}
+              text={p}
+            />
+          ))}
+        </View>
+      </View>
 
       <View>
-        <Button style={DEMO} textStyle={DEMO_TEXT} text="HC Submit" onPress={submit} />
+        <Button
+          disabled={!isReadyToSubmit()}
+          style={DEMO}
+          textStyle={DEMO_TEXT}
+          text="HC Submit"
+          onPress={submit}
+        />
         <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
       </View>
     </View>
