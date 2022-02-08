@@ -37,7 +37,7 @@ const PlanList = (props: PlanListProps) => {
           return (
             <Section title={item.title} key={item.id}>
               The plan is a <Text style={styles.highlight}>{item.category}</Text> at{" "}
-              <Text style={styles.highlight}>{item.location.address}</Text> around{" "}
+              <Text style={styles.highlight}>{item.location}</Text> around{" "}
               <Text style={styles.highlight}>{new Date(item.time).toLocaleDateString()}</Text>.
             </Section>
           );
