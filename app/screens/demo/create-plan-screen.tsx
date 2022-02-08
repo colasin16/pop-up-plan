@@ -1,25 +1,11 @@
-import React, { FC, useState } from "react";
-import { ImageStyle, Platform, TextStyle, View, ViewStyle } from "react-native";
+import React, { FC } from "react";
+import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
-import {
-  Button,
-  Header,
-  Text,
-  Screen,
-  AutoImage as Image,
-  GradientBackground,
-  TextField,
-} from "../../components";
+import { Header, Text, Screen, AutoImage as Image, GradientBackground } from "../../components";
 import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
-import { Timestamp } from "../../../src/core/types/timestamp";
-import { CustomLocation } from "../../../src/core/types/location";
-import { PlanCreator } from "../../../src/features/create-plan/application/plan-creator";
-import { PlanCreatorHttpRepository } from "../../../src/features/create-plan/infrastructure/plan-creator-http-repository";
-import { PlanCreationData } from "../../../src/features/create-plan/domain/plan-creation-data";
-import { Category, Privacy } from "../../../src/core/shared/domain/plan";
-import { savePlan } from "../../../src/features/create-plan/infrastructure/state/plan-creator-state";
+import { CreatePlan } from "../../../src/features/create-plan/infrastructure/ui/plan-creator";
 
 export const logoIgnite = require("./logo-ignite.png");
 export const heart = require("./heart.png");
@@ -29,17 +15,8 @@ const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
   paddingHorizontal: spacing[4],
 };
-const DEMO: ViewStyle = {
-  paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
-  backgroundColor: color.palette.deepPurple,
-};
+
 const BOLD: TextStyle = { fontWeight: "bold" };
-const DEMO_TEXT: TextStyle = {
-  ...BOLD,
-  fontSize: 13,
-  letterSpacing: 2,
-};
 
 const HEADER: TextStyle = {
   paddingTop: spacing[3],
@@ -96,42 +73,9 @@ const HEART: ImageStyle = {
   resizeMode: "contain",
 };
 
-const HINT: TextStyle = {
-  color: "#BAB6C8",
-  fontSize: 12,
-  lineHeight: 15,
-  marginVertical: spacing[2],
-};
-
-const user = { id: "1644013242380", name: "Jordi" };
-
 export const CreatePlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
-
-    const [title, setTitle] = useState("");
-    const [location, setLocation] = useState<CustomLocation>({ address: "" });
-    const [time, setTime] = useState<Timestamp>(0);
-    const category = Category.RUN;
-    const privacy = Privacy.PUBLIC;
-
-    const submit = async (): Promise<void> => {
-      const planCreator = new PlanCreator(new PlanCreatorHttpRepository());
-
-      if (!!title && !!location && !!time) {
-        const planData: PlanCreationData = {
-          owner: user,
-          title,
-          location,
-          time,
-          category,
-          privacy,
-        };
-
-        const plan = await planCreator.create(user, planData);
-        savePlan(plan);
-      }
-    };
 
     return (
       <View testID="DemoScreen" style={FULL}>
@@ -146,32 +90,8 @@ export const CreatePlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> 
           />
           <Text style={TITLE} preset="header" text="HC What do you fill like doing today?" />
           <Text style={TAGLINE} text="HC Create a new plan" />
-          <TextField
-            inputStyle={{ padding: 8, marginTop: 8 }}
-            onChangeText={value => setTitle(value)}
-            value={title}
-            label="Title"
-            placeholder="Plan title"
-          />
-          <TextField
-            inputStyle={{ padding: 8, marginTop: 8 }}
-            onChangeText={value => setLocation({ address: value })}
-            value={location.address}
-            label="Location"
-            placeholder="Plan location"
-          />
-          <TextField
-            inputStyle={{ padding: 8, marginTop: 8 }}
-            onChangeText={value => setTime(new Date().valueOf())}
-            value={time ? `${time}` : ""}
-            label="Time"
-            placeholder="Plan time"
-          />
 
-          <View>
-            <Button style={DEMO} textStyle={DEMO_TEXT} text="HC Submit" onPress={submit} />
-            <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
-          </View>
+          <CreatePlan onFinish={goBack} />
 
           <Image source={logoIgnite} style={IGNITE} />
           <View style={LOVE_WRAPPER}>

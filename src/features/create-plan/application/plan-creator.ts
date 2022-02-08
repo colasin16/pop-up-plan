@@ -9,5 +9,3 @@ export class PlanCreator {
     return await this.planRespository.create(owner, plan);
   }
 }
-
-// export default new PlanCreator(new PlanHttpRepository());
