@@ -10,8 +10,9 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens";
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities";
-import { CreatePlanScreen } from "../screens/demo/create-plan-screen";
-import { FindPlanScreen } from "../screens/demo/find-plan-screen";
+import { CreatePlanScreen } from "../screens/use-cases/create-plan-screen";
+import { FindPlanScreen } from "../screens/use-cases/find-plan-screen";
+import { UserProfileScreen } from "../screens/use-cases/user-profile-screen";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -29,6 +30,7 @@ export type NavigatorParamList = {
   welcome: undefined;
   createPlan: undefined;
   findPlan: undefined;
+  userProfileScreen: undefined;
   demo: undefined;
   demoList: undefined;
   // 🔥 Your screens go here
@@ -47,6 +49,7 @@ const AppStack = () => {
       <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="createPlan" component={CreatePlanScreen} />
       <Stack.Screen name="findPlan" component={FindPlanScreen} />
+      <Stack.Screen name="userProfileScreen" component={UserProfileScreen} />
       <Stack.Screen name="demo" component={DemoScreen} />
       <Stack.Screen name="demoList" component={DemoListScreen} />
       {/** 🔥 Your screens go here */}

@@ -7,8 +7,8 @@ import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
 import PlanList from "../../../src/features/find-plan/infrastructure/plan-list-react";
 
-export const logoIgnite = require("./logo-ignite.png");
-export const heart = require("./heart.png");
+export const logoIgnite = require("../demo/logo-ignite.png");
+export const heart = require("../demo/heart.png");
 
 const FULL: ViewStyle = { flex: 1 };
 const CONTAINER: ViewStyle = {
