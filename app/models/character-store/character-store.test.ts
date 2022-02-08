@@ -1,7 +1,7 @@
-import { CharacterStoreModel } from "./character-store"
+import { CharacterStoreModel } from "./character-store";
 
 test("can be created", () => {
-  const instance = CharacterStoreModel.create({})
+  const instance = CharacterStoreModel.create({});
 
-  expect(instance).toBeTruthy()
-})
+  expect(instance).toBeTruthy();
+});

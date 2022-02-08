@@ -1,16 +1,16 @@
 /* eslint-disable */
-import * as React from "react"
-import { storiesOf } from "@storybook/react-native"
-import { StoryScreen, Story, UseCase } from "../../../storybook/views"
-import { AutoImage } from "./auto-image"
+import * as React from "react";
+import { storiesOf } from "@storybook/react-native";
+import { StoryScreen, Story, UseCase } from "../../../storybook/views";
+import { AutoImage } from "./auto-image";
 
-declare let module
+declare let module;
 
-const bowser = require("../../screens/welcome/bowser.png")
-const morty = { uri: "https://rickandmortyapi.com/api/character/avatar/2.jpeg" }
+const bowser = require("../../screens/welcome/bowser.png");
+const morty = { uri: "https://rickandmortyapi.com/api/character/avatar/2.jpeg" };
 
 storiesOf("AutoImage", module)
-  .addDecorator((fn) => <StoryScreen>{fn()}</StoryScreen>)
+  .addDecorator(fn => <StoryScreen>{fn()}</StoryScreen>)
   .add("Style Presets", () => (
     <Story>
       <UseCase text="With require()">
@@ -28,4 +28,4 @@ storiesOf("AutoImage", module)
         <AutoImage source={morty} style={{ height: 150, resizeMode: "contain" }} />
       </UseCase>
     </Story>
-  ))
+  ));
