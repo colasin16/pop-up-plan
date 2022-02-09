@@ -84,8 +84,9 @@ const CONTINUE_TEXT: TextStyle = {
 };
 const FOOTER: ViewStyle = { backgroundColor: "#20162D" };
 const FOOTER_CONTENT: ViewStyle = {
+  flexDirection: "row",
+  justifyContent: "space-evenly",
   paddingVertical: spacing[4],
-  paddingHorizontal: spacing[4],
 };
 
 export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
@@ -120,41 +121,39 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
             For everyone else, this is where you'll see a live preview of your fully functioning app
             using Ignite.
           </Text>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", flexWrap: "wrap" }}>
+          {/* <Button
+              testID="next-screen-button"
+              style={CONTINUE}
+              textStyle={CONTINUE_TEXT}
+              tx="welcomeScreen.continue"
+              onPress={nextScreen}
+            /> */}
+        </Screen>
+        <SafeAreaView style={FOOTER}>
+          <View style={FOOTER_CONTENT}>
             <Button
               testID="next-screen-button-1"
               style={CONTINUE}
               textStyle={CONTINUE_TEXT}
-              text="HC CREATE"
+              text="CREATE"
               onPress={createNewPlanScreen}
             />
             <Button
               testID="next-screen-button-2"
               style={CONTINUE}
               textStyle={CONTINUE_TEXT}
-              text="HC EXPLORE"
+              text="JOIN"
               onPress={findAPlanScreen}
             />
             <Button
               testID="next-screen-button-3"
               style={CONTINUE}
               textStyle={CONTINUE_TEXT}
-              text="HC PROFILE"
+              text="YOU"
               onPress={userProfileScreen}
             />
           </View>
-        </Screen>
-        {/* <SafeAreaView style={FOOTER}>
-          <View style={FOOTER_CONTENT}>
-            <Button
-              testID="next-screen-button"
-              style={CONTINUE}
-              textStyle={CONTINUE_TEXT}
-              tx="welcomeScreen.continue"
-              onPress={nextScreen}
-            />
-          </View>
-        </SafeAreaView> */}
+        </SafeAreaView>
       </View>
     );
   },
