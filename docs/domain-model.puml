@@ -20,5 +20,4 @@ Atendees o--> User
 User *--> Profile
 Profile o--> "1" PlanList
 
-
 @enduml
