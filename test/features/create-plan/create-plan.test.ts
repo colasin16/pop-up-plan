@@ -41,7 +41,7 @@ describe("Unit tests", () => {
 });
 
 describe("Acceptance test", () => {
-  test("pepe", done => {
-    expect(true).not.toBe(false);
+  test("PlanCreator", done => {
+    // tirar la request que lleva al endpoint del router que colabora con el controlador del caso de uso
   });
 });
