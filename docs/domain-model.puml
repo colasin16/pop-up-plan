@@ -4,7 +4,7 @@ class Plan
 class User
 class Profile
 
-PlanList o--> Plan : aggregation
+PlanStore o--> Plan : aggregation
 
 Owner --|> User
 Plan *--> "1" Owner
@@ -17,8 +17,9 @@ Plan *--> "1" Category
 Plan *--> Atendees
 
 Atendees o--> User
+Chat o--> User
 User *--> Profile
-Profile o--> "1" PlanList
+Profile o--> "1" PlanStore
 
 
 @enduml
