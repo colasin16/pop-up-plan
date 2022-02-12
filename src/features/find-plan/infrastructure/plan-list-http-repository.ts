@@ -4,29 +4,33 @@ import { CustomLocation } from "../../../core/types/location";
 import type { PlanListRepository } from "../domain/plan-list-repository";
 
 export class PlanListHttpRepository implements PlanListRepository {
-  private readonly repositorRoot = "localhost";
+  private readonly repositorRoot = "http://localhost:8080/plans";
 
-  async findAll(): Promise<Plan[]> {
-    const response = await axios.get<undefined, Plan[]>(`${this.repositorRoot}`);
-    return response;
-  }
-
-  async findByCategory(category: Category): Promise<Plan[]> {
-    const response = await axios.get<undefined, Plan[]>(
-      `${this.repositorRoot}/category/${category}`,
+  async findAll() {
+    const response = await axios.get<undefined, { data: { success: boolean; plans: Plan[] } }>(
+      `${this.repositorRoot}`,
     );
-    return response;
+    return response.data;
   }
 
-  async findByTime(time: number): Promise<Plan[]> {
-    const response = await axios.get<undefined, Plan[]>(`${this.repositorRoot}/time/${time}`);
-    return response;
+  async findByCategory(category: Category) {
+    const response = await axios.get<undefined, { data: { success: boolean; plans: Plan[] } }>(
+      `${this.repositorRoot}/${category}`,
+    );
+    return response.data;
   }
 
-  async findByLocation(location: CustomLocation): Promise<Plan[]> {
-    const response = await axios.get<undefined, Plan[]>(
+  async findByTime(time: number) {
+    const response = await axios.get<undefined, { data: { success: boolean; plans: Plan[] } }>(
+      `${this.repositorRoot}/time/${time}`,
+    );
+    return response.data;
+  }
+
+  async findByLocation(location: CustomLocation) {
+    const response = await axios.get<undefined, { data: { success: boolean; plans: Plan[] } }>(
       `${this.repositorRoot}/location/${location}`,
     );
-    return response;
+    return response.data;
   }
 }

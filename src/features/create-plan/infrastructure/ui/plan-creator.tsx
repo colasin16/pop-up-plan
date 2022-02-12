@@ -1,6 +1,8 @@
+import { ObjectId } from "bson";
 import React, { FC, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { ViewStyle, TextStyle, Platform, View } from "react-native";
+
 import { useStores } from "../../../../../app/models";
 import { spacing, color } from "../../../../../app/theme";
 import { Category, Privacy } from "../../../../core/shared/domain/plan";
@@ -10,6 +12,7 @@ import { PlanCreator } from "../../application/plan-creator";
 import { PlanCreationData } from "../../domain/plan-creation-data";
 import { containerDI } from "../../../../core/dependency-injection/container";
 import { Button, TextField, Text } from "../../../../../app/components";
+import { PlanFinder } from "../../../find-plan/application/plan-finder";
 
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
@@ -30,7 +33,7 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 };
 
-const user = { id: "1644013242380", name: { firstName: "Jordi", lastName: "Colas" } };
+const user = { id: new ObjectId().toHexString(), name: { firstName: "Jordi", lastName: "Colas" } };
 
 interface Props {
   onFinish(): void;
@@ -51,6 +54,7 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
 
   const submit = async (): Promise<void> => {
     const planCreator = containerDI.resolve(PlanCreator);
+    const planFinder = containerDI.resolve(PlanFinder);
 
     if (isReadyToSubmit()) {
       const planData: PlanCreationData = {
@@ -63,9 +67,17 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
         privacy,
       };
 
-      const plan = await planCreator.create(user, planData);
-      userPlansStore.savePlans([...userPlansStore.plans, plan]);
-      onFinish();
+      try {
+        const { planId } = await planCreator.create(user, planData);
+        const { plans } = await planFinder.findAll();
+        const plan = plans.find(p => p.id === planId);
+        if (plan) {
+          userPlansStore.savePlans([...userPlansStore.plans, plan]);
+        }
+        onFinish();
+      } catch (error) {
+        console.log("🚀 ~ file: plan-creator.tsx ~ line 72 ~ submit ~ error", error);
+      }
     }
   };
 

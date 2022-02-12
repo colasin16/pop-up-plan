@@ -17,8 +17,8 @@ const PlanList = observer((props: PlanListProps) => {
   useEffect(() => {
     async function getData() {
       const planFinder = containerDI.resolve(PlanFinder);
-      const allPlans = await planFinder.findAll();
-      searchPlansStore.savePlans(allPlans);
+      const { plans } = await planFinder.findAll();
+      searchPlansStore.savePlans(plans);
     }
 
     getData();
@@ -26,14 +26,14 @@ const PlanList = observer((props: PlanListProps) => {
 
   const findWalkPlans = async (): Promise<void> => {
     const planFinder = containerDI.resolve(PlanFinder);
-    const walkPlans = await planFinder.findByCategory(Category.WALK);
-    searchPlansStore.savePlans(walkPlans);
+    const { plans } = await planFinder.findByCategory(Category.WALK);
+    searchPlansStore.savePlans(plans);
   };
 
   const findRunPlans = async (): Promise<void> => {
     const planFinder = containerDI.resolve(PlanFinder);
-    const walkPlans = await planFinder.findByCategory(Category.RUN);
-    searchPlansStore.savePlans(walkPlans);
+    const { plans } = await planFinder.findByCategory(Category.RUN);
+    searchPlansStore.savePlans(plans);
   };
 
   return (

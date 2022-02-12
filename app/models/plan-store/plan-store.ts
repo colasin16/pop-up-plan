@@ -18,11 +18,11 @@ export const PlanStoreModel = types
   .actions(self => ({
     getPlans: async () => {
       const planFinder = containerDI.resolve(PlanFinder);
-      const result = await planFinder.findAll();
-      if (result.length > 0) {
-        self.savePlans(result);
+      const { plans } = await planFinder.findAll();
+      if (plans.length > 0) {
+        self.savePlans(plans);
       } else {
-        __DEV__ && console.tron.log(result);
+        __DEV__ && console.tron.log(plans);
       }
     },
   }));

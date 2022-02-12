@@ -11,7 +11,6 @@ export const PlanModel = types.model("Plan").props({
   location: types.string,
   time: types.number,
   atendees: types.array(UserModel),
-  chat: types.string,
 });
 
 type PlanType = Instance<typeof PlanModel>;
