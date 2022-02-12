@@ -1,33 +1,32 @@
-import { injectable } from "tsyringe";
-import {
-  AmazingPlan,
-  BoringPlan,
-  FarAwayRunPlan,
-  FarAwayWalkPlan,
-} from "../../../core/shared/domain/mocks/plan";
+import axios from "axios";
 import { Plan, Category } from "../../../core/shared/domain/plan";
 import { CustomLocation } from "../../../core/types/location";
 import type { PlanListRepository } from "../domain/plan-list-repository";
 
-// TODO: Remove when inputs are finished
-const plans = [BoringPlan, AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
-const allPlans = plans.map((plan, index) => ({
-  id: `${new Date().setHours(index).valueOf()}`,
-  ...plan,
-}));
-
-@injectable()
 export class PlanListHttpRepository implements PlanListRepository {
-  findAll(): Promise<Plan[]> {
-    return Promise.resolve(allPlans);
+  private readonly repositorRoot = "localhost";
+
+  async findAll(): Promise<Plan[]> {
+    const response = await axios.get<undefined, Plan[]>(`${this.repositorRoot}`);
+    return response;
   }
-  findByCategory(category: Category): Promise<Plan[]> {
-    return Promise.resolve(allPlans.filter(plan => plan.category === category));
+
+  async findByCategory(category: Category): Promise<Plan[]> {
+    const response = await axios.get<undefined, Plan[]>(
+      `${this.repositorRoot}/category/${category}`,
+    );
+    return response;
   }
-  findByTime(time: number): Promise<Plan[]> {
-    throw new Error("Method not implemented.");
+
+  async findByTime(time: number): Promise<Plan[]> {
+    const response = await axios.get<undefined, Plan[]>(`${this.repositorRoot}/time/${time}`);
+    return response;
   }
-  findByLocation(location: CustomLocation): Promise<Plan[]> {
-    throw new Error("Method not implemented.");
+
+  async findByLocation(location: CustomLocation): Promise<Plan[]> {
+    const response = await axios.get<undefined, Plan[]>(
+      `${this.repositorRoot}/location/${location}`,
+    );
+    return response;
   }
 }
