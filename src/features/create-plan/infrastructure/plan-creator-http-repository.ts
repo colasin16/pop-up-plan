@@ -5,6 +5,7 @@ import { User } from "../../../core/shared/domain/user";
 import { PlanCreationData } from "../domain/plan-creation-data";
 import { PlanCreatorRepository } from "../domain/plan-creator-repository";
 
+// The mock of this repository is the same as the mock because rightnow they do the same
 export class PlanCreatorHttpRepository implements PlanCreatorRepository {
   private readonly repositoryRoot = "localhost";
 

@@ -8,7 +8,7 @@ import { CustomLocation } from "../../../../core/types/location";
 import { Timestamp } from "../../../../core/types/timestamp";
 import { PlanCreator } from "../../application/plan-creator";
 import { PlanCreationData } from "../../domain/plan-creation-data";
-import { PlanCreatorHttpRepository } from "../plan-creator-http-repository";
+import { containerDI } from "../../../../core/dependency-injection/container";
 import { Button, TextField, Text } from "../../../../../app/components";
 
 const DEMO: ViewStyle = {
@@ -50,7 +50,7 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
   };
 
   const submit = async (): Promise<void> => {
-    const planCreator = new PlanCreator(new PlanCreatorHttpRepository());
+    const planCreator = containerDI.resolve(PlanCreator);
 
     if (isReadyToSubmit()) {
       const planData: PlanCreationData = {
