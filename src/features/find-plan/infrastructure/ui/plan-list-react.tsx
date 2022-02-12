@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
-import { Button, FormRow } from "../../../../app/components";
-import { useStores } from "../../../../app/models";
-import { palette } from "../../../../app/theme/palette";
-import { container } from "../../../core/dependency-injection/container";
-import { Category } from "../../../core/shared/domain/plan";
-import { PlanFinder } from "../application/plan-finder";
-import { Section } from "./ui/section";
+import { Button, FormRow } from "../../../../../app/components";
+import { useStores } from "../../../../../app/models";
+import { palette } from "../../../../../app/theme/palette";
+import { containerDI } from "../../../../core/dependency-injection/container";
+import { Category } from "../../../../core/shared/domain/plan";
+import { PlanFinder } from "../../application/plan-finder";
+import { Section } from "./section";
 
 interface PlanListProps {}
 
@@ -16,7 +16,7 @@ const PlanList = observer((props: PlanListProps) => {
 
   useEffect(() => {
     async function getData() {
-      const planFinder = container.resolve(PlanFinder);
+      const planFinder = containerDI.resolve(PlanFinder);
       const allPlans = await planFinder.findAll();
       searchPlansStore.savePlans(allPlans);
     }
@@ -25,13 +25,13 @@ const PlanList = observer((props: PlanListProps) => {
   }, []);
 
   const findWalkPlans = async (): Promise<void> => {
-    const planFinder = container.resolve(PlanFinder);
+    const planFinder = containerDI.resolve(PlanFinder);
     const walkPlans = await planFinder.findByCategory(Category.WALK);
     searchPlansStore.savePlans(walkPlans);
   };
 
   const findRunPlans = async (): Promise<void> => {
-    const planFinder = container.resolve(PlanFinder);
+    const planFinder = containerDI.resolve(PlanFinder);
     const walkPlans = await planFinder.findByCategory(Category.RUN);
     searchPlansStore.savePlans(walkPlans);
   };

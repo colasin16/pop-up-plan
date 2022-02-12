@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
-import { container } from "../../../src/core/dependency-injection/container";
+import { containerDI } from "../../../src/core/dependency-injection/container";
 import { PlanFinder } from "../../../src/features/find-plan/application/plan-finder";
 import { withEnvironment } from "../extensions/with-environment";
 import { PlanModel, PlanSnapshot } from "../plan/plan";
@@ -17,7 +17,7 @@ export const PlanStoreModel = types
   }))
   .actions(self => ({
     getPlans: async () => {
-      const planFinder = container.resolve(PlanFinder);
+      const planFinder = containerDI.resolve(PlanFinder);
       const result = await planFinder.findAll();
       if (result.length > 0) {
         self.savePlans(result);

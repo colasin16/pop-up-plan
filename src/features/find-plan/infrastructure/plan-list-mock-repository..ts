@@ -15,8 +15,7 @@ const allPlans = plans.map((plan, index) => ({
   ...plan,
 }));
 
-// The mock of this repository is the same as the mock because rightnow they do the same
-export class PlanListHttpRepository implements PlanListRepository {
+export class PlanListMockRepository implements PlanListRepository {
   findAll(): Promise<Plan[]> {
     return Promise.resolve(allPlans);
   }
