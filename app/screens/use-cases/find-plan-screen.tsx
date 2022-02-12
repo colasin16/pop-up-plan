@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { Header, Text, Screen, GradientBackground } from "../../components";
 import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
-import PlanList from "../../../src/features/find-plan/infrastructure/plan-list-react";
+import PlanList from "../../../src/features/find-plan/infrastructure/ui/plan-list-react";
 
 export const logoIgnite = require("../demo/logo-ignite.png");
 export const heart = require("../demo/heart.png");
