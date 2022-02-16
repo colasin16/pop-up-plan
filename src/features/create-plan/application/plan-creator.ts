@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { PLAN_CREATOR_REPOSITORY } from "../../../core/dependency-injection/injection-tokens";
-import { User } from "../../../core/shared/domain/user";
+import { PLAN_CREATOR_REPOSITORY } from "../../../core/infrastructure/dependency-injection/injection-tokens";
+import { User } from "../../../core/domain/user";
 import { PlanCreationData } from "../domain/plan-creation-data";
 import { PlanCreatorRepository } from "../domain/plan-creator-repository";
 

@@ -5,14 +5,14 @@ import { ViewStyle, TextStyle, Platform, View } from "react-native";
 
 import { useStores } from "../../../../../app/models";
 import { spacing, color } from "../../../../../app/theme";
-import { Category, Privacy } from "../../../../core/shared/domain/plan";
-import { CustomLocation } from "../../../../core/types/location";
-import { Timestamp } from "../../../../core/types/timestamp";
+import { CustomLocation } from "../../../../core/domain/types/location";
+import { Timestamp } from "../../../../core/domain/types/timestamp";
 import { PlanCreator } from "../../application/plan-creator";
 import { PlanCreationData } from "../../domain/plan-creation-data";
-import { containerDI } from "../../../../core/dependency-injection/container";
+import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
 import { Button, TextField, Text } from "../../../../../app/components";
 import { PlanFinder } from "../../../find-plan/application/plan-finder";
+import { Category, Privacy } from "../../../../core/domain/plan";
 
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],

@@ -1,4 +1,4 @@
-import { User } from "../../../core/shared/domain/user";
+import { User } from "../../../core/domain/user";
 import { PlanCreationData } from "./plan-creation-data";
 
 export interface PlanCreatorRepository {

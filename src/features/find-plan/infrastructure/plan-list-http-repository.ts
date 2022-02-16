@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Plan, Category } from "../../../core/shared/domain/plan";
-import { CustomLocation } from "../../../core/types/location";
+import { Plan, Category } from "../../../core/domain/plan";
+import { CustomLocation } from "../../../core/domain/types/location";
 import type { PlanListRepository } from "../domain/plan-list-repository";
 
 export class PlanListHttpRepository implements PlanListRepository {

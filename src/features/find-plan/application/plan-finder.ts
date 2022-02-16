@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
-import { PLAN_LIST_REPOSITORY } from "../../../core/dependency-injection/injection-tokens";
-import { Category } from "../../../core/shared/domain/plan";
-import { CustomLocation } from "../../../core/types/location";
-import { Timestamp } from "../../../core/types/timestamp";
+import { PLAN_LIST_REPOSITORY } from "../../../core/infrastructure/dependency-injection/injection-tokens";
+import { Category } from "../../../core/domain/plan";
+import { CustomLocation } from "../../../core/domain/types/location";
+import { Timestamp } from "../../../core/domain/types/timestamp";
 import type { PlanListRepository } from "../domain/plan-list-repository";
 
 @injectable()

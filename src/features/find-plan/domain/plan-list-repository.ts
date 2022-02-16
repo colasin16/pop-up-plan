@@ -1,6 +1,6 @@
-import { Plan, Category } from "../../../core/shared/domain/plan";
-import { CustomLocation } from "../../../core/types/location";
-import { Timestamp } from "../../../core/types/timestamp";
+import { Category, Plan } from "../../../core/domain/plan";
+import { CustomLocation } from "../../../core/domain/types/location";
+import { Timestamp } from "../../../core/domain/types/timestamp";
 
 export interface PlanListRepository {
   findAll(): Promise<{ success: boolean; plans: Plan[] }>;

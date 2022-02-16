@@ -1,6 +1,5 @@
-import { Plan } from '../../../core/shared/domain/plan';
-import { PersistedObject } from '../../../core/types/persisted-object';
+import { Plan } from "../../../core/domain/plan";
 
 export class PlanList {
-  constructor(private readonly plans: PersistedObject<Plan>[]) {}
+  constructor(private readonly plans: Plan[]) {}
 }

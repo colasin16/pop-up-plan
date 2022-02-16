@@ -1,6 +1,5 @@
 import axios from "axios";
-
-import { User } from "../../../core/shared/domain/user";
+import { User } from "../../../core/domain/user";
 import { PlanCreationData } from "../domain/plan-creation-data";
 import { PlanCreatorRepository } from "../domain/plan-creator-repository";
 

@@ -1,7 +1,6 @@
-import { Id } from "../../types/id";
-import { CustomLocation } from "../../types/location";
-import { Entity } from "../../types/entity";
-import { Timestamp } from "../../types/timestamp";
+import { Entity } from "./types/entity";
+import { CustomLocation } from "./types/location";
+import { Timestamp } from "./types/timestamp";
 import { User } from "./user";
 
 export enum Privacy {

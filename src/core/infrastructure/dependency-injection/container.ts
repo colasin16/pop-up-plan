@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
 import { PLAN_CREATOR_REPOSITORY, PLAN_LIST_REPOSITORY } from "./injection-tokens";
-import { PlanListHttpRepository } from "../../features/find-plan/infrastructure/plan-list-http-repository";
-import { PlanCreatorHttpRepository } from "../../features/create-plan/infrastructure/plan-creator-http-repository";
+import { PlanListHttpRepository } from "../../../features/find-plan/infrastructure/plan-list-http-repository";
+import { PlanCreatorHttpRepository } from "../../../features/create-plan/infrastructure/plan-creator-http-repository";
 // import { PlanCreatorMockRepository } from "../../features/create-plan/infrastructure/plan-creator-mock-repository";
 // import { PlanListMockRepository } from "../../features/find-plan/infrastructure/plan-list-mock-repository.";
 

@@ -1,4 +1,4 @@
-import { Entity } from "../../types/entity";
+import { Entity } from "./types/entity";
 
 interface UserName {
   firstName: string;

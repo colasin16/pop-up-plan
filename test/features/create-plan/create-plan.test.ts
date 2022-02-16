@@ -1,6 +1,7 @@
-import { containerDI } from "../../../src/core/dependency-injection/container";
-import { Category, Privacy } from "../../../src/core/shared/domain/plan";
-import { User } from "../../../src/core/shared/domain/user";
+import { Privacy, Category } from "../../../src/core/domain/plan";
+import { User } from "../../../src/core/domain/user";
+import { containerDI } from "../../../src/core/infrastructure/dependency-injection/container";
+
 import { PlanCreator } from "../../../src/features/create-plan/application/plan-creator";
 import { PlanCreationData } from "../../../src/features/create-plan/domain/plan-creation-data";
 
