@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
-import { Category, Privacy } from "../../../src/core/shared/domain/plan";
+import { Category, Privacy } from "../../../src/core/domain/plan";
 import { UserModel } from "../user/user";
 
 export const PlanModel = types.model("Plan").props({
@@ -10,7 +10,7 @@ export const PlanModel = types.model("Plan").props({
   owner: UserModel,
   location: types.string,
   time: types.number,
-  atendees: types.array(UserModel),
+  attendees: types.array(UserModel),
 });
 
 type PlanType = Instance<typeof PlanModel>;

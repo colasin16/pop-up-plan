@@ -11,8 +11,7 @@ export const BoringPlan: Plan = {
   time: new Date().valueOf(),
   privacy: Privacy.PUBLIC,
   category: Category.WALK,
-  atendees: [],
-  chat: "1644055787449",
+  attendees: [],
 };
 
 export const AmazingPlan: Plan = {
@@ -26,8 +25,7 @@ export const AmazingPlan: Plan = {
   time: new Date().valueOf(),
   privacy: Privacy.PUBLIC,
   category: Category.RUN,
-  atendees: [],
-  chat: "1644055924452",
+  attendees: [],
 };
 
 export const FarAwayWalkPlan: Plan = {
@@ -41,8 +39,7 @@ export const FarAwayWalkPlan: Plan = {
   time: new Date().valueOf(),
   privacy: Privacy.PUBLIC,
   category: Category.WALK,
-  atendees: [],
-  chat: "1644055906972",
+  attendees: [],
 };
 
 export const FarAwayRunPlan: Plan = {
@@ -56,6 +53,5 @@ export const FarAwayRunPlan: Plan = {
   time: new Date().valueOf(),
   privacy: Privacy.PUBLIC,
   category: Category.RUN,
-  atendees: [],
-  chat: "1644055782685",
+  attendees: [],
 };

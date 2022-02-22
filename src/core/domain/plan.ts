@@ -22,5 +22,5 @@ export interface Plan extends Entity {
   time: Timestamp;
   privacy: Privacy;
   category: Category;
-  atendees: User[];
+  attendees: User[];
 }
