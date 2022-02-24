@@ -88,7 +88,7 @@ export const CreatePlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> 
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <Text style={TITLE} preset="header" text="HC What do you fill like doing today?" />
+          <Text style={TITLE} preset="header" text="HC What do you feel like doing today?" />
           <Text style={TAGLINE} text="HC Create a new plan" />
 
           <CreatePlan onFinish={goBack} />
