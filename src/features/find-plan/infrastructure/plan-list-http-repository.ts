@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Plan, Category } from "../../../core/domain/plan";
 import { CustomLocation } from "../../../core/domain/types/location";
+import { User } from "../../../core/domain/user";
 import type { PlanListRepository } from "../domain/plan-list-repository";
 
 export class PlanListHttpRepository implements PlanListRepository {
@@ -30,6 +31,23 @@ export class PlanListHttpRepository implements PlanListRepository {
   async findByLocation(location: CustomLocation) {
     const response = await axios.get<undefined, { data: { success: boolean; plans: Plan[] } }>(
       `${this.repositorRoot}/location/${location}`,
+    );
+    return response.data;
+  }
+
+  async findByOwner(owner: User) {
+     // TODO: implement api in backend
+    const url: string = `${this.repositorRoot}/owner/${owner.id}`
+
+    const { plans } = await this.findAll();
+    console.debug(`owner: ${JSON.stringify(owner)}`)
+    const ownersPlan = plans.filter(plan=>plan.owner=== owner)
+    console.debug(`filteredplan: ${JSON.stringify(ownersPlan)}`)
+
+    return {success: true, plans: ownersPlan}
+    throw new Error(`API ('${url}') Not implemented in backend`);
+    const response = await axios.get<undefined, { data: { success: boolean; plans: Plan[] } }>(
+     url,
     );
     return response.data;
   }

@@ -13,6 +13,10 @@ import {
 import { color, spacing } from "../../theme";
 import { useStores } from "../../models";
 import { NavigatorParamList } from "../../navigators";
+import { AmazingPlan, BoringPlan } from "../../../src/core/domain/mocks/plan";
+import { containerDI } from "../../../src/core/infrastructure/dependency-injection/container";
+import { PlanFinder } from "../../../src/features/find-plan/application/plan-finder";
+import { PlanSnapshot } from "../../models/plan/plan";
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -54,17 +58,35 @@ export const UserProfileScreen: FC<
 > = observer(({ navigation }) => {
   const goBack = () => navigation.goBack();
   const store = useStores();
-  const { plans } = store.userPlansStore;
+  // const { plans } = store.userPlansStore;
+  const { searchPlansStore } = useStores();
+
+  // mocked_plans
+  // TODO: replace with real ones
+  // const plans = [BoringPlan, AmazingPlan];
 
   const { characterStore } = useStores();
   const { characters } = characterStore;
 
-  useEffect(() => {
-    async function fetchData() {
-      await characterStore.getCharacters();
-    }
+  const findRunPlansByOwner = async (): Promise<void> => {
+    const planFinder = containerDI.resolve(PlanFinder);
+    const { plans } = await planFinder.findByOwner({
+      id: "1644055774364",
+      name: { firstName: "Tom", lastName: "Smith" },
+    });
 
-    fetchData();
+    console.debug(`plans: ${JSON.stringify(plans)}`);
+    searchPlansStore.savePlans(plans as PlanSnapshot[]);
+  };
+
+  useEffect(() => {
+    // TODO: Ask Jordi wheter I can remove this
+    // async function fetchData() {
+    //   await characterStore.getCharacters();
+    // }
+
+    // fetchData();
+    findRunPlansByOwner();
   }, []);
 
   return (
@@ -83,17 +105,16 @@ export const UserProfileScreen: FC<
             characters.length > 0 ? (
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Image source={{ uri: characters[0].image }} style={IMAGE} />
-                <Text
-                  style={
-                    LIST_TEXT
-                  }>{`${store.user.name.firstName} ${store.user.name.lastName}`}</Text>
+                <Text style={LIST_TEXT}>
+                  {`${store.user.name.firstName} ${store.user.name.lastName}`}
+                </Text>
               </View>
             ) : (
               <></>
             )
           }
           contentContainerStyle={FLAT_LIST}
-          data={plans}
+          data={searchPlansStore.plans}
           keyExtractor={item => String(`${item.id}-${item.title}`)}
           renderItem={({ item }) => (
             <View style={LIST_CONTAINER}>

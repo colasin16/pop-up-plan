@@ -4,6 +4,7 @@ import { Category } from "../../../core/domain/plan";
 import { CustomLocation } from "../../../core/domain/types/location";
 import { Timestamp } from "../../../core/domain/types/timestamp";
 import type { PlanListRepository } from "../domain/plan-list-repository";
+import { User } from "../../../core/domain/user";
 
 @injectable()
 export class PlanFinder {
@@ -25,5 +26,9 @@ export class PlanFinder {
 
   public async findByTime(time: Timestamp) {
     return await this.planListRepository.findByTime(time);
+  }
+
+  public async findByOwner(owner: User) {
+    return await this.planListRepository.findByOwner(owner);
   }
 }
