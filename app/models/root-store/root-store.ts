@@ -10,6 +10,9 @@ import { User, UserModel } from "../user/user";
 export const RootStoreModel = types.model("RootStore").props({
   characterStore: types.optional(CharacterStoreModel, {} as any),
   user: types.maybe(UserModel),
+  // TODO: Must we have different Models for `userPlansStore` and `searchPlansStore`?
+  // Because I think that getPlans method must have different implementations for 
+  // these stores
   userPlansStore: types.optional(PlanStoreModel, {} as any),
   searchPlansStore: types.optional(PlanStoreModel, {} as any),
 }).actions(self => ({

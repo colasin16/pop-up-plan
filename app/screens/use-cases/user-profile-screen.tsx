@@ -82,7 +82,7 @@ export const UserProfileScreen: FC<
     }
 
     fetchData();
-    findRunPlansByOwner();
+    // findRunPlansByOwner();
   }, []);
 
   return (
