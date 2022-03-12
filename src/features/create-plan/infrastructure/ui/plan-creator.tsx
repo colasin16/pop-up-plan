@@ -68,6 +68,9 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
       };
 
       try {
+        // TODO: if PlanCreatorRepository returns plan obj instead of planId
+        // The three following lines will be converted to this:
+        // const { plan } = await planCreator.create(user, planData);
         const { planId } = await planCreator.create(user, planData);
         const { plans } = await planFinder.findAll();
         const plan = plans.find(p => p.id === planId);

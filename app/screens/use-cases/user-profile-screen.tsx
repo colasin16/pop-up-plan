@@ -57,16 +57,12 @@ export const UserProfileScreen: FC<
   StackScreenProps<NavigatorParamList, "userProfileScreen">
 > = observer(({ navigation }) => {
   const goBack = () => navigation.goBack();
-  const store = useStores();
-  // const { plans } = store.userPlansStore;
-  const { searchPlansStore } = useStores();
+  const { searchPlansStore, user: userStore, characterStore, userPlansStore } = useStores();
+  const { characters } = characterStore;
 
   // mocked_plans
   // TODO: replace with real ones
   // const plans = [BoringPlan, AmazingPlan];
-
-  const { characterStore } = useStores();
-  const { characters } = characterStore;
 
   const findRunPlansByOwner = async (): Promise<void> => {
     const planFinder = containerDI.resolve(PlanFinder);
@@ -81,11 +77,11 @@ export const UserProfileScreen: FC<
 
   useEffect(() => {
     // TODO: Ask Jordi wheter I can remove this
-    // async function fetchData() {
-    //   await characterStore.getCharacters();
-    // }
+    async function fetchData() {
+      await characterStore.getCharacters();
+    }
 
-    // fetchData();
+    fetchData();
     findRunPlansByOwner();
   }, []);
 
@@ -106,7 +102,7 @@ export const UserProfileScreen: FC<
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Image source={{ uri: characters[0].image }} style={IMAGE} />
                 <Text style={LIST_TEXT}>
-                  {`${store.user.name.firstName} ${store.user.name.lastName}`}
+                  {`${userStore.name.firstName} ${userStore.name.lastName}`}
                 </Text>
               </View>
             ) : (
