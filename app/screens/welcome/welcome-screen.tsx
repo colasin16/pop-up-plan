@@ -97,6 +97,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
     const userProfileScreen = () => navigation.navigate("userProfileScreen");
 
     useEffect(() => {
+      // TODO: Move this to login screen
       store.setUser({
         id: "1644013242380",
         name: {

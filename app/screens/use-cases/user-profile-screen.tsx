@@ -1,22 +1,22 @@
-import React, { useEffect, FC } from "react";
-import { FlatList, TextStyle, View, ViewStyle, ImageStyle } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
+import React, { FC, useEffect } from "react";
+import { FlatList, ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import {
-  Header,
-  Screen,
-  Text,
-  AutoImage as Image,
-  GradientBackground,
-  BulletItem,
-} from "../../components";
-import { color, spacing } from "../../theme";
-import { useStores } from "../../models";
-import { NavigatorParamList } from "../../navigators";
-import { AmazingPlan, BoringPlan } from "../../../src/core/domain/mocks/plan";
+  AmazingPlan,
+  BoringPlan,
+  FarAwayRunPlan,
+  FarAwayWalkPlan,
+} from "../../../src/core/domain/mocks/plan";
 import { containerDI } from "../../../src/core/infrastructure/dependency-injection/container";
 import { PlanFinder } from "../../../src/features/find-plan/application/plan-finder";
+import { AutoImage as Image, GradientBackground, Header, Screen, Text } from "../../components";
+import { useStores } from "../../models";
 import { PlanSnapshot } from "../../models/plan/plan";
+import { NavigatorParamList } from "../../navigators";
+import { color, spacing } from "../../theme";
+
+const DATA = [BoringPlan, AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -29,6 +29,11 @@ const HEADER: TextStyle = {
   paddingHorizontal: spacing[4],
   paddingTop: spacing[3],
 };
+const PROFILE_PICTURE_CONTAINER: ViewStyle = {
+  flexDirection: "row",
+  alignItems: "center",
+  margin: 20,
+};
 const HEADER_TITLE: TextStyle = {
   fontSize: 12,
   fontWeight: "bold",
@@ -37,20 +42,29 @@ const HEADER_TITLE: TextStyle = {
   textAlign: "center",
 };
 const LIST_CONTAINER: ViewStyle = {
-  alignItems: "flex-start",
-  flexDirection: "row",
+  // alignItems: "flex-start",
+  // flexDirection: "row",
+  flex: 1,
   padding: 10,
 };
 const IMAGE: ImageStyle = {
-  borderRadius: 35,
-  height: 65,
-  width: 65,
+  borderRadius: 100,
+  height: 100,
+  width: 100,
 };
+
+const PLAN_IMAGE: ImageStyle = {
+  borderRadius: 5,
+  height: 85,
+  width: 85,
+};
+
 const LIST_TEXT: TextStyle = {
   marginLeft: 10,
 };
 const FLAT_LIST: ViewStyle = {
   paddingHorizontal: spacing[4],
+  margin: 15,
 };
 
 export const UserProfileScreen: FC<
@@ -83,6 +97,15 @@ export const UserProfileScreen: FC<
     // findRunPlansByOwner();
   }, []);
 
+  // const renderItem = ({ item }) => <Item title={item.title} />;
+
+  const renderItem = ({ item }) => (
+    <View style={LIST_CONTAINER}>
+      <Image source={{ uri: `${item.image}` }} style={PLAN_IMAGE} />
+      <Text>{item.title}</Text>
+    </View>
+  );
+
   return (
     <View testID="DemoListScreen" style={FULL}>
       <GradientBackground colors={["#422443", "#281b34"]} />
@@ -94,23 +117,32 @@ export const UserProfileScreen: FC<
           style={HEADER}
           titleStyle={HEADER_TITLE}
         />
+        <View style={PROFILE_PICTURE_CONTAINER}>
+          <Image source={{ uri: userStore ? userStore.image : "" }} style={IMAGE} />
+          <Text style={LIST_TEXT}>{`${userStore ? userStore.name.firstName : "undefined"} ${
+            userStore ? userStore.name.lastName : "undefined"
+          }`}</Text>
+        </View>
+        <View style={{ backgroundColor: "white", height: 10 }} />
+        <View style={{ flexDirection: "row", alignItems: "center", margin: 8 }}>
+          <View style={{ flex: 1, height: 1 }} />
+          <View>
+            <Text style={{ width: 150, textAlign: "center" }}>Owned Plans</Text>
+          </View>
+          <View style={{ flex: 1, height: 1 }} />
+          <View style={{ flex: 1, height: 1 }} />
+          <View>
+            <Text style={{ width: 150, textAlign: "center" }}>Attending Plans</Text>
+          </View>
+          <View style={{ flex: 1, height: 1 }} />
+        </View>
+        <View style={{ backgroundColor: "white", height: 2 }} />
         <FlatList
-          ListHeaderComponent={
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Image source={{ uri: userStore.image }} style={IMAGE} />
-              <Text style={LIST_TEXT}>
-                {`${userStore.name.firstName} ${userStore.name.lastName}`}
-              </Text>
-            </View>
-          }
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
           contentContainerStyle={FLAT_LIST}
-          data={searchPlansStore.plans}
-          keyExtractor={item => String(`${item.id}-${item.title}`)}
-          renderItem={({ item }) => (
-            <View style={LIST_CONTAINER}>
-              <BulletItem text={`${item.title} (${item.category}) - ${item.location}`} />
-            </View>
-          )}
+          numColumns={3}
         />
       </Screen>
     </View>
