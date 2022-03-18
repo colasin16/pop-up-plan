@@ -12,7 +12,7 @@ import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens";
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities";
 import { CreatePlanScreen } from "../screens/use-cases/create-plan-screen";
 import { FindPlanScreen } from "../screens/use-cases/find-plan-screen";
-import { UserProfileScreen } from "../screens/use-cases/user-profile-screen";
+import { UserProfileScreen } from "../screens/use-cases/UserProfileScreen/user-profile-screen";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator

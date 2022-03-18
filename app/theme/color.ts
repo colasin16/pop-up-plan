@@ -61,4 +61,9 @@ export const color = {
    * white background
    */
   storybookTextColor: palette.black,
+
+  /**
+   * Selected item color, e.g, selected tab in profile
+   */
+  selectedItemColor: palette.yellow,
 };

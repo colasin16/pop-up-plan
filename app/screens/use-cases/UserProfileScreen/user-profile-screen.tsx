@@ -1,22 +1,25 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { FlatList, ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import {
   AmazingPlan,
   BoringPlan,
   FarAwayRunPlan,
   FarAwayWalkPlan,
-} from "../../../src/core/domain/mocks/plan";
-import { containerDI } from "../../../src/core/infrastructure/dependency-injection/container";
-import { PlanFinder } from "../../../src/features/find-plan/application/plan-finder";
-import { AutoImage as Image, GradientBackground, Header, Screen, Text } from "../../components";
-import { useStores } from "../../models";
-import { PlanSnapshot } from "../../models/plan/plan";
-import { NavigatorParamList } from "../../navigators";
-import { color, spacing } from "../../theme";
-
-const DATA = [BoringPlan, AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
+} from "../../../../src/core/domain/mocks/plan";
+import { containerDI } from "../../../../src/core/infrastructure/dependency-injection/container";
+import { PlanFinder } from "../../../../src/features/find-plan/application/plan-finder";
+import { AutoImage as Image, GradientBackground, Header, Screen, Text } from "../../../components";
+import { useStores } from "../../../models";
+import { PlanSnapshot } from "../../../models/plan/plan";
+import { NavigatorParamList } from "../../../navigators";
+import { color, spacing } from "../../../theme";
+import { CurrentTabContext } from "./current-tab-context";
+import { TABS } from "./enums";
+import { TaskTab } from "./tab-component";
+const OWNED_PLANS = [BoringPlan];
+const ATTENDING_PLANS = [AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -73,9 +76,7 @@ export const UserProfileScreen: FC<
   const goBack = () => navigation.goBack();
   const { searchPlansStore, user: userStore, userPlansStore } = useStores();
 
-  // mocked_plans
-  // TODO: replace with real ones
-  // const plans = [BoringPlan, AmazingPlan];
+  const [currentTab, setCurrentTab] = useState(TABS.OWNED_PLANS);
 
   const findRunPlansByOwner = async (): Promise<void> => {
     const planFinder = containerDI.resolve(PlanFinder);
@@ -97,8 +98,6 @@ export const UserProfileScreen: FC<
     // findRunPlansByOwner();
   }, []);
 
-  // const renderItem = ({ item }) => <Item title={item.title} />;
-
   const renderItem = ({ item }) => (
     <View style={LIST_CONTAINER}>
       <Image source={{ uri: `${item.image}` }} style={PLAN_IMAGE} />
@@ -106,12 +105,20 @@ export const UserProfileScreen: FC<
     </View>
   );
 
+  const getData = key => {
+    const data = {
+      [TABS.OWNED_PLANS]: OWNED_PLANS,
+      [TABS.ATTENDING_PLANS]: ATTENDING_PLANS,
+    };
+    return data[key];
+  };
+
   return (
     <View testID="DemoListScreen" style={FULL}>
       <GradientBackground colors={["#422443", "#281b34"]} />
       <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
         <Header
-          headerText="HC PROFILE"
+          headerText="PROFILE"
           leftIcon="back"
           onLeftPress={goBack}
           style={HEADER}
@@ -123,27 +130,21 @@ export const UserProfileScreen: FC<
             userStore ? userStore.name.lastName : "undefined"
           }`}</Text>
         </View>
-        <View style={{ backgroundColor: "white", height: 10 }} />
-        <View style={{ flexDirection: "row", alignItems: "center", margin: 8 }}>
-          <View style={{ flex: 1, height: 1 }} />
-          <View>
-            <Text style={{ width: 150, textAlign: "center" }}>Owned Plans</Text>
+        <CurrentTabContext.Provider value={{ currentTab, setCurrentTab }}>
+          <View style={{ backgroundColor: color.line, height: 10 }} />
+          <View style={{ flexDirection: "row", alignItems: "center", margin: 8 }}>
+            <TaskTab tabName={TABS.OWNED_PLANS} />
+            <TaskTab tabName={TABS.ATTENDING_PLANS} />
           </View>
-          <View style={{ flex: 1, height: 1 }} />
-          <View style={{ flex: 1, height: 1 }} />
-          <View>
-            <Text style={{ width: 150, textAlign: "center" }}>Attending Plans</Text>
-          </View>
-          <View style={{ flex: 1, height: 1 }} />
-        </View>
-        <View style={{ backgroundColor: "white", height: 2 }} />
-        <FlatList
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          contentContainerStyle={FLAT_LIST}
-          numColumns={3}
-        />
+          <View style={{ backgroundColor: color.line, height: 1 }} />
+          <FlatList
+            data={getData(currentTab)}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            contentContainerStyle={FLAT_LIST}
+            numColumns={3}
+          />
+        </CurrentTabContext.Provider>
       </Screen>
     </View>
   );
