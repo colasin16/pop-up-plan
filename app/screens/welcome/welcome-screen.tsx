@@ -97,7 +97,14 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
     const userProfileScreen = () => navigation.navigate("userProfileScreen");
 
     useEffect(() => {
-      store.setUser({ id: "1644013242380", name: { firstName: "Jordi", lastName: "Colas" } });
+      store.setUser({
+        id: "1644013242380",
+        name: {
+          firstName: "Jordi",
+          lastName: "Colas",
+        },
+        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+      });
     });
 
     return (

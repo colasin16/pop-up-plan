@@ -57,8 +57,7 @@ export const UserProfileScreen: FC<
   StackScreenProps<NavigatorParamList, "userProfileScreen">
 > = observer(({ navigation }) => {
   const goBack = () => navigation.goBack();
-  const { searchPlansStore, user: userStore, characterStore, userPlansStore } = useStores();
-  const { characters } = characterStore;
+  const { searchPlansStore, user: userStore, userPlansStore } = useStores();
 
   // mocked_plans
   // TODO: replace with real ones
@@ -77,11 +76,10 @@ export const UserProfileScreen: FC<
 
   useEffect(() => {
     // TODO: Ask Jordi wheter I can remove this
-    async function fetchData() {
-      await characterStore.getCharacters();
-    }
-
-    fetchData();
+    // async function fetchData() {
+    //   await characterStore.getCharacters();
+    // }
+    // fetchData();
     // findRunPlansByOwner();
   }, []);
 
@@ -98,16 +96,12 @@ export const UserProfileScreen: FC<
         />
         <FlatList
           ListHeaderComponent={
-            characters.length > 0 ? (
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Image source={{ uri: characters[0].image }} style={IMAGE} />
-                <Text style={LIST_TEXT}>
-                  {`${userStore.name.firstName} ${userStore.name.lastName}`}
-                </Text>
-              </View>
-            ) : (
-              <></>
-            )
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Image source={{ uri: userStore.image }} style={IMAGE} />
+              <Text style={LIST_TEXT}>
+                {`${userStore.name.firstName} ${userStore.name.lastName}`}
+              </Text>
+            </View>
           }
           contentContainerStyle={FLAT_LIST}
           data={searchPlansStore.plans}

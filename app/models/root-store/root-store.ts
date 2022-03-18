@@ -8,6 +8,7 @@ import { User, UserModel } from "../user/user";
  */
 // prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
+  // TODO: remove this store
   characterStore: types.optional(CharacterStoreModel, {} as any),
   user: types.maybe(UserModel),
   // TODO: Must we have different Models for `userPlansStore` and `searchPlansStore`?

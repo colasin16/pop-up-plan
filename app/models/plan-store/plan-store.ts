@@ -15,6 +15,7 @@ export const PlanStoreModel = types
       self.plans.replace(planSnapshots as any);
     },
   }))
+  // TODO: delete this method, we do not need it here
   .actions(self => ({
     getPlans: async () => {
       const planFinder = containerDI.resolve(PlanFinder);

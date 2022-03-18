@@ -4,6 +4,7 @@ import { UserNameModel } from "./user-name";
 export const UserModel = types.model("User").props({
   id: types.identifier,
   name: UserNameModel,
+  image: types.maybe(types.string),
 });
 
 type UserType = Instance<typeof UserModel>;
