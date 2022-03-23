@@ -92,11 +92,6 @@ export const UserProfileScreen: FC<
   };
 
   useEffect(() => {
-    // TODO: Ask Jordi wheter I can remove this
-    // async function fetchData() {
-    //   await characterStore.getCharacters();
-    // }
-    // fetchData();
     // findRunPlansByOwner();
   }, []);
 
