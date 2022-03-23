@@ -4,7 +4,6 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
 import { Header, Screen, Text, AutoImage as Image, GradientBackground } from "../../components";
 import { color, spacing } from "../../theme";
-import { useStores } from "../../models";
 import { NavigatorParamList } from "../../navigators";
 
 const FULL: ViewStyle = {
@@ -46,15 +45,14 @@ export const DemoListScreen: FC<StackScreenProps<NavigatorParamList, "demoList">
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
 
-    const { characterStore } = useStores();
-    const { characters } = characterStore;
+    // const { characterStore } = useStores();
+    // const { characters } = characterStore;
 
     useEffect(() => {
-      async function fetchData() {
-        await characterStore.getCharacters();
-      }
-
-      fetchData();
+      // async function fetchData() {
+      //   await characterStore.getCharacters();
+      // }
+      // fetchData();
     }, []);
 
     return (
