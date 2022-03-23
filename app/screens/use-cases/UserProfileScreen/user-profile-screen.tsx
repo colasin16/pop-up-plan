@@ -18,6 +18,8 @@ import { color, spacing } from "../../../theme";
 import { CurrentTabContext } from "./current-tab-context";
 import { TABS } from "./enums";
 import { TaskTab } from "./tab-component";
+
+// TODO: get owned and attending plans using API
 const OWNED_PLANS = [BoringPlan];
 const ATTENDING_PLANS = [AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
 
@@ -105,7 +107,7 @@ export const UserProfileScreen: FC<
     </View>
   );
 
-  const getData = key => {
+  const getData = (key: TABS) => {
     const data = {
       [TABS.OWNED_PLANS]: OWNED_PLANS,
       [TABS.ATTENDING_PLANS]: ATTENDING_PLANS,
