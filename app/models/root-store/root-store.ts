@@ -1,5 +1,4 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
-import { CharacterStoreModel } from "../character-store/character-store";
 import { PlanStoreModel } from "../plan-store/plan-store";
 import { User, UserModel } from "../user/user";
 

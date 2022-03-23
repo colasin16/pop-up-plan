@@ -68,7 +68,8 @@ export const DemoListScreen: FC<StackScreenProps<NavigatorParamList, "demoList">
           />
           <FlatList
             contentContainerStyle={FLAT_LIST}
-            data={[...characters]}
+            // data={[...characters]}
+            data={[]}
             keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
               <View style={LIST_CONTAINER}>
