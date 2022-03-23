@@ -76,11 +76,11 @@ export const UserProfileScreen: FC<
   StackScreenProps<NavigatorParamList, "userProfileScreen">
 > = observer(({ navigation }) => {
   const goBack = () => navigation.goBack();
-  const { searchPlansStore, user: userStore, userPlansStore } = useStores();
+  const { searchPlansStore, userStore, userPlansStore } = useStores();
 
   const [currentTab, setCurrentTab] = useState(TABS.OWNED_PLANS);
 
-  const findRunPlansByOwner = async (): Promise<void> => {
+  const findPlansByOwner = async (): Promise<void> => {
     const planFinder = containerDI.resolve(PlanFinder);
     const { plans } = await planFinder.findByOwner({
       id: "1644055774364",
@@ -92,7 +92,7 @@ export const UserProfileScreen: FC<
   };
 
   useEffect(() => {
-    // findRunPlansByOwner();
+    // findPlansByOwner();
   }, []);
 
   const renderItem = ({ item }) => (
