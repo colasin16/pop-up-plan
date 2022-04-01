@@ -99,16 +99,6 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
     const createNewUserScreen = () => navigation.navigate("createUser");
 
     useEffect(() => {
-<<<<<<< HEAD
-      // TODO: Move this to login screen
-      store.setUser({
-        id: "1644013242380",
-        name: {
-          firstName: "Jordi",
-          lastName: "Colas",
-        },
-        image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-=======
       // store.setUser({ id: "1644013242380", name: { firstName: "Jordi", lastName: "Colas" } });
       store.setUser({
         id: new ObjectId().toHexString(),
@@ -116,7 +106,6 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
         lastName: "Colas",
         email: "test@test.com",
         phoneNumber: "+11111111111",
->>>>>>> d03cfe4f8ce972a0fec19167eb07793ef289aa79
       });
     });
 
