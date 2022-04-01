@@ -13,6 +13,7 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities";
 import { CreatePlanScreen } from "../screens/use-cases/create-plan-screen";
 import { FindPlanScreen } from "../screens/use-cases/find-plan-screen";
 import { UserProfileScreen } from "../screens/use-cases/user-profile-screen";
+import { CreateUserScreen } from "../screens/use-cases/create-user";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -27,6 +28,7 @@ import { UserProfileScreen } from "../screens/use-cases/user-profile-screen";
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type NavigatorParamList = {
+  createUser: undefined;
   welcome: undefined;
   createPlan: undefined;
   findPlan: undefined;
@@ -47,6 +49,7 @@ const AppStack = () => {
       }}
       initialRouteName="welcome">
       <Stack.Screen name="welcome" component={WelcomeScreen} />
+      <Stack.Screen name="createUser" component={CreateUserScreen} />
       <Stack.Screen name="createPlan" component={CreatePlanScreen} />
       <Stack.Screen name="findPlan" component={FindPlanScreen} />
       <Stack.Screen name="userProfileScreen" component={UserProfileScreen} />

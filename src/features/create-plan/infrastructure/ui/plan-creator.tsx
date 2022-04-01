@@ -33,7 +33,13 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 };
 
-const user = { id: new ObjectId().toHexString(), name: { firstName: "Jordi", lastName: "Colas" } };
+const user = {
+  id: new ObjectId().toHexString(),
+  name: "Jordi",
+  lastName: "Colas",
+  email: "test@test.com",
+  phoneNumber: "+11111111111",
+};
 
 interface Props {
   onFinish(): void;

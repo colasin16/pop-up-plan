@@ -13,6 +13,7 @@ import {
 import { color, spacing, typography } from "../../theme";
 import { NavigatorParamList } from "../../navigators";
 import { useStores } from "../../models";
+import { ObjectId } from "bson";
 
 const bowserLogo = require("./bowser.png");
 
@@ -95,9 +96,17 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
     const createNewPlanScreen = () => navigation.navigate("createPlan");
     const findAPlanScreen = () => navigation.navigate("findPlan");
     const userProfileScreen = () => navigation.navigate("userProfileScreen");
+    const createNewUserScreen = () => navigation.navigate("createUser");
 
     useEffect(() => {
-      store.setUser({ id: "1644013242380", name: { firstName: "Jordi", lastName: "Colas" } });
+      // store.setUser({ id: "1644013242380", name: { firstName: "Jordi", lastName: "Colas" } });
+      store.setUser({
+        id: new ObjectId().toHexString(),
+        name: "Jordi",
+        lastName: "Colas",
+        email: "test@test.com",
+        phoneNumber: "+11111111111",
+      });
     });
 
     return (
@@ -141,6 +150,13 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
               textStyle={CONTINUE_TEXT}
               text="HC PROFILE"
               onPress={userProfileScreen}
+            />
+            <Button
+              testID="next-screen-button-3"
+              style={CONTINUE}
+              textStyle={CONTINUE_TEXT}
+              text="REGISTRATION"
+              onPress={createNewUserScreen}
             />
           </View>
         </Screen>
