@@ -77,7 +77,7 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
         lastName,
         email,
         phoneNumber,
-        newPassword,
+        password: newPassword,
       };
 
       try {

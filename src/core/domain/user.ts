@@ -13,5 +13,5 @@ export interface User extends Entity {
   lastName: string;
   email: Email;
   phoneNumber: PhoneNumber;
-  newPassword: Password;
+  password: Password;
 }
