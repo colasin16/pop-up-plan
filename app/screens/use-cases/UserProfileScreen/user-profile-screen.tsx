@@ -76,7 +76,7 @@ export const UserProfileScreen: FC<
   StackScreenProps<NavigatorParamList, "userProfileScreen">
 > = observer(({ navigation }) => {
   const goBack = () => navigation.goBack();
-  const { searchPlansStore, userStore, userPlansStore } = useStores();
+  const { /*searchPlansStore,*/ userStore, userPlansStore } = useStores();
 
   const [currentTab, setCurrentTab] = useState(TABS.OWNED_PLANS);
 
@@ -88,14 +88,14 @@ export const UserProfileScreen: FC<
     });
 
     console.debug(`plans: ${JSON.stringify(plans)}`);
-    searchPlansStore.savePlans(plans as PlanSnapshot[]);
+    userPlansStore.savePlans(plans as PlanSnapshot[]);
   };
 
   useEffect(() => {
     // findPlansByOwner();
   }, []);
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }) => (  
     <View style={LIST_CONTAINER}>
       <Image source={{ uri: `${item.image}` }} style={PLAN_IMAGE} />
       <Text>{item.title}</Text>
