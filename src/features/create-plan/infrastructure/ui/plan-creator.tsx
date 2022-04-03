@@ -13,6 +13,7 @@ import { containerDI } from "../../../../core/infrastructure/dependency-injectio
 import { Button, TextField, Text } from "../../../../../app/components";
 import { PlanFinder } from "../../../find-plan/application/plan-finder";
 import { Category, Privacy } from "../../../../core/domain/plan";
+import { User } from "../../../../core/domain/user";
 
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
@@ -33,10 +34,9 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 };
 
-const user = {
+const user: User = {
   id: new ObjectId().toHexString(),
-  name: "Jordi",
-  lastName: "Colas",
+  name: { firstName: "Jordi", lastName: "Colas" },
   email: "test@test.com",
   phoneNumber: "+11111111111",
   password: "testPassword",
@@ -81,8 +81,7 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
         const { planId } = await planCreator.create(
           {
             id: new ObjectId().toHexString(),
-            name: "hesam",
-            lastName: "Colas",
+            name: { firstName: "Jordi", lastName: "Colas" },
             email: "test@test.com",
             phoneNumber: "+11111111111",
             password: "testPassword",

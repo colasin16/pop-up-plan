@@ -11,6 +11,7 @@ import { PhoneNumber } from "../../../../core/domain/types/phone-number";
 import { Email } from "../../../../core/domain/types/email";
 import { Password } from "../../../../core/domain/types/password";
 import { ValidationError } from "../../../../core/domain/exceptions";
+import { useStores } from "../../../../../app/models";
 
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
@@ -39,8 +40,9 @@ interface Props {
 
 export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
   // const { userPlansStore } = useStores();
+  const store = useStores();
 
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState<Email>("");
   const [phoneNumber, setPhoneNumber] = useState<PhoneNumber>();
@@ -55,7 +57,9 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
   // const [privacy, setPrivacy] = useState<Privacy>();
 
   const isReadyToSubmit = () => {
-    return !!name && !!lastName && !!email && !!phoneNumber && !!newPassword && newPasswordAgain;
+    return (
+      !!firstName && !!lastName && !!email && !!phoneNumber && !!newPassword && newPasswordAgain
+    );
   };
 
   const validateForm = () => {
@@ -73,7 +77,7 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
 
     if (isReadyToSubmit()) {
       const userData: UserCreationData = {
-        name,
+        name: { firstName: firstName, lastName: lastName },
         lastName,
         email,
         phoneNumber,
@@ -82,7 +86,19 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
 
       try {
         const { userId } = await userCreator.create(userData);
+        // TODO: Get user
+
         console.debug(`user with id '${userId}' has been created!`);
+
+        // after register a new user, it automatically logs in
+        // TODO: change it
+        store.setUser({
+          id: "1644013242380",
+          name: { firstName: "Jordi", lastName: "Colas" },
+          email: "test@test.com",
+          phoneNumber: "+11111111111",
+          image: "",
+        });
         // TODO: check how can we validate that the user has been created successfully
 
         // const { plans } = await planFinder.findAll();
@@ -101,8 +117,8 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
     <View>
       <TextField
         inputStyle={{ padding: 8, marginTop: 8 }}
-        onChangeText={value => setName(value)}
-        value={name}
+        onChangeText={value => setFirstName(value)}
+        value={firstName}
         label="Name"
         placeholder="Creator name"
       />

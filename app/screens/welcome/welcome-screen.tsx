@@ -98,16 +98,15 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
     const userProfileScreen = () => navigation.navigate("userProfileScreen");
     const createNewUserScreen = () => navigation.navigate("createUser");
 
-    useEffect(() => {
-      // store.setUser({ id: "1644013242380", name: { firstName: "Jordi", lastName: "Colas" } });
-      store.setUser({
-        id: new ObjectId().toHexString(),
-        name: "Jordi",
-        lastName: "Colas",
-        email: "test@test.com",
-        phoneNumber: "+11111111111",
-      });
-    });
+    // useEffect(() => {
+    //   store.setUser({
+    //     id: "1644013242380",
+    //     name: { firstName: "Jordi", lastName: "Colas" },
+    //     email: "test@test.com",
+    //     phoneNumber: "+11111111111",
+    //     image: "",
+    //   });
+    // });
 
     return (
       <View testID="WelcomeScreen" style={FULL}>

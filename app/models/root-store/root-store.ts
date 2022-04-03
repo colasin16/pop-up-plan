@@ -20,7 +20,8 @@ export const RootStoreModel = types.model("RootStore").props({
 }).actions(self => ({
   // TODO: why this action is here?  Can we move it to 'UserModel' like what has been
   // done in 'PlanStoreModel'?
-  setUser: (user: User) => {
+  setUser: (user: User|undefined) => {
+    // we have null here to use it for logout
     self.userStore = user;
   },
 }))

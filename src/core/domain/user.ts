@@ -3,15 +3,15 @@ import { Entity } from "./types/entity";
 import { Password } from "./types/password";
 import { PhoneNumber } from "./types/phone-number";
 
-// interface UserName {
-//   firstName: string;
-//   lastName: string;
-// }
+interface FullName {
+  firstName: string;
+  lastName: string;
+}
 
 export interface User extends Entity {
-  name: string;
-  lastName: string;
+  name: FullName;
   email: Email;
   phoneNumber: PhoneNumber;
   password: Password;
+  image: string;
 }

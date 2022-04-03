@@ -10,11 +10,18 @@ import {
 } from "../../../../src/core/domain/mocks/plan";
 import { containerDI } from "../../../../src/core/infrastructure/dependency-injection/container";
 import { PlanFinder } from "../../../../src/features/find-plan/application/plan-finder";
-import { AutoImage as Image, GradientBackground, Header, Screen, Text } from "../../../components";
+import {
+  AutoImage as Image,
+  Button,
+  GradientBackground,
+  Header,
+  Screen,
+  Text,
+} from "../../../components";
 import { useStores } from "../../../models";
 import { PlanSnapshot } from "../../../models/plan/plan";
 import { NavigatorParamList } from "../../../navigators";
-import { color, spacing } from "../../../theme";
+import { color, spacing, typography } from "../../../theme";
 import { CurrentTabContext } from "./current-tab-context";
 import { TABS } from "./enums";
 import { TaskTab } from "./tab-component";
@@ -77,6 +84,7 @@ export const UserProfileScreen: FC<
 > = observer(({ navigation }) => {
   const goBack = () => navigation.goBack();
   const { /*searchPlansStore,*/ userStore, userPlansStore } = useStores();
+  const store = useStores();
 
   const [currentTab, setCurrentTab] = useState(TABS.OWNED_PLANS);
 
@@ -85,6 +93,10 @@ export const UserProfileScreen: FC<
     const { plans } = await planFinder.findByOwner({
       id: "1644055774364",
       name: { firstName: "Tom", lastName: "Smith" },
+      email: "test@gmail.com",
+      phoneNumber: "+12321312",
+      password: "fakePassword",
+      image: "",
     });
 
     console.debug(`plans: ${JSON.stringify(plans)}`);
@@ -95,7 +107,7 @@ export const UserProfileScreen: FC<
     // findPlansByOwner();
   }, []);
 
-  const renderItem = ({ item }) => (  
+  const renderItem = ({ item }) => (
     <View style={LIST_CONTAINER}>
       <Image source={{ uri: `${item.image}` }} style={PLAN_IMAGE} />
       <Text>{item.title}</Text>
@@ -109,11 +121,45 @@ export const UserProfileScreen: FC<
     };
     return data[key];
   };
-
+  const TEXT: TextStyle = {
+    color: color.palette.white,
+    fontFamily: typography.primary,
+  };
+  const BOLD: TextStyle = { fontWeight: "bold" };
+  const HEADER: TextStyle = {
+    paddingTop: spacing[3],
+    paddingBottom: spacing[4] + spacing[1],
+    paddingHorizontal: 0,
+  };
+  const CONTINUE: ViewStyle = {
+    paddingVertical: spacing[4],
+    paddingHorizontal: spacing[4],
+    marginVertical: spacing[4],
+    backgroundColor: color.palette.deepPurple,
+  };
+  const CONTINUE_TEXT: TextStyle = {
+    ...TEXT,
+    ...BOLD,
+    fontSize: 13,
+    letterSpacing: 2,
+  };
   return (
     <View testID="DemoListScreen" style={FULL}>
       <GradientBackground colors={["#422443", "#281b34"]} />
       <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+        <Button
+          textStyle={{ fontSize: 16, color: color.palette.black }}
+          style={{
+            margin: 8,
+            backgroundColor: color.palette.lighterGrey,
+            borderWidth: 3,
+          }}
+          onPress={() => {
+            store.setUser(undefined);
+          }}
+          key={"key"}
+          text={"Logout"}
+        />
         <Header
           headerText="PROFILE"
           leftIcon="back"
