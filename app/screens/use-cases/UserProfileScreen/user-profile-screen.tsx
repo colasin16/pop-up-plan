@@ -168,7 +168,15 @@ export const UserProfileScreen: FC<
           titleStyle={HEADER_TITLE}
         />
         <View style={PROFILE_PICTURE_CONTAINER}>
-          <Image source={{ uri: userStore ? userStore.image : "" }} style={IMAGE} />
+          <Image
+            source={{
+              uri: userStore
+                ? userStore.image ||
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS07F-qRjmDQk_lG3ZU3PYshRLh6lDlRPhW8w&usqp=CAU"
+                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS07F-qRjmDQk_lG3ZU3PYshRLh6lDlRPhW8w&usqp=CAU",
+            }}
+            style={IMAGE}
+          />
           <Text style={LIST_TEXT}>{`${userStore ? userStore.name.firstName : "undefined"} ${
             userStore ? userStore.name.lastName : "undefined"
           }`}</Text>
