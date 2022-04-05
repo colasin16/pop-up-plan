@@ -3,8 +3,8 @@ import { observer } from "mobx-react-lite";
 import { ViewStyle, TextStyle, Platform, View } from "react-native";
 
 import { spacing, color } from "../../../../../app/theme";
-import { UserCreator } from "../../application/user-creator";
-import { UserCreationData } from "../../domain/user-creation-data";
+import { UserAuthenticator } from "../../application/user-authenticator";
+import { UserAuthenticationData } from "../../domain/user-login-data";
 import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
 import { Button, TextField, Text } from "../../../../../app/components";
 import { PhoneNumber } from "../../../../core/domain/types/phone-number";
@@ -38,16 +38,12 @@ interface Props {
   onFinish(): void;
 }
 
-export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
+export const AuthenticateUser: FC<Props> = observer(({ onFinish }: Props) => {
   // const { userPlansStore } = useStores();
   const store = useStores();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState<Email>("");
-  const [phoneNumber, setPhoneNumber] = useState<PhoneNumber>();
-  const [newPassword, setNewPassword] = useState<Password>();
-  const [newPasswordAgain, setNewPasswordAgain] = useState<Password>();
+  const [password, setPassword] = useState<Password>();
 
   // const [title, setTitle] = useState("");
   // const [description, setDescription] = useState("");
@@ -57,38 +53,29 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
   // const [privacy, setPrivacy] = useState<Privacy>();
 
   const isReadyToSubmit = () => {
-    return (
-      !!firstName && !!lastName && !!email && !!phoneNumber && !!newPassword && newPasswordAgain
-    );
+    return !!email && !!password;
   };
 
-  const validateForm = () => {
-    if (newPassword !== newPasswordAgain) {
-      console.error("Passwords do not match");
-      throw new ValidationError("Passwords do not match");
-    }
-  };
+  const validateForm = () => {};
 
   const submit = async (): Promise<void> => {
-    const userCreator = containerDI.resolve(UserCreator);
+    const userAuthenticator = containerDI.resolve(UserAuthenticator);
     // const planFinder = containerDI.resolve(PlanFinder);
 
     validateForm();
 
     if (isReadyToSubmit()) {
-      const userData: UserCreationData = {
-        name: { firstName: firstName, lastName: lastName },
-        lastName,
-        email,
-        phoneNumber,
-        password: newPassword,
+      const authenticationData: UserAuthenticationData = {
+        // TODO: maybe in future we use actual username instead of email
+        username: email,
+        password: password,
       };
 
       try {
-        const { userId } = await userCreator.create(userData);
+        const { token } = await userAuthenticator.login(authenticationData);
         // TODO: Get user
 
-        console.debug(`user with id '${userId}' has been created!`);
+        console.debug(`user '${email}' has been authenticated, the token is: '${token}'`);
 
         // after register a new user, it automatically logs in
         // TODO: change it
@@ -117,45 +104,18 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
     <View>
       <TextField
         inputStyle={{ padding: 8, marginTop: 8 }}
-        onChangeText={value => setFirstName(value)}
-        value={firstName}
-        label="Name"
-        placeholder="Enter your name"
-      />
-      <TextField
-        inputStyle={{ padding: 8, marginTop: 8 }}
-        onChangeText={value => setLastName(value)}
-        value={lastName}
-        label="Last Name"
-        placeholder="Enter your last name"
-      />
-      <TextField
-        inputStyle={{ padding: 8, marginTop: 8 }}
         onChangeText={value => setEmail(value)}
         value={email}
         label="Email"
         placeholder="Enter your email"
       />
+
       <TextField
         inputStyle={{ padding: 8, marginTop: 8 }}
-        onChangeText={value => setPhoneNumber(value)}
-        value={phoneNumber}
-        label="Phone Number"
-        placeholder="Enter your phone number"
-      />
-      <TextField
-        inputStyle={{ padding: 8, marginTop: 8 }}
-        onChangeText={value => setNewPassword(value)}
-        value={newPassword}
+        onChangeText={value => setPassword(value)}
+        value={password}
         label="Password"
-        placeholder="Enter your new password"
-      />
-      <TextField
-        inputStyle={{ padding: 8, marginTop: 8 }}
-        onChangeText={value => setNewPasswordAgain(value)}
-        value={newPasswordAgain}
-        label="Password"
-        placeholder="Enter your new password again"
+        placeholder="Enter your password"
       />
 
       {/*<View>

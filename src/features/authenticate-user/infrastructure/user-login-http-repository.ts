@@ -1,26 +1,27 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { UserCreationData } from "../domain/user-creation-data";
-import { UserCreatorRepository } from "../domain/user-creator-repository";
+import { UserAuthenticationData } from "../domain/user-login-data";
+import { UserLoginRepository } from "../domain/user-login-repository";
 
 // The mock of this repository is the same as the mock because rightnow they do the same
-export class UserCreatorHttpRepository implements UserCreatorRepository {
-  private readonly repositoryRoot = "http://localhost:8080/user";
+export class UserAuthenticatorHttpRepository implements UserLoginRepository {
+  private readonly repositoryRoot = "http://localhost:8080/login";
 
-  async create(user: UserCreationData) {
+  async login(authenticationData: UserAuthenticationData) {
     try {
       const response = await axios.post<
-        UserCreationData,
+        UserAuthenticationData,
         // { success: boolean; userId: string }
         AxiosResponse
       >(`${this.repositoryRoot}`, {
-        ...user,
+        ...authenticationData,
       });
 
-      const { success, userId } = response.data;
+      const { success, token } = response.data;
 
-      console.debug(`async create, userId: ${userId}`);
+      console.debug(`response.data: ${JSON.stringify(response.data)}`);
+      console.debug(`async login, token: ${token}`);
 
-      return { success, userId };
+      return { success, token };
     } catch (error) {
       const err = error as AxiosError;
 
@@ -30,7 +31,6 @@ export class UserCreatorHttpRepository implements UserCreatorRepository {
         console.debug(err.response.data);
       }
       // this.handleAxiosError(error)
-
       throw error;
     }
   }

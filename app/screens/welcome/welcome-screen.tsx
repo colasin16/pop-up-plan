@@ -95,8 +95,9 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
     // const nextScreen = () => navigation.navigate("demo");
     const createNewPlanScreen = () => navigation.navigate("createPlan");
     const findAPlanScreen = () => navigation.navigate("findPlan");
-    const userProfileScreen = () => navigation.navigate("userProfileScreen");
+    const userProfileScreen = () => navigation.navigate("userProfile");
     const createNewUserScreen = () => navigation.navigate("createUser");
+    const loginUserScreen = () => navigation.navigate("loginUser");
 
     // useEffect(() => {
     //   store.setUser({
@@ -151,11 +152,18 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
               onPress={userProfileScreen}
             />
             <Button
-              testID="next-screen-button-3"
+              testID="next-screen-button-4"
               style={CONTINUE}
               textStyle={CONTINUE_TEXT}
               text="REGISTRATION"
               onPress={createNewUserScreen}
+            />
+            <Button
+              testID="next-screen-button-5"
+              style={CONTINUE}
+              textStyle={CONTINUE_TEXT}
+              text="LOGIN"
+              onPress={loginUserScreen}
             />
           </View>
         </Screen>

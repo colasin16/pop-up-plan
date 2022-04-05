@@ -5,9 +5,9 @@ import { observer } from "mobx-react-lite";
 import { Header, Text, Screen, AutoImage as Image, GradientBackground } from "../../components";
 import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
-import { CreateUser } from "../../../src/features/create-user/infrastructure/ui/user-creator";
-import { palette } from "../../theme/palette";
+import { AuthenticateUser } from "../../../src/features/authenticate-user/infrastructure/ui/user-authenticator";
 import { useStores } from "../../models";
+import { palette } from "../../theme/palette";
 
 export const logoIgnite = require("../demo/logo-ignite.png");
 export const heart = require("../demo/heart.png");
@@ -82,30 +82,34 @@ const HEART: ImageStyle = {
   resizeMode: "contain",
 };
 
-export const CreateUserScreen: FC<StackScreenProps<NavigatorParamList, "createUser">> = observer(
+export const loginUserScreen: FC<StackScreenProps<NavigatorParamList, "loginUser">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
     const store = useStores();
 
     return (
-      <View testID="DemoScreen" style={FULL}>
+      <View testID="LoginScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Header
-            headerText="REGISTRATION"
+            headerText="LOGIN"
             leftIcon="back"
             onLeftPress={goBack}
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <Text style={TITLE} preset="header" text="HC What do you feel like doing today?" />
+          <Text
+            style={TITLE}
+            preset="header"
+            text="HC Are you willing to have a great experience?"
+          />
 
           {store.isAuthenticated() ? (
             <Text style={TAGLINE_Error} text="You are already authenticated, please logout first" />
           ) : (
             <>
-              <Text style={TAGLINE} text="HC Create a new plan" />
-              <CreateUser onFinish={goBack} />
+              <Text style={TAGLINE} text="HC Login to your account" />
+              <AuthenticateUser onFinish={goBack} />
             </>
           )}
 
