@@ -36,19 +36,19 @@ export class PlanListHttpRepository implements PlanListRepository {
   }
 
   async findByOwner(owner: User) {
-     // TODO: implement api in backend
-    const url: string = `${this.repositorRoot}/owner/${owner.id}`
+    // TODO: implement api in backend
+    // const url: string = `${this.repositorRoot}/owner/${owner.id}`
 
     const { plans } = await this.findAll();
-    console.debug(`owner: ${JSON.stringify(owner)}`)
-    const ownersPlan = plans.filter(plan=>plan.owner=== owner)
-    console.debug(`filteredplan: ${JSON.stringify(ownersPlan)}`)
+    console.debug(`owner: ${JSON.stringify(owner)}`);
+    const ownersPlan = plans.filter(plan => plan.ownerId === owner.id);
+    console.debug(`filteredplan: ${JSON.stringify(ownersPlan)}`);
 
-    return {success: true, plans: ownersPlan}
-    throw new Error(`API ('${url}') Not implemented in backend`);
-    const response = await axios.get<undefined, { data: { success: boolean; plans: Plan[] } }>(
-     url,
-    );
-    return response.data;
+    return { success: true, plans: ownersPlan };
+    // throw new Error(`API ('${url}') Not implemented in backend`);
+    // const response = await axios.get<undefined, { data: { success: boolean; plans: Plan[] } }>(
+    //  url,
+    // );
+    // return response.data;
   }
 }

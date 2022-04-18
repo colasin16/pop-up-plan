@@ -39,7 +39,6 @@ interface Props {
 }
 
 export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
-  // const { userPlansStore } = useStores();
   const store = useStores();
 
   const [firstName, setFirstName] = useState("");
@@ -48,13 +47,6 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
   const [phoneNumber, setPhoneNumber] = useState<PhoneNumber>();
   const [newPassword, setNewPassword] = useState<Password>();
   const [newPasswordAgain, setNewPasswordAgain] = useState<Password>();
-
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [location, setLocation] = useState<CustomLocation>("");
-  // const [time, setTime] = useState<Timestamp>(0);
-  // const [category, setCategory] = useState<Category>();
-  // const [privacy, setPrivacy] = useState<Privacy>();
 
   const isReadyToSubmit = () => {
     return (
@@ -71,44 +63,34 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
 
   const submit = async (): Promise<void> => {
     const userCreator = containerDI.resolve(UserCreator);
-    // const planFinder = containerDI.resolve(PlanFinder);
 
     validateForm();
 
     if (isReadyToSubmit()) {
       const userData: UserCreationData = {
         name: { firstName: firstName, lastName: lastName },
-        lastName,
         email,
         phoneNumber,
         password: newPassword,
       };
 
       try {
-        const { userId } = await userCreator.create(userData);
+        const { user } = await userCreator.create(userData);
         // TODO: Get user
 
-        console.debug(`user with id '${userId}' has been created!`);
+        console.debug(`user with id '${user["id"]}' has been created!`);
 
         // after register a new user, it automatically logs in
-        // TODO: change it
         store.setUser({
-          id: "1644013242380",
-          name: { firstName: "Jordi", lastName: "Colas" },
-          email: "test@test.com",
-          phoneNumber: "+11111111111",
+          ...user,
           image: "",
         });
+
         // TODO: check how can we validate that the user has been created successfully
 
-        // const { plans } = await planFinder.findAll();
-        // const plan = plans.find(p => p.id === userId);
-        // if (plan) {
-        //   userPlansStore.savePlans([...userPlansStore.plans, plan]);
-        // }
         onFinish();
       } catch (error) {
-        console.log("🚀 ~ file: user-creator.tsx ~ line 83 ~ submit ~ error", error);
+        console.log("🚀 ~ file: user-creator.tsx ~ line 101 ~ submit ~ error", error);
       }
     }
   };
@@ -157,45 +139,6 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
         label="Password"
         placeholder="Enter your new password again"
       />
-
-      {/*<View>
-        <Text preset="fieldLabel">Select the plan type:</Text>
-         <View style={{ flexDirection: "row" }}>
-          {Object.values(Category).map((cat, index) => (
-            <Button
-              textStyle={{ fontSize: 16, color: color.palette.black }}
-              style={{
-                margin: 8,
-                backgroundColor: color.palette.lighterGrey,
-                borderWidth: 3,
-                borderColor: category === cat ? color.palette.orange : color.palette.lighterGrey,
-              }}
-              onPress={() => setCategory(cat)}
-              key={cat}
-              text={cat}
-            />
-          ))}
-        </View> 
-      </View>*/}
-      {/*<View>
-        <Text preset="fieldLabel">Select the plan privacy:</Text>
-       <View style={{ flexDirection: "row" }}>
-          {Object.values(Privacy).map(p => (
-            <Button
-              textStyle={{ fontSize: 16, color: color.palette.black }}
-              style={{
-                margin: 8,
-                backgroundColor: color.palette.lighterGrey,
-                borderWidth: 3,
-                borderColor: privacy === p ? color.palette.orange : color.palette.lighterGrey,
-              }}
-              onPress={() => setPrivacy(p)}
-              key={p}
-              text={p}
-            />
-          ))}
-        </View> 
-      </View>*/}
 
       <View>
         <Button

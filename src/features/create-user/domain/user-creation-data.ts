@@ -1,6 +1,3 @@
 import { User } from "../../../core/domain/user";
 
-export type UserCreationData = Pick<
-  User,
-  "name" | "lastName" | "email" | "phoneNumber" | "password"
->;
+export type UserCreationData = Pick<User, "name" | "email" | "phoneNumber" | "password">;
