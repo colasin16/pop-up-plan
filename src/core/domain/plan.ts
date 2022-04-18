@@ -4,13 +4,13 @@ import { Timestamp } from "./types/timestamp";
 import { User } from "./user";
 
 export enum Privacy {
-  PUBLIC = "PUBLIC",
-  PRIVATE = "PRIVATE",
+  PUBLIC = "public",
+  PRIVATE = "private",
 }
 
 export enum Category {
-  WALK = "WALK",
-  RUN = "RUN",
+  WALK = "walk",
+  RUN = "run",
 }
 
 export interface Plan extends Entity {
