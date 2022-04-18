@@ -59,7 +59,7 @@ export const AuthenticateUser: FC<Props> = observer(({ onFinish }: Props) => {
       };
 
       try {
-        const { token } = await userAuthenticator.login(authenticationData);
+        const { token, user } = await userAuthenticator.login(authenticationData);
         // TODO: Get user
 
         console.debug(`user '${email}' has been authenticated, the token is: '${token}'`);
@@ -67,10 +67,7 @@ export const AuthenticateUser: FC<Props> = observer(({ onFinish }: Props) => {
         // after register a new user, it automatically logs in
         // TODO: change it
         store.setUser({
-          id: "1644013242380",
-          name: { firstName: "Jordi", lastName: "Colas" },
-          email: "test@test.com",
-          phoneNumber: "+11111111111",
+          ...user,
           image: "",
         });
         // TODO: check how can we validate that the user has been created successfully

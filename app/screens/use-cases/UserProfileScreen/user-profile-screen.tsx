@@ -29,6 +29,8 @@ import { TaskTab } from "./tab-component";
 // TODO: get owned and attending plans using API
 const OWNED_PLANS = [BoringPlan];
 const ATTENDING_PLANS = [AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
+const DEFAULT_PLAN_IMAGE =
+  "https://i.picsum.photos/id/19/200/200.jpg?hmac=U8dBrPCcPP89QG1EanVOKG3qBsZwAvtCLUrfeXdE0FI";
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -89,33 +91,27 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
 
     const findPlansByOwner = async (): Promise<void> => {
       const planFinder = containerDI.resolve(PlanFinder);
-      const { plans } = await planFinder.findByOwner({
-        id: "1644055774364",
-        name: { firstName: "Tom", lastName: "Smith" },
-        email: "test@gmail.com",
-        phoneNumber: "+12321312",
-        password: "fakePassword",
-        image: "",
-      });
+      const { plans } = await planFinder.findByOwner(userStore);
 
       console.debug(`plans: ${JSON.stringify(plans)}`);
       userPlansStore.savePlans(plans as PlanSnapshot[]);
     };
 
     useEffect(() => {
-      // findPlansByOwner();
+      findPlansByOwner();
     }, []);
 
-    const renderItem = ({ item }) => (
+    const renderPlanItem = ({ item }) => (
       <View style={LIST_CONTAINER}>
-        <Image source={{ uri: `${item.image}` }} style={PLAN_IMAGE} />
+        <Image source={{ uri: `${item.image || DEFAULT_PLAN_IMAGE}` }} style={PLAN_IMAGE} />
         <Text>{item.title}</Text>
       </View>
     );
 
     const getData = (key: TABS) => {
+      const OwnedPlans = userPlansStore.plans;
       const data = {
-        [TABS.OWNED_PLANS]: OWNED_PLANS,
+        [TABS.OWNED_PLANS]: OwnedPlans,
         [TABS.ATTENDING_PLANS]: ATTENDING_PLANS,
       };
       return data[key];
@@ -189,7 +185,7 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
             <View style={{ backgroundColor: color.line, height: 1 }} />
             <FlatList
               data={getData(currentTab)}
-              renderItem={renderItem}
+              renderItem={renderPlanItem}
               keyExtractor={item => item.id}
               contentContainerStyle={FLAT_LIST}
               numColumns={3}

@@ -41,6 +41,8 @@ export class PlanListHttpRepository implements PlanListRepository {
 
     const { plans } = await this.findAll();
     console.debug(`owner: ${JSON.stringify(owner)}`);
+    console.debug(`plans: ${JSON.stringify(plans)}`);
+
     const ownersPlan = plans.filter(plan => plan.ownerId === owner.id);
     console.debug(`filteredplan: ${JSON.stringify(ownersPlan)}`);
 

@@ -16,12 +16,12 @@ export class UserAuthenticatorHttpRepository implements UserLoginRepository {
         ...authenticationData,
       });
 
-      const { success, token } = response.data;
+      const { success, token, user } = response.data;
 
       console.debug(`response.data: ${JSON.stringify(response.data)}`);
       console.debug(`async login, token: ${token}`);
 
-      return { success, token };
+      return { success, token, user };
     } catch (error) {
       const err = error as AxiosError;
 

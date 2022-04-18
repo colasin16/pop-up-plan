@@ -5,7 +5,7 @@ import { User } from "../../../../app/models/user/user";
 
 // The mock of this repository is the same as the mock because rightnow they do the same
 export class UserCreatorHttpRepository implements UserCreatorRepository {
-  private readonly repositoryRoot = "http://localhost:8080/user";
+  private readonly repositoryRoot = "http://localhost:8080/users";
 
   async create(userToCreate: UserCreationData): Promise<{ success: boolean; user: User }> {
     try {
