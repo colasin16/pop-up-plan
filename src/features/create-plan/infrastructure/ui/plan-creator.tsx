@@ -34,20 +34,22 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 };
 
-const user: User = {
-  id: new ObjectId().toHexString(),
-  name: { firstName: "Jordi", lastName: "Colas" },
-  email: "test@test.com",
-  phoneNumber: "+11111111111",
-  password: "testPassword",
-};
+// TODO: change me
+// const user: User = {
+//   id: new ObjectId().toHexString(),
+//   name: { firstName: "Jordi", lastName: "Colas" },
+//   email: "test@test.com",
+//   phoneNumber: "+11111111111",
+//   password: "testPassword",
+//   image: "",
+// };
 
 interface Props {
   onFinish(): void;
 }
 
 export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
-  const { userPlansStore } = useStores();
+  const { userPlansStore, userStore } = useStores();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState<CustomLocation>("");
@@ -65,7 +67,7 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
 
     if (isReadyToSubmit()) {
       const planData: PlanCreationData = {
-        owner: user,
+        ownerId: userStore.id,
         title,
         location,
         time,
@@ -78,19 +80,12 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
         // TODO: if PlanCreatorRepository returns plan obj instead of planId
         // The three following lines will be converted to this:
         // const { plan } = await planCreator.create(user, planData);
-        const { planId } = await planCreator.create(
-          {
-            id: new ObjectId().toHexString(),
-            name: { firstName: "Jordi", lastName: "Colas" },
-            email: "test@test.com",
-            phoneNumber: "+11111111111",
-            password: "testPassword",
-          },
-          planData,
-        );
-        const { plans } = await planFinder.findAll();
-        const plan = plans.find(p => p.id === planId);
+        const { plan } = await planCreator.create(planData);
+        // const { plans } = await planFinder.findAll();
+        // const plan = plans.find(p => p.id === planId);
         if (plan) {
+          // TODO: everytime when a plan is created, fetch all the plans from server again,
+          // maybe other users added a plan and we need to have them?
           userPlansStore.savePlans([...userPlansStore.plans, plan]);
         }
         onFinish();
