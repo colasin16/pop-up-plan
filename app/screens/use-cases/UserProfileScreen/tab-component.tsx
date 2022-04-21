@@ -20,9 +20,6 @@ interface TaskTabProps {
  * @returns jsx element
  */
 export function TaskTab({ tabName }: TaskTabProps): JSX.Element {
-  // const onTabPress = (tabName: TABS) => {
-  //   setCurrentTab(tabName);
-  // };
   const getTabStyle = (tabName: TABS, currentTab: TABS) => {
     return currentTab === tabName
       ? { ...PLAN_TAB_TITLE, ...SELECTED_PLAN_TAB_TITLE }
