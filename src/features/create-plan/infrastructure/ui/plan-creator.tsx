@@ -81,8 +81,6 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
         // The three following lines will be converted to this:
         // const { plan } = await planCreator.create(user, planData);
         const { plan } = await planCreator.create(planData);
-        // const { plans } = await planFinder.findAll();
-        // const plan = plans.find(p => p.id === planId);
         if (plan) {
           // TODO: everytime when a plan is created, fetch all the plans from server again,
           // maybe other users added a plan and we need to have them?
