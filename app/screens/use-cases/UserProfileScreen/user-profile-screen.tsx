@@ -167,8 +167,8 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
               source={{
                 uri: userStore
                   ? userStore.image ||
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS07F-qRjmDQk_lG3ZU3PYshRLh6lDlRPhW8w&usqp=CAU"
-                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS07F-qRjmDQk_lG3ZU3PYshRLh6lDlRPhW8w&usqp=CAU",
+                    DEFAULT_USER_PROFILE_IMAGE
+                  : DEFAULT_USER_PROFILE_IMAGE,
               }}
               style={IMAGE}
             />
