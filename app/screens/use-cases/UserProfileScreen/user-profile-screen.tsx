@@ -30,6 +30,7 @@ import { TaskTab } from "./tab-component";
 const ATTENDING_PLANS = [AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
 const DEFAULT_PLAN_IMAGE =
   "https://i.picsum.photos/id/19/200/200.jpg?hmac=U8dBrPCcPP89QG1EanVOKG3qBsZwAvtCLUrfeXdE0FI";
+const DEFAULT_USER_PROFILE_IMAGE = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS07F-qRjmDQk_lG3ZU3PYshRLh6lDlRPhW8w&usqp=CAU"
 
 const FULL: ViewStyle = {
   flex: 1,
