@@ -109,12 +109,6 @@ export const CreateUserScreen: FC<StackScreenProps<NavigatorParamList, "createUs
             </>
           )}
 
-          {/* <Image source={logoIgnite} style={IGNITE} /> */}
-          {/* <View style={LOVE_WRAPPER}>
-            <Text style={LOVE} text="Made with" />
-            <Image source={heart} style={HEART} />
-            <Text style={LOVE} text="by Infinite Red" />
-          </View> */}
         </Screen>
       </View>
     );
