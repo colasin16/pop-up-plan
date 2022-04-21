@@ -15,20 +15,6 @@ export const PlanStoreModel = types
       self.plans.replace(planSnapshots as any);
     },
   }));
-  // // TODO: delete this method, we do not need it here
-  // .actions(self => ({
-  //   getPlans: async () => {
-  //     const planFinder = containerDI.resolve(PlanFinder);
-  //     const { plans } = await planFinder.findAll();
-  //     if (plans.length > 0) {
-  //       self.savePlans(plans);
-  //     } else {
-  //       __DEV__ && console.tron.log(plans);
-  //     }
-  //   },
-  // }
-  // )
-  // );
 
 type PlanStoreType = Instance<typeof PlanStoreModel>;
 export interface PlanStore extends PlanStoreType {}
