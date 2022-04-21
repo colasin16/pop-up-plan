@@ -10,7 +10,6 @@ export class UserAuthenticatorHttpRepository implements UserLoginRepository {
     try {
       const response = await axios.post<
         UserAuthenticationData,
-        // { success: boolean; userId: string }
         AxiosResponse
       >(`${this.repositoryRoot}`, {
         ...authenticationData,
