@@ -11,7 +11,6 @@ export class UserCreatorHttpRepository implements UserCreatorRepository {
     try {
       const response = await axios.post<
         UserCreationData,
-        // { success: boolean; userId: string }
         AxiosResponse
       >(`${this.repositoryRoot}`, {
         ...userToCreate,
