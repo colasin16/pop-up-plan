@@ -34,15 +34,6 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 };
 
-// TODO: change me
-// const user: User = {
-//   id: new ObjectId().toHexString(),
-//   name: { firstName: "Jordi", lastName: "Colas" },
-//   email: "test@test.com",
-//   phoneNumber: "+11111111111",
-//   password: "testPassword",
-//   image: "",
-// };
 
 interface Props {
   onFinish(): void;
