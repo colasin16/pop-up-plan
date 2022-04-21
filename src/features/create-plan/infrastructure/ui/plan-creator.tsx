@@ -84,6 +84,7 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
         if (plan) {
           // TODO: everytime when a plan is created, fetch all the plans from server again,
           // maybe other users added a plan and we need to have them?
+          // or we can have a refresh mechanism (auto or manual)
           userPlansStore.savePlans([...userPlansStore.plans, plan]);
         }
         onFinish();
