@@ -92,7 +92,6 @@ const FOOTER_CONTENT: ViewStyle = {
 export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
   ({ navigation }) => {
     const store = useStores();
-    // const nextScreen = () => navigation.navigate("demo");
     const createNewPlanScreen = () => navigation.navigate("createPlan");
     const findAPlanScreen = () => navigation.navigate("findPlan");
     const userProfileScreen = () => navigation.navigate("userProfile");
