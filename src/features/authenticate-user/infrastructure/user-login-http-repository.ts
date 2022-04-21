@@ -29,6 +29,7 @@ export class UserAuthenticatorHttpRepository implements UserLoginRepository {
         console.debug(err.response.status);
         console.debug(err.response.data);
       }
+      // TODO: writig something like util or helper to mange erorr handling (e.g. logging and ...)
       // this.handleAxiosError(error)
       throw error;
     }
