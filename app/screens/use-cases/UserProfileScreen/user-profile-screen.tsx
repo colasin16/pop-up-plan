@@ -26,8 +26,7 @@ import { CurrentTabContext } from "./current-tab-context";
 import { TABS } from "./enums";
 import { TaskTab } from "./tab-component";
 
-// TODO: get owned and attending plans using API
-const OWNED_PLANS = [BoringPlan];
+// TODO: attending plans using API
 const ATTENDING_PLANS = [AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
 const DEFAULT_PLAN_IMAGE =
   "https://i.picsum.photos/id/19/200/200.jpg?hmac=U8dBrPCcPP89QG1EanVOKG3qBsZwAvtCLUrfeXdE0FI";
