@@ -6,6 +6,7 @@ export const UserModel = types.model("User").props({
   name: UserFullNameModel,
   email: types.string,
   phoneNumber: types.string,
+// TODO: changed this default image
   image:
     "https://avatars2.githubusercontent.com/u/3902527?s=200&u=a0d16b13ed719f35d95ca0f4440f5d07c32c349a&v=4",
 });
