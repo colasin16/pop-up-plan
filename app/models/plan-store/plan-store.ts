@@ -1,6 +1,4 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
-// import { containerDI } from "../../../src/core/infrastructure/dependency-injection/container";
-// import { PlanFinder } from "../../../src/features/find-plan/application/plan-finder";
 import { withEnvironment } from "../extensions/with-environment";
 import { PlanModel, PlanSnapshot } from "../plan/plan";
 
