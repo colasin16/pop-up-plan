@@ -45,8 +45,6 @@ export const DemoListScreen: FC<StackScreenProps<NavigatorParamList, "demoList">
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
 
-    // const { characterStore } = useStores();
-    // const { characters } = characterStore;
 
     useEffect(() => {
       // async function fetchData() {
