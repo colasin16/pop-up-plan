@@ -9,8 +9,6 @@ import { PlanListHttpRepository } from "../../../features/find-plan/infrastructu
 import { PlanCreatorHttpRepository } from "../../../features/create-plan/infrastructure/plan-creator-http-repository";
 import { UserCreatorHttpRepository } from "../../../features/create-user/infrastructure/user-creator-http-repository";
 import { UserAuthenticatorHttpRepository } from "../../../features/authenticate-user/infrastructure/user-login-http-repository";
-// import { PlanCreatorMockRepository } from "../../features/create-plan/infrastructure/plan-creator-mock-repository";
-// import { PlanListMockRepository } from "../../features/find-plan/infrastructure/plan-list-mock-repository.";
 
 const containerDI = container;
 
