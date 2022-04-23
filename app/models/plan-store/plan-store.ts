@@ -1,4 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
+import { Id } from "../../../src/core/domain/types/id";
 import { withEnvironment } from "../extensions/with-environment";
 import { PlanModel, PlanSnapshot } from "../plan/plan";
 
@@ -11,6 +12,13 @@ export const PlanStoreModel = types
   .actions(self => ({
     savePlans: (planSnapshots: PlanSnapshot[]) => {
       self.plans.replace(planSnapshots as any);
+    },
+  }))
+  .actions(self => ({
+    getPlan: (planId: Id) => {
+      const foundPlans = self.plans.filter(plan => plan.id === planId);
+
+      return foundPlans[0];
     },
   }));
 

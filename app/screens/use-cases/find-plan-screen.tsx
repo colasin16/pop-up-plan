@@ -69,7 +69,7 @@ export const FindPlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = 
             text="HC Explore what others are planning for today!"
           />
           <Text style={TAGLINE} text="HC Look for a plan that fits you and join them!" />
-          <PlanList />
+          <PlanList navigation={navigation} />
         </Screen>
       </View>
     );

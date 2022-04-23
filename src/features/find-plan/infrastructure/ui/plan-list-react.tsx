@@ -1,25 +1,44 @@
 import { observer } from "mobx-react-lite";
 import React, { PropsWithChildren, useEffect } from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet, Text, TextStyle, ViewStyle } from "react-native";
 import { Button, FormRow } from "../../../../../app/components";
 import { useStores } from "../../../../../app/models";
 import { PlanSnapshot } from "../../../../../app/models/plan/plan";
+import { color, spacing, typography } from "../../../../../app/theme";
 import { palette } from "../../../../../app/theme/palette";
-import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
 import { Category } from "../../../../core/domain/plan";
+import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
 import { PlanFinder } from "../../application/plan-finder";
 import { Section } from "./section";
-import { User } from "../../../../core/domain/user";
 
 interface PlanListProps extends PropsWithChildren<any> {
-  areButtonsShown?: boolean;
-  owner?: User;
+  navigation?: any;
 }
 
-const defaultPlanListProps: PlanListProps = {
-  areButtonsShown: true,
+const BOLD: TextStyle = { fontWeight: "bold" };
+const TEXT: TextStyle = {
+  color: color.palette.white,
+  fontFamily: typography.primary,
+};
+const CONTINUE: ViewStyle = {
+  paddingVertical: spacing[4],
+  paddingHorizontal: spacing[4],
+  marginVertical: spacing[4],
+  backgroundColor: color.palette.deepPurple,
+};
+const CONTINUE_TEXT: TextStyle = {
+  ...TEXT,
+  ...BOLD,
+  fontSize: 13,
+  letterSpacing: 2,
 };
 
+// const defaultPlanListProps: PlanListProps = {
+//   areButtonsShown: true,
+// };
+
+// export const PlanList: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
+// ({ navigation }) => {
 const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
   const { searchPlansStore } = useStores();
 
@@ -45,18 +64,18 @@ const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
     searchPlansStore.savePlans(plans as PlanSnapshot[]);
   };
 
-  const findRunPlansByOwner = async (): Promise<void> => {
-    const planFinder = containerDI.resolve(PlanFinder);
-    const { data: plans } = await planFinder.findByOwner(props.owner);
-    searchPlansStore.savePlans(plans as PlanSnapshot[]);
-  };
+  // const findRunPlansByOwner = async (): Promise<void> => {
+  //   const planFinder = containerDI.resolve(PlanFinder);
+  //   const { data: plans } = await planFinder.findByOwner(props.owner);
+  //   searchPlansStore.savePlans(plans as PlanSnapshot[]);
+  // };
 
   const FilterButtons = ({ areButtonsShown }) => {
     console.debug(areButtonsShown);
-    if (props.owner) {
-      findRunPlansByOwner();
-      return <></>;
-    }
+    // if (props.owner) {
+    //   findRunPlansByOwner();
+    //   return <></>;
+    // }
 
     if (areButtonsShown) {
       return (
@@ -84,14 +103,28 @@ const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
 
   return (
     <>
-      <FilterButtons areButtonsShown={props.areButtonsShown} />
+      {/* TODO: revise this component */}
+      <FilterButtons areButtonsShown={true} />
       <ScrollView>
-        {searchPlansStore.plans.map(item => {
+        {searchPlansStore.plans.map(plan => {
           return (
-            <Section title={item.title} key={item.id}>
-              The plan is a <Text style={styles.highlight}>{item.category}</Text> at{" "}
-              <Text style={styles.highlight}>{item.location}</Text> around{" "}
-              <Text style={styles.highlight}>{new Date(item.time).toLocaleDateString()}</Text>.
+            <Section title={plan.title} key={plan.id}>
+              The plan is a <Text style={styles.highlight}>{plan.category}</Text> at{" "}
+              <Text style={styles.highlight}>{plan.location}</Text> around{" "}
+              <Text style={styles.highlight}>{new Date(plan.time).toLocaleDateString()}</Text>.
+              <Button
+                testID="next-screen-button-5"
+                style={CONTINUE}
+                textStyle={CONTINUE_TEXT}
+                text="MORE"
+                // ref: https://reactnavigation.org/docs/params/
+                onPress={() =>
+                  props.navigation.navigate({
+                    name: "joinPlanRequest",
+                    params: { planId: plan.id },
+                  })
+                }
+              />
             </Section>
           );
         })}
@@ -100,7 +133,7 @@ const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
   );
 });
 
-PlanList.defaultProps = defaultPlanListProps;
+// PlanList.defaultProps = defaultPlanListProps;
 
 export default PlanList;
 
