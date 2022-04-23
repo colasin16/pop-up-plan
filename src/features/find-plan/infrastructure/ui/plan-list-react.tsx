@@ -26,7 +26,7 @@ const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
   useEffect(() => {
     async function getData() {
       const planFinder = containerDI.resolve(PlanFinder);
-      const { plans } = await planFinder.findAll();
+      const { data: plans } = await planFinder.findAll();
       searchPlansStore.savePlans(plans as PlanSnapshot[]);
     }
 
@@ -35,19 +35,19 @@ const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
 
   const findWalkPlans = async (): Promise<void> => {
     const planFinder = containerDI.resolve(PlanFinder);
-    const { plans } = await planFinder.findByCategory(Category.WALK);
+    const { data: plans } = await planFinder.findByCategory(Category.WALK);
     searchPlansStore.savePlans(plans as PlanSnapshot[]);
   };
 
   const findRunPlans = async (): Promise<void> => {
     const planFinder = containerDI.resolve(PlanFinder);
-    const { plans } = await planFinder.findByCategory(Category.RUN);
+    const { data: plans } = await planFinder.findByCategory(Category.RUN);
     searchPlansStore.savePlans(plans as PlanSnapshot[]);
   };
 
   const findRunPlansByOwner = async (): Promise<void> => {
     const planFinder = containerDI.resolve(PlanFinder);
-    const { plans } = await planFinder.findByOwner(props.owner);
+    const { data: plans } = await planFinder.findByOwner(props.owner);
     searchPlansStore.savePlans(plans as PlanSnapshot[]);
   };
 

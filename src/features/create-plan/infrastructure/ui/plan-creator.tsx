@@ -1,19 +1,15 @@
-import { ObjectId } from "bson";
-import React, { FC, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, Platform, View } from "react-native";
-
+import React, { FC, useState } from "react";
+import { Platform, TextStyle, View, ViewStyle } from "react-native";
+import { Button, Text, TextField } from "../../../../../app/components";
 import { useStores } from "../../../../../app/models";
-import { spacing, color } from "../../../../../app/theme";
+import { color, spacing } from "../../../../../app/theme";
+import { Category, Privacy } from "../../../../core/domain/plan";
 import { CustomLocation } from "../../../../core/domain/types/location";
 import { Timestamp } from "../../../../core/domain/types/timestamp";
+import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
 import { PlanCreator } from "../../application/plan-creator";
 import { PlanCreationData } from "../../domain/plan-creation-data";
-import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
-import { Button, TextField, Text } from "../../../../../app/components";
-import { PlanFinder } from "../../../find-plan/application/plan-finder";
-import { Category, Privacy } from "../../../../core/domain/plan";
-import { User } from "../../../../core/domain/user";
 
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
@@ -34,7 +30,6 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 };
 
-
 interface Props {
   onFinish(): void;
 }
@@ -54,11 +49,11 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
 
   const submit = async (): Promise<void> => {
     const planCreator = containerDI.resolve(PlanCreator);
-    const planFinder = containerDI.resolve(PlanFinder);
 
     if (isReadyToSubmit()) {
+      const loggedInUserId = userStore.id;
       const planData: PlanCreationData = {
-        ownerId: userStore.id,
+        ownerId: loggedInUserId,
         title,
         location,
         time,
@@ -71,16 +66,16 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
         // TODO: if PlanCreatorRepository returns plan obj instead of planId
         // The three following lines will be converted to this:
         // const { plan } = await planCreator.create(user, planData);
-        const { plan } = await planCreator.create(planData);
-        if (plan) {
+        const { data } = await planCreator.create(planData);
+        if (data) {
           // TODO: everytime when a plan is created, fetch all the plans from server again,
           // maybe other users added a plan and we need to have them?
           // or we can have a refresh mechanism (auto or manual)
-          userPlansStore.savePlans([...userPlansStore.plans, plan]);
+          userPlansStore.savePlans([...userPlansStore.plans, data]);
         }
         onFinish();
       } catch (error) {
-        console.log("🚀 ~ file: plan-creator.tsx ~ line 72 ~ submit ~ error", error);
+        console.log("🚀 ~ file: plan-creator.tsx ~ line 77 ~ submit ~ error", error);
       }
     }
   };

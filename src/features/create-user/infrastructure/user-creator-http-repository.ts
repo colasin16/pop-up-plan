@@ -7,21 +7,18 @@ import { User } from "../../../../app/models/user/user";
 export class UserCreatorHttpRepository implements UserCreatorRepository {
   private readonly repositoryRoot = "http://localhost:8080/users";
 
-  async create(userToCreate: UserCreationData): Promise<{ success: boolean; user: User }> {
+  async create(userToCreate: UserCreationData): Promise<{ success: boolean; data: User }> {
     try {
-      const response = await axios.post<
-        UserCreationData,
-        AxiosResponse
-      >(`${this.repositoryRoot}`, {
+      const response = await axios.post<UserCreationData, AxiosResponse>(`${this.repositoryRoot}`, {
         ...userToCreate,
       });
 
       // TODO: define type for user
-      const { success, user }: { success: boolean; user: User } = response.data;
+      const { success, data }: { success: boolean; data: User } = response.data;
 
-      console.debug(`async create, user: ${user}`);
+      console.debug(`async create, user: ${data}`);
 
-      return { success, user };
+      return { success, data };
     } catch (error) {
       const err = error as AxiosError;
 
@@ -30,7 +27,7 @@ export class UserCreatorHttpRepository implements UserCreatorRepository {
         console.debug(err.response.status);
         console.debug(err.response.data);
       }
- 
+
       throw error;
     }
   }

@@ -73,14 +73,14 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
       };
 
       try {
-        const { user } = await userCreator.create(userData);
+        const { data } = await userCreator.create(userData);
         // TODO: Get user
 
-        console.debug(`user with id '${user["id"]}' has been created!`);
+        console.debug(`user with id '${data["id"]}' has been created!`);
 
         // after register a new user, it automatically logs in
         store.setUser({
-          ...user,
+          ...data,
           image: "",
         });
 

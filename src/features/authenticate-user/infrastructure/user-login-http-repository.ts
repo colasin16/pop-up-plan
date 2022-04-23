@@ -8,14 +8,15 @@ export class UserAuthenticatorHttpRepository implements UserLoginRepository {
 
   async login(authenticationData: UserAuthenticationData) {
     try {
-      const response = await axios.post<
-        UserAuthenticationData,
-        AxiosResponse
-      >(`${this.repositoryRoot}`, {
-        ...authenticationData,
-      });
+      const response = await axios.post<UserAuthenticationData, AxiosResponse>(
+        `${this.repositoryRoot}`,
+        {
+          ...authenticationData,
+        },
+      );
 
-      const { success, token, user } = response.data;
+      const { success, data } = response.data;
+      const { token, user } = data;
 
       console.debug(`response.data: ${JSON.stringify(response.data)}`);
       console.debug(`async login, token: ${token}`);

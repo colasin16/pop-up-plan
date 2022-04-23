@@ -23,5 +23,6 @@ export interface Plan extends Entity {
   privacy: Privacy;
   category: Category;
   attendeesId: Id[];
+  pendingAttendeesId: Id[];
   image?: string;
 }

@@ -14,6 +14,7 @@ export const PlanModel = types.model("Plan").props({
   // attendees: types.array(UserModel),
   // TODO: Check whether this type is ok
   attendeesId: types.array(types.string),
+  pendingAttendeesId: types.array(types.string),
 });
 
 type PlanType = Instance<typeof PlanModel>;

@@ -8,11 +8,11 @@ export class PlanCreatorHttpRepository implements PlanCreatorRepository {
   private readonly repositoryRoot = "http://localhost:8080/plans";
 
   async create(planToCreate: PlanCreationData) {
-    const { success, plan } = await axios.post<PlanCreationData, { success: boolean; plan: Plan }>(
+    const response = await axios.post<PlanCreationData, { data: { success: boolean; data: Plan } }>(
       `${this.repositoryRoot}`,
       planToCreate,
     );
 
-    return { success, plan };
+    return response.data;
   }
 }

@@ -4,7 +4,6 @@ import React, { FC, useEffect, useState } from "react";
 import { FlatList, ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import {
   AmazingPlan,
-  BoringPlan,
   FarAwayRunPlan,
   FarAwayWalkPlan,
 } from "../../../../src/core/domain/mocks/plan";
@@ -30,7 +29,8 @@ import { TaskTab } from "./tab-component";
 const ATTENDING_PLANS = [AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
 const DEFAULT_PLAN_IMAGE =
   "https://i.picsum.photos/id/19/200/200.jpg?hmac=U8dBrPCcPP89QG1EanVOKG3qBsZwAvtCLUrfeXdE0FI";
-const DEFAULT_USER_PROFILE_IMAGE = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS07F-qRjmDQk_lG3ZU3PYshRLh6lDlRPhW8w&usqp=CAU"
+const DEFAULT_USER_PROFILE_IMAGE =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS07F-qRjmDQk_lG3ZU3PYshRLh6lDlRPhW8w&usqp=CAU";
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -91,10 +91,9 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
 
     const findPlansByOwner = async (): Promise<void> => {
       const planFinder = containerDI.resolve(PlanFinder);
-      const { plans } = await planFinder.findByOwner(userStore);
+      const { data } = await planFinder.findByOwner(userStore);
 
-      console.debug(`plans: ${JSON.stringify(plans)}`);
-      userPlansStore.savePlans(plans as PlanSnapshot[]);
+      userPlansStore.savePlans(data as PlanSnapshot[]);
     };
 
     useEffect(() => {
@@ -166,8 +165,7 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
             <Image
               source={{
                 uri: userStore
-                  ? userStore.image ||
-                    DEFAULT_USER_PROFILE_IMAGE
+                  ? userStore.image || DEFAULT_USER_PROFILE_IMAGE
                   : DEFAULT_USER_PROFILE_IMAGE,
               }}
               style={IMAGE}

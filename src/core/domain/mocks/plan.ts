@@ -9,6 +9,7 @@ export const BoringPlan: Plan = {
   privacy: Privacy.PUBLIC,
   category: Category.WALK,
   attendeesId: [],
+  pendingAttendeesId: [],
   image:
     "https://i.picsum.photos/id/19/200/200.jpg?hmac=U8dBrPCcPP89QG1EanVOKG3qBsZwAvtCLUrfeXdE0FI",
 };
@@ -22,6 +23,7 @@ export const AmazingPlan: Plan = {
   privacy: Privacy.PUBLIC,
   category: Category.RUN,
   attendeesId: [],
+  pendingAttendeesId: [],
   image:
     "https://i.picsum.photos/id/825/200/200.jpg?hmac=Rpa0BK5LjdGtlClC7IBAfyqXkR8ivGiARYDUmgpjZ3w",
 };
@@ -35,6 +37,7 @@ export const FarAwayWalkPlan: Plan = {
   privacy: Privacy.PUBLIC,
   category: Category.WALK,
   attendeesId: [],
+  pendingAttendeesId: [],
   image:
     "https://i.picsum.photos/id/389/200/200.jpg?hmac=wMpkVNteeBzuxyzbDb9fXZfr-aCfp8scZWMabXtk7qU",
 };
@@ -48,6 +51,7 @@ export const FarAwayRunPlan: Plan = {
   privacy: Privacy.PUBLIC,
   category: Category.RUN,
   attendeesId: [],
+  pendingAttendeesId: [],
   image:
     "https://i.picsum.photos/id/954/200/300.jpg?hmac=S-BQE-Zth1hOGOVewt5Jy5gk_r5fwSHC6iNU4oX3B9k",
 };

@@ -1,12 +1,12 @@
-import React, { FC } from "react";
-import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
-import { Header, Text, Screen, AutoImage as Image, GradientBackground } from "../../components";
+import React, { FC } from "react";
+import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
+import { AuthenticateUser } from "../../../src/features/authenticate-user/infrastructure/ui/user-authenticator";
+import { GradientBackground, Header, Screen, Text } from "../../components";
+import { useStores } from "../../models";
 import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
-import { AuthenticateUser } from "../../../src/features/authenticate-user/infrastructure/ui/user-authenticator";
-import { useStores } from "../../models";
 import { palette } from "../../theme/palette";
 
 export const logoIgnite = require("../demo/logo-ignite.png");
@@ -112,7 +112,6 @@ export const loginUserScreen: FC<StackScreenProps<NavigatorParamList, "loginUser
               <AuthenticateUser onFinish={goBack} />
             </>
           )}
-
         </Screen>
       </View>
     );
