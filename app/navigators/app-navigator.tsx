@@ -16,6 +16,7 @@ import { CreateUserScreen } from "../screens/use-cases/create-user";
 import { UserProfileScreen } from "../screens/use-cases/UserProfileScreen";
 import { loginUserScreen } from "../screens/use-cases/login-user";
 import { JoinPlanRequestScreen } from "../screens/use-cases/join-plan-request-screen";
+import { checkRequestsScreen } from "../screens/use-cases/check-requests-screen";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -34,6 +35,7 @@ export type NavigatorParamList = {
   welcome: undefined;
   createPlan: undefined;
   joinPlanRequest: undefined;
+  checkRequests: undefined;
   findPlan: undefined;
   userProfile: undefined;
   loginUser: undefined;
@@ -55,6 +57,7 @@ const AppStack = () => {
       <Stack.Screen name="welcome" component={WelcomeScreen} />
       <Stack.Screen name="createUser" component={CreateUserScreen} />
       <Stack.Screen name="loginUser" component={loginUserScreen} />
+      <Stack.Screen name="checkRequests" component={checkRequestsScreen} />
       <Stack.Screen name="createPlan" component={CreatePlanScreen} />
       <Stack.Screen name="joinPlanRequest" component={JoinPlanRequestScreen} />
       <Stack.Screen name="findPlan" component={FindPlanScreen} />

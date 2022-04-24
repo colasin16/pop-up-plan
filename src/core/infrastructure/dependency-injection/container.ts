@@ -3,13 +3,13 @@ import { UserAuthenticatorHttpRepository } from "../../../features/authenticate-
 import { PlanCreatorHttpRepository } from "../../../features/create-plan/infrastructure/plan-creator-http-repository";
 import { UserCreatorHttpRepository } from "../../../features/create-user/infrastructure/user-creator-http-repository";
 import { PlanListHttpRepository } from "../../../features/find-plan/infrastructure/plan-list-http-repository";
+import { AcceptOrRejectJoinRequestPlanHttpRepository } from "../../../features/request-checker/infrastructure/request-checker-http-repository";
 import { JoinPlanRequestHttpRepository } from "../../../features/request-join-plan/infrastructure/join-plan-requestor-http-repository";
 import {
-  JOIN_PLAN_REQUESTER_REPOSITORY,
-  PLAN_CREATOR_REPOSITORY,
+  ACCEPT_OR_REJECTER_JOIN_PLAN_REPOSITORY, JOIN_PLAN_REQUESTER_REPOSITORY, PLAN_CREATOR_REPOSITORY,
   PLAN_LIST_REPOSITORY,
   USER_AUTHENTICATOR_REPOSITORY,
-  USER_CREATOR_REPOSITORY,
+  USER_CREATOR_REPOSITORY
 } from "./injection-tokens";
 
 const containerDI = container;
@@ -21,6 +21,7 @@ const containerDI = container;
 containerDI.register(PLAN_LIST_REPOSITORY, PlanListHttpRepository);
 containerDI.register(PLAN_CREATOR_REPOSITORY, PlanCreatorHttpRepository);
 containerDI.register(JOIN_PLAN_REQUESTER_REPOSITORY, JoinPlanRequestHttpRepository);
+containerDI.register(ACCEPT_OR_REJECTER_JOIN_PLAN_REPOSITORY, AcceptOrRejectJoinRequestPlanHttpRepository);
 containerDI.register(USER_CREATOR_REPOSITORY, UserCreatorHttpRepository);
 containerDI.register(USER_AUTHENTICATOR_REPOSITORY, UserAuthenticatorHttpRepository);
 

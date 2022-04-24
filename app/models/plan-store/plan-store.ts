@@ -13,7 +13,11 @@ export const PlanStoreModel = types
     savePlans: (planSnapshots: PlanSnapshot[]) => {
       self.plans.replace(planSnapshots as any);
     },
-  }));
+  })).actions(self => ({
+    getPendingPlans: (planSnapshots: PlanSnapshot[]) => {
+      self.plans.replace(planSnapshots as any);
+    },
+  }));;
 
 type PlanStoreType = Instance<typeof PlanStoreModel>;
 export interface PlanStore extends PlanStoreType {}

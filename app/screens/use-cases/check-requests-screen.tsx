@@ -1,11 +1,11 @@
-import React, { FC } from "react";
-import { TextStyle, View, ViewStyle } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
-import { Header, Text, Screen, GradientBackground } from "../../components";
+import React, { FC } from "react";
+import { TextStyle, View, ViewStyle } from "react-native";
+import AcceptOrRejectJoinPlanRequest from "../../../src/features/request-checker/infrastructure/ui/request-checker";
+import { GradientBackground, Header, Screen, Text } from "../../components";
 import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
-import PlanList from "../../../src/features/find-plan/infrastructure/ui/plan-finder";
 
 export const logoIgnite = require("../demo/logo-ignite.png");
 export const heart = require("../demo/heart.png");
@@ -47,16 +47,16 @@ const TAGLINE: TextStyle = {
   marginBottom: spacing[4] + spacing[1],
 };
 
-export const FindPlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
+export const checkRequestsScreen: FC<StackScreenProps<NavigatorParamList, "checkRequests">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
 
     return (
-      <View testID="DemoScreen" style={FULL}>
+      <View testID="checkRequestsScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
           <Header
-            headerText="HC FIND PLANS"
+            headerText="HC PENDING PLANS THAT YOU NEED TO CHECK"
             leftIcon="back"
             rightIcon="bullet"
             onLeftPress={goBack}
@@ -66,10 +66,10 @@ export const FindPlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = 
           <Text
             style={TITLE}
             preset="header"
-            text="HC Explore what others are planning for today!"
+            text="HC See who wants to join your plan(s)!"
           />
-          <Text style={TAGLINE} text="HC Look for a plan that fits you and join them!" />
-          <PlanList navigation={navigation} />
+          <Text style={TAGLINE} text="HC Look carefully! When you accept someone you cannot redo this operation." />
+          <AcceptOrRejectJoinPlanRequest navigation={navigation} />
         </Screen>
       </View>
     );

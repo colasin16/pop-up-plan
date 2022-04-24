@@ -188,7 +188,9 @@ export const JoinPlanRequest: FC<Props> = observer(({ onFinish, planId }: Props)
         <Text style={TAGLINE} text={`Location is: ${plan.location}`} />
 
         <View>
-          <Button style={DEMO} textStyle={DEMO_TEXT} text={joinButtonText(planState)} onPress={submit} disabled={!!PLAN_STATE_CHOICES.JOINT}/>
+          <Button style={DEMO} textStyle={DEMO_TEXT} text={joinButtonText(planState)} onPress={submit} 
+          // disabled={!!PLAN_STATE_CHOICES.JOINT}
+          />
           {/* <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} /> */}
         </View>
       </View>

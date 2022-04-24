@@ -97,6 +97,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
     const userProfileScreen = () => navigation.navigate("userProfile");
     const createNewUserScreen = () => navigation.navigate("createUser");
     const loginUserScreen = () => navigation.navigate("loginUser");
+    const checkRequestsScreen = () => navigation.navigate("checkRequests");
 
 
     return (
@@ -154,6 +155,13 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
               textStyle={CONTINUE_TEXT}
               text="LOGIN"
               onPress={loginUserScreen}
+            />
+            <Button
+              testID="next-screen-button-6"
+              style={CONTINUE}
+              textStyle={CONTINUE_TEXT}
+              text="PENDING LIST"
+              onPress={checkRequestsScreen}
             />
           </View>
         </Screen>
