@@ -98,10 +98,10 @@ interface Props {
 }
 
 export const enum PLAN_STATE_CHOICES {
-  PENDING = "PENDING",
-  JOINT = "JOINT",
-  NOT_REQUESTED = "NOT_REQUESTED",
-  LOADING = "LOADING",
+  PENDING = "Pending",
+  JOINT = "Already join",
+  NOT_REQUESTED = "HC Join Request",
+  LOADING = "Loading",
 }
 
 
@@ -113,6 +113,7 @@ export const JoinPlanRequest: FC<Props> = observer(({ onFinish, planId }: Props)
 
   const [planState, setPlanState] = useState( PLAN_STATE_CHOICES.LOADING)
   const [plan, setPlan] = useState(undefined)
+  // const [joinButtonTextState, setjoinButtonTextState] = useState("Loading")
 
   useEffect(() => {
     // TODO: remove me later
@@ -120,6 +121,12 @@ export const JoinPlanRequest: FC<Props> = observer(({ onFinish, planId }: Props)
       return
     }
     
+    if (planId === undefined){
+      // prevent sending request when planId has not been recieved
+      setPlanState(PLAN_STATE_CHOICES.NOT_REQUESTED)
+      return
+    }
+
     const fetchPlan =async () => {
       const { data } = await planFinder.get(planId);
       return data
@@ -156,7 +163,7 @@ export const JoinPlanRequest: FC<Props> = observer(({ onFinish, planId }: Props)
       // const { plan } = await planCreator.create(user, planData);
       await joinPlanRequester.join(planId, userStore.id);
 
-      onFinish();
+      // onFinish();
     } catch (error) {
       console.log("🚀 ~ file: join-plan-requester.tsx ~ line 137 ~ submit ~ error", error);
     }
@@ -188,7 +195,7 @@ export const JoinPlanRequest: FC<Props> = observer(({ onFinish, planId }: Props)
         <Text style={TAGLINE} text={`Location is: ${plan.location}`} />
 
         <View>
-          <Button style={DEMO} textStyle={DEMO_TEXT} text={joinButtonText(planState)} onPress={submit} 
+          <Button style={DEMO} textStyle={DEMO_TEXT} text={planState} onPress={submit} 
           // disabled={!!PLAN_STATE_CHOICES.JOINT}
           />
           {/* <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} /> */}
