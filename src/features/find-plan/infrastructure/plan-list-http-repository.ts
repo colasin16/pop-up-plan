@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Plan, Category } from "../../../core/domain/plan";
+import { Id } from "../../../core/domain/types/id";
 import { CustomLocation } from "../../../core/domain/types/location";
 import { User } from "../../../core/domain/user";
 import type { PlanListRepository } from "../domain/plan-list-repository";
@@ -50,4 +51,12 @@ export class PlanListHttpRepository implements PlanListRepository {
     // );
     // return response.data;
   }
+
+  async get(planId: Id) {
+    const response = await axios.get<undefined, { data: { success: boolean; data: Plan } }>(
+      `${this.repositorRoot}/${planId}`,
+    );
+    return response.data;
+  }
+
 }

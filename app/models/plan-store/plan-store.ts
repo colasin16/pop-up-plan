@@ -13,13 +13,6 @@ export const PlanStoreModel = types
     savePlans: (planSnapshots: PlanSnapshot[]) => {
       self.plans.replace(planSnapshots as any);
     },
-  }))
-  .actions(self => ({
-    getPlan: (planId: Id) => {
-      const foundPlans = self.plans.filter(plan => plan.id === planId);
-
-      return foundPlans[0];
-    },
   }));
 
 type PlanStoreType = Instance<typeof PlanStoreModel>;

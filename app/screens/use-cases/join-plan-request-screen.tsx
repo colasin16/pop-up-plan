@@ -101,7 +101,7 @@ export const JoinPlanRequestScreen: FC<
   const { searchPlansStore } = useStores();
 
   // @ts-ignore
-  const [plan, setPlan] = useState({} as Plan);
+  const [planId, setPlanId] = useState(undefined as Id);
 
   React.useEffect(() => {
     // ref: https://reactnavigation.org/docs/params/
@@ -111,12 +111,9 @@ export const JoinPlanRequestScreen: FC<
       // For example, send the post to the server
       // @ts-ignore
       const planId = route.params?.planId;
-      const planToJoinRequest = searchPlansStore.getPlan(planId);
+      // const planToJoinRequest = searchPlansStore.getPlan(planId);
       // @ts-ignore
-      setPlan({
-        ...plan,
-        ...planToJoinRequest,
-      });
+      setPlanId(planId);
     }
     // @ts-ignore
   }, [route && route.params && route.params?.planId]);
@@ -135,7 +132,9 @@ export const JoinPlanRequestScreen: FC<
         <Text style={TITLE} preset="header" text="HC Would you like enjoying this plan?" />
         <Text style={TAGLINE} text="Join the plan" />
 
-        <JoinPlanRequest onFinish={goBack} plan={plan} />
+        {/* <JoinPlanRequest onFinish={goBack} plan={plan} /> */}
+        <JoinPlanRequest onFinish={goBack} planId={planId}/>
+
 
         {/* <CreatePlan onFinish={goBack} /> */}
 
