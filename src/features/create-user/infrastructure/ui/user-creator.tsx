@@ -12,6 +12,7 @@ import { Email } from "../../../../core/domain/types/email";
 import { Password } from "../../../../core/domain/types/password";
 import { ValidationError } from "../../../../core/domain/exceptions";
 import { useStores } from "../../../../../app/models";
+import { ToastPIC } from "../../../../../app/utils/toast";
 
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
@@ -54,15 +55,21 @@ export const CreateUser: FC<Props> = observer(({ onFinish }: Props) => {
 
   const validateForm = () => {
     if (newPassword !== newPasswordAgain) {
-      console.error("Passwords do not match");
-      throw new ValidationError("Passwords do not match");
+      const errorMessage = "Passwords do not match"
+      console.error(errorMessage);
+      ToastPIC.show(errorMessage)
+      throw new ValidationError("Passwords do not match"); // TODO: think about it
     }
   };
 
   const submit = async (): Promise<void> => {
     const userCreator = containerDI.resolve(UserCreator);
+    try {
+      validateForm();
 
-    validateForm();
+    } catch (error) {
+      return
+    }
 
     if (isReadyToSubmit()) {
       const userData: UserCreationData = {
