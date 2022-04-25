@@ -72,6 +72,21 @@ export class PlanListHttpRepository extends Repository implements PlanListReposi
     return Promise.resolve({ success: false, data: null })
   }
 
+  async findByAttendee(attendee: User) {
+    // TODO: implement api in backend
+    // const url: string = `${this.repositorRoot}/owner/${owner.id}`
+    try {
+      const { data } = await this.findAll();
+      const plans: Plan[] = data
+      const attendedPlans = plans.filter(plan => plan.attendeesId.includes(attendee.id));
+
+      return { success: true, data: attendedPlans };
+    } catch (error) {
+      this.handleAxiosError(error)
+    }
+    return Promise.resolve({ success: false, data: null })
+  }
+
   async get(planId: Id) {
     try {
       const response = await axios.get<undefined, { data: { success: boolean; data: Plan } }>(

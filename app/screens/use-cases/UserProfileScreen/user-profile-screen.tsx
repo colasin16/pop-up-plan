@@ -87,6 +87,8 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
     const { /*searchPlansStore,*/ userStore, userPlansStore } = useStores();
     const store = useStores();
 
+    const [state, setState] = useState({ ownedPlans: [], attendingPlans: [] })
+
     const [currentTab, setCurrentTab] = useState(TABS.OWNED_PLANS);
 
     const findPlansByOwner = async (): Promise<void> => {
@@ -94,10 +96,18 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
       const { data } = await planFinder.findByOwner(userStore);
 
       userPlansStore.savePlans(data as PlanSnapshot[]);
+      setState({ ...state, ownedPlans: data })
+    };
+
+    const findPlansByAttendee = async (): Promise<void> => {
+      const planFinder = containerDI.resolve(PlanFinder);
+      const { data } = await planFinder.findByAttendee(userStore);
+      setState({ ...state, attendingPlans: data })
     };
 
     useEffect(() => {
       findPlansByOwner();
+      findPlansByAttendee();
     }, []);
 
     const renderPlanItem = ({ item }) => (
@@ -108,10 +118,11 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
     );
 
     const getData = (key: TABS) => {
-      const OwnedPlans = userPlansStore.plans;
+      const OwnedPlans = state.ownedPlans;
+      const attendingPlans = state.attendingPlans
       const data = {
         [TABS.OWNED_PLANS]: OwnedPlans,
-        [TABS.ATTENDING_PLANS]: ATTENDING_PLANS,
+        [TABS.ATTENDING_PLANS]: attendingPlans,
       };
       return data[key];
     };
@@ -170,9 +181,8 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
               }}
               style={IMAGE}
             />
-            <Text style={LIST_TEXT}>{`${userStore ? userStore.name.firstName : "undefined"} ${
-              userStore ? userStore.name.lastName : "undefined"
-            }`}</Text>
+            <Text style={LIST_TEXT}>{`${userStore ? userStore.name.firstName : "undefined"} ${userStore ? userStore.name.lastName : "undefined"
+              }`}</Text>
           </View>
           <CurrentTabContext.Provider value={{ currentTab, setCurrentTab }}>
             <View style={{ backgroundColor: color.line, height: 10 }} />
