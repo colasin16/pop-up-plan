@@ -99,7 +99,7 @@ interface Props {
 
 export const enum PLAN_STATE_CHOICES {
   PENDING = "Pending",
-  JOINT = "Already join",
+  JOINT = "Already joint",
   NOT_REQUESTED = "HC Join Request",
   LOADING = "Loading",
 }
@@ -111,48 +111,48 @@ export const JoinPlanRequest: FC<Props> = observer(({ onFinish, planId }: Props)
   const joinPlanRequester = containerDI.resolve(JoinPlanRequester);
   const planFinder = containerDI.resolve(PlanFinder);
 
-  const [planState, setPlanState] = useState( PLAN_STATE_CHOICES.LOADING)
+  const [planState, setPlanState] = useState(PLAN_STATE_CHOICES.LOADING)
   const [plan, setPlan] = useState(undefined)
   // const [joinButtonTextState, setjoinButtonTextState] = useState("Loading")
 
   useEffect(() => {
     // TODO: remove me later
-    if (!userStore || !userStore.id){
+    if (!userStore || !userStore.id) {
       return
     }
-    
-    if (planId === undefined){
+
+    if (planId === undefined) {
       // prevent sending request when planId has not been recieved
       setPlanState(PLAN_STATE_CHOICES.NOT_REQUESTED)
       return
     }
 
-    const fetchPlan =async () => {
+    const fetchPlan = async () => {
       const { data } = await planFinder.get(planId);
       return data
     }
 
-    fetchPlan().then((data)=>{
-      console.debug (` plan: ${JSON.stringify(data)}`)
+    fetchPlan().then((data) => {
+      console.debug(` plan: ${JSON.stringify(data)}`)
 
       setPlan(data)
 
-      console.debug (` plan.pendingAttendeesId: ${JSON.stringify(data.pendingAttendeesId)}`)
-      console.debug (` userStore.id : ${JSON.stringify(userStore.id )}`)
+      console.debug(` plan.pendingAttendeesId: ${JSON.stringify(data.pendingAttendeesId)}`)
+      console.debug(` userStore.id : ${JSON.stringify(userStore.id)}`)
 
-      if ( data.pendingAttendeesId.includes(userStore.id)){
-        console.debug (`userStore.id in data.pendingAttendeesId`)
+      if (data.pendingAttendeesId.includes(userStore.id)) {
+        console.debug(`userStore.id in data.pendingAttendeesId`)
         setPlanState(PLAN_STATE_CHOICES.PENDING)
-      } else if ( data.attendeesId.includes(userStore.id)){
+      } else if (data.attendeesId.includes(userStore.id)) {
         setPlanState(PLAN_STATE_CHOICES.JOINT)
       } else {
         setPlanState(PLAN_STATE_CHOICES.NOT_REQUESTED)
       }
     }).catch()
-    
-   
+
+
   }, [planId])
-  
+
 
   const submit = async (): Promise<void> => {
     console.log("submit");
@@ -169,7 +169,7 @@ export const JoinPlanRequest: FC<Props> = observer(({ onFinish, planId }: Props)
     }
   };
 
-  const joinButtonText = (stateOfPlan:PLAN_STATE_CHOICES) =>{
+  const joinButtonText = (stateOfPlan: PLAN_STATE_CHOICES) => {
     const choics = {
       [PLAN_STATE_CHOICES.NOT_REQUESTED]: "HC Join Request",
       [PLAN_STATE_CHOICES.JOINT]: "Already joint",
@@ -188,21 +188,21 @@ export const JoinPlanRequest: FC<Props> = observer(({ onFinish, planId }: Props)
   return (
     <View>
       {
-        plan  && <View>
-        <Text style={TAGLINE} text={`Time is: ${plan.time}`} />
-        <Text style={TAGLINE} text={`Plan ID is: ${plan.id}`} />
-        <Text style={TAGLINE} text={`Category is: ${plan.category}`} />
-        <Text style={TAGLINE} text={`Location is: ${plan.location}`} />
+        plan && <View>
+          <Text style={TAGLINE} text={`Time is: ${plan.time}`} />
+          <Text style={TAGLINE} text={`Plan ID is: ${plan.id}`} />
+          <Text style={TAGLINE} text={`Category is: ${plan.category}`} />
+          <Text style={TAGLINE} text={`Location is: ${plan.location}`} />
 
-        <View>
-          <Button style={DEMO} textStyle={DEMO_TEXT} text={planState} onPress={submit} 
-          // disabled={!!PLAN_STATE_CHOICES.JOINT}
-          />
-          {/* <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} /> */}
+          <View>
+            <Button style={DEMO} textStyle={DEMO_TEXT} text={planState} onPress={submit}
+            // disabled={!!PLAN_STATE_CHOICES.JOINT}
+            />
+            {/* <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} /> */}
+          </View>
         </View>
-      </View>
       }
     </View>
-    
+
   );
 });

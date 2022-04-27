@@ -87,7 +87,8 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
     const { /*searchPlansStore,*/ userStore, userPlansStore } = useStores();
     const store = useStores();
 
-    const [state, setState] = useState({ ownedPlans: [], attendingPlans: [] })
+    const [ownedPlansState, setOwnedPlanState] = useState([])
+    const [attendingPlansState, setAttendingPlansState] = useState([])
 
     const [currentTab, setCurrentTab] = useState(TABS.OWNED_PLANS);
 
@@ -96,13 +97,13 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
       const { data } = await planFinder.findByOwner(userStore);
 
       userPlansStore.savePlans(data as PlanSnapshot[]);
-      setState({ ...state, ownedPlans: data })
+      setOwnedPlanState(data)
     };
 
     const findPlansByAttendee = async (): Promise<void> => {
       const planFinder = containerDI.resolve(PlanFinder);
       const { data } = await planFinder.findByAttendee(userStore);
-      setState({ ...state, attendingPlans: data })
+      setAttendingPlansState(data)
     };
 
     useEffect(() => {
@@ -112,14 +113,14 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
 
     const renderPlanItem = ({ item }) => (
       <View style={LIST_CONTAINER}>
-        <Image source={{ uri: `${item.image || DEFAULT_PLAN_IMAGE}` }} style={PLAN_IMAGE} />
+        <Image source={{ uri: `${item.image ?? DEFAULT_PLAN_IMAGE}` }} style={PLAN_IMAGE} />
         <Text>{item.title}</Text>
       </View>
     );
 
     const getData = (key: TABS) => {
-      const OwnedPlans = state.ownedPlans;
-      const attendingPlans = state.attendingPlans
+      const OwnedPlans = ownedPlansState;
+      const attendingPlans = attendingPlansState;
       const data = {
         [TABS.OWNED_PLANS]: OwnedPlans,
         [TABS.ATTENDING_PLANS]: attendingPlans,
