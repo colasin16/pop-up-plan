@@ -1,11 +1,11 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
 import React, { FC, useEffect, useState } from "react";
-import { FlatList, ImageStyle, TextStyle, View, ViewStyle } from "react-native";
+import { FlatList, ImageStyle, Pressable, TextStyle, View, ViewStyle } from "react-native";
 import {
   AmazingPlan,
   FarAwayRunPlan,
-  FarAwayWalkPlan,
+  FarAwayWalkPlan
 } from "../../../../src/core/domain/mocks/plan";
 import { containerDI } from "../../../../src/core/infrastructure/dependency-injection/container";
 import { PlanFinder } from "../../../../src/features/find-plan/application/plan-finder";
@@ -15,7 +15,7 @@ import {
   GradientBackground,
   Header,
   Screen,
-  Text,
+  Text
 } from "../../../components";
 import { useStores } from "../../../models";
 import { PlanSnapshot } from "../../../models/plan/plan";
@@ -112,10 +112,17 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
     }, []);
 
     const renderPlanItem = ({ item }) => (
-      <View style={LIST_CONTAINER}>
+      <Pressable style={LIST_CONTAINER} onPress={() => {
+        // navigation.navigate({
+        //   name: "joinPlanRequest",
+        //   params: { planId: item.id },
+        // })
+      }
+      }>
         <Image source={{ uri: `${item.image ?? DEFAULT_PLAN_IMAGE}` }} style={PLAN_IMAGE} />
         <Text>{item.title}</Text>
-      </View>
+      </Pressable>
+
     );
 
     const getData = (key: TABS) => {
@@ -193,13 +200,17 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
               <TaskTab tabName={TABS.ATTENDING_PLANS} />
             </View>
             <View style={{ backgroundColor: color.line, height: 1 }} />
+            {/* <ScrollView> */}
             <FlatList
+              scrollEnabled={true}
               data={getData(currentTab)}
               renderItem={renderPlanItem}
               keyExtractor={item => item.id}
               contentContainerStyle={FLAT_LIST}
               numColumns={3}
             />
+            {/* </ScrollView> */}
+
           </CurrentTabContext.Provider>
         </Screen>
       </View>

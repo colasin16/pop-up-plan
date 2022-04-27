@@ -1,16 +1,16 @@
-import React, { FC } from "react";
-import { TextStyle, View, ViewStyle } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
-import { Header, Text, Screen, GradientBackground } from "../../components";
+import React, { FC } from "react";
+import { TextStyle, View, ViewStyle } from "react-native";
+import PlanList from "../../../src/features/find-plan/infrastructure/ui/plan-finder";
+import { GradientBackground, Header, Screen, Text } from "../../components";
 import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
-import PlanList from "../../../src/features/find-plan/infrastructure/ui/plan-finder";
 
 export const logoIgnite = require("../demo/logo-ignite.png");
 export const heart = require("../demo/heart.png");
 
-const FULL: ViewStyle = { flex: 1 };
+const FULL: ViewStyle = { flex: 1, paddingBottom: 20 };
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
   paddingHorizontal: spacing[4],
@@ -50,7 +50,6 @@ const TAGLINE: TextStyle = {
 export const FindPlanScreen: FC<StackScreenProps<NavigatorParamList, "findPlan">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
-
 
     return (
       <View testID="FindPlanScreen" style={FULL}>

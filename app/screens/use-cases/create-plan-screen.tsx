@@ -10,7 +10,7 @@ import { CreatePlan } from "../../../src/features/create-plan/infrastructure/ui/
 export const logoIgnite = require("../demo/logo-ignite.png");
 export const heart = require("../demo/heart.png");
 
-const FULL: ViewStyle = { flex: 1 };
+const FULL: ViewStyle = { flex: 1, paddingBottom: 10 };
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
   paddingHorizontal: spacing[4],
@@ -93,12 +93,6 @@ export const CreatePlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> 
 
           <CreatePlan onFinish={goBack} />
 
-          <Image source={logoIgnite} style={IGNITE} />
-          <View style={LOVE_WRAPPER}>
-            <Text style={LOVE} text="Made with" />
-            <Image source={heart} style={HEART} />
-            <Text style={LOVE} text="by Infinite Red" />
-          </View>
         </Screen>
       </View>
     );

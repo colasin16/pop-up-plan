@@ -48,9 +48,12 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
   };
 
   const submit = async (): Promise<void> => {
+    console.debug("submit")
     const planCreator = containerDI.resolve(PlanCreator);
 
     if (isReadyToSubmit()) {
+      console.debug("submitting")
+
       const loggedInUserId = userStore.id;
       const planData: PlanCreationData = {
         ownerId: loggedInUserId,

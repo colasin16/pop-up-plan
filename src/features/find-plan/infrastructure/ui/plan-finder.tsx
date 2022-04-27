@@ -9,9 +9,7 @@ import { containerDI } from "../../../../core/infrastructure/dependency-injectio
 import { PlanFinder } from "../../application/plan-finder";
 import { Section } from "./section";
 
-interface PlanListProps extends PropsWithChildren<any> {
-  navigation?: any;
-}
+
 
 const BOLD: TextStyle = { fontWeight: "bold" };
 const TEXT: TextStyle = {
@@ -35,6 +33,10 @@ const CONTINUE_TEXT: TextStyle = {
 //   areButtonsShown: true,
 // };
 
+interface PlanListProps extends PropsWithChildren<any> {
+  navigation?: any;
+}
+
 // export const PlanList: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
 // ({ navigation }) => {
 const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
@@ -47,7 +49,7 @@ const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
       searchPlansStore.savePlans(plans as PlanSnapshot[]);
     }
 
-    getData();
+    getData().catch();
   }, []);
 
   const findWalkPlans = async (): Promise<void> => {

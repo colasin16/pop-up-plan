@@ -86,11 +86,11 @@ const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: 
           return (
             <>
               {
-                plan.pendingAttendeesId.length > 0 && <Section title={plan.title} key={plan.id}>
+                plan.pendingAttendeesId.length > 0 && <Section title={plan.title} key={`session-${plan.id}`}>
                   {
                     plan.pendingAttendeesId.map(requesterUser => {
                       return (
-                        <View key={plan.id}>
+                        <View key={`view-${plan.id}`}>
                           <Text style={styles.highlight}>The user {requesterUser} asks to join.</Text>
 
                           <View style={styles.container}>

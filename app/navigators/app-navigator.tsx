@@ -60,9 +60,9 @@ export const AppStack = () => {
       {/* <Stack.Screen name="welcome" component={WelcomeScreen} /> */}
       {/* <Stack.Screen name="loginUser" component={loginUserScreen} /> */}
       <Stack.Screen name="findPlan" component={FindPlanScreen} />
+      <Stack.Screen name="createPlan" component={CreatePlanScreen} />
       <Stack.Screen name="createUser" component={CreateUserScreen} />
       <Stack.Screen name="checkRequests" component={checkRequestsScreen} />
-      <Stack.Screen name="createPlan" component={CreatePlanScreen} />
       <Stack.Screen name="joinPlanRequest" component={JoinPlanRequestScreen} />
       <Stack.Screen name="userProfile" component={UserProfileScreen} />
       <Stack.Screen name="demo" component={DemoScreen} />
