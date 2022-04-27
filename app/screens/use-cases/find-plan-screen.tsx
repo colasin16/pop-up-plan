@@ -47,12 +47,13 @@ const TAGLINE: TextStyle = {
   marginBottom: spacing[4] + spacing[1],
 };
 
-export const FindPlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
+export const FindPlanScreen: FC<StackScreenProps<NavigatorParamList, "findPlan">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
 
+
     return (
-      <View testID="DemoScreen" style={FULL}>
+      <View testID="FindPlanScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
           <Header

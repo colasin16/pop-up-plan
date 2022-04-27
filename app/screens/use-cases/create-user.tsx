@@ -88,7 +88,7 @@ export const CreateUserScreen: FC<StackScreenProps<NavigatorParamList, "createUs
     const store = useStores();
 
     return (
-      <View testID="DemoScreen" style={FULL}>
+      <View testID="CreateUserScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Header

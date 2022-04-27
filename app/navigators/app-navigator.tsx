@@ -17,6 +17,8 @@ import { UserProfileScreen } from "../screens/use-cases/UserProfileScreen";
 import { loginUserScreen } from "../screens/use-cases/login-user";
 import { JoinPlanRequestScreen } from "../screens/use-cases/join-plan-request-screen";
 import { checkRequestsScreen } from "../screens/use-cases/check-requests-screen";
+import MyTabs from "./tab-navigator";
+import { MainAppStack } from "./main-navigator";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -47,20 +49,21 @@ export type NavigatorParamList = {
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<NavigatorParamList>();
 
-const AppStack = () => {
+export const AppStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="welcome">
-      <Stack.Screen name="welcome" component={WelcomeScreen} />
+      initialRouteName="findPlan"
+    >
+      {/* <Stack.Screen name="welcome" component={WelcomeScreen} /> */}
+      {/* <Stack.Screen name="loginUser" component={loginUserScreen} /> */}
+      <Stack.Screen name="findPlan" component={FindPlanScreen} />
       <Stack.Screen name="createUser" component={CreateUserScreen} />
-      <Stack.Screen name="loginUser" component={loginUserScreen} />
       <Stack.Screen name="checkRequests" component={checkRequestsScreen} />
       <Stack.Screen name="createPlan" component={CreatePlanScreen} />
       <Stack.Screen name="joinPlanRequest" component={JoinPlanRequestScreen} />
-      <Stack.Screen name="findPlan" component={FindPlanScreen} />
       <Stack.Screen name="userProfile" component={UserProfileScreen} />
       <Stack.Screen name="demo" component={DemoScreen} />
       <Stack.Screen name="demoList" component={DemoListScreen} />
@@ -69,18 +72,27 @@ const AppStack = () => {
   );
 };
 
-interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> { }
 
 export const AppNavigator = (props: NavigationProps) => {
   const colorScheme = useColorScheme();
   useBackButtonHandler(canExit);
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-      {...props}>
-      <AppStack />
-    </NavigationContainer>
+    <>
+      <NavigationContainer
+        ref={navigationRef}
+        theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        {...props}>
+        <MainAppStack />
+        {/* <MyTabs /> */}
+
+        {/* <AppStack /> */}
+      </NavigationContainer>
+      {/* <NavigationContainer>
+        <MyTabs />
+      </NavigationContainer> */}
+    </>
+
   );
 };
 

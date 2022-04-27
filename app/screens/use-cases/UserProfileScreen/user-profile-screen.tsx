@@ -162,6 +162,7 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
             }}
             onPress={() => {
               store.setUser(undefined);
+              navigation.navigate("loginUser");
             }}
             key={"key"}
             text={"Logout"}

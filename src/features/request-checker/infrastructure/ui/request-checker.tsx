@@ -40,7 +40,7 @@ const CONTINUE_TEXT: TextStyle = {
 // export const PlanList: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
 // ({ navigation }) => {
 const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: PlanListProps) => {
-  const { searchPlansStore,userStore } = useStores();
+  const { searchPlansStore, userStore } = useStores();
   const planAccepterOrRejecter = containerDI.resolve(RequestChecker);
   // const { /*searchPlansStore,*/ userStore, userPlansStore } = useStores();
 
@@ -62,19 +62,19 @@ const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: 
 
   const [ownedPlans, setownedPlans] = useState([] as Plan[])
 
-  
+
   useEffect(() => {
-    const getOwnedPlans = async ()=>{
+    const getOwnedPlans = async () => {
       return await findLoggedInUserOwnedPlans()
     }
-    getOwnedPlans().then((plans)=>{
-    setownedPlans(plans)
+    getOwnedPlans().then((plans) => {
+      setownedPlans(plans)
 
     }).catch()
 
   }, [])
-  
-  
+
+
   return (
     <>
       {/* TODO: revise this component */}
@@ -83,40 +83,40 @@ const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: 
           return (
             <Section title={plan.title} key={plan.id}>
               {
-                plan.pendingAttendeesId.map(requesterUser=>{
+                plan.pendingAttendeesId.map(requesterUser => {
                   return (
-                    <View>
-                        <Text style={styles.highlight}>The user {requesterUser} asks to join.</Text> 
+                    <View key={plan.id}>
+                      <Text style={styles.highlight}>The user {requesterUser} asks to join.</Text>
 
-                    <Button
-                      testID="next-screen-button-5"
-                      style={CONTINUE}
-                      textStyle={CONTINUE_TEXT}
-                      text="ACCEPT"
-                      // ref: https://reactnavigation.org/docs/params/
-                      onPress={() =>
-                      {
-                        planAccepterOrRejecter.acceptOrReject(plan.id,requesterUser, JoinPlanRequestStatus.ACCEPT)
-                      }
-                      }
-                    />
-                      <Button
-                      testID="next-screen-button-5"
-                      style={CONTINUE}
-                      textStyle={CONTINUE_TEXT}
-                      text="REJECT"
-                      // ref: https://reactnavigation.org/docs/params/
-                      onPress={() =>
-                      {
-                        planAccepterOrRejecter.acceptOrReject(plan.id, requesterUser,JoinPlanRequestStatus.REJECT)
-                      }
-                      }
-                    />
-                  </View>
+                      <View style={{ flexDirection: 'column' }}>
+                        <Button
+                          testID="next-screen-button-5"
+                          style={{ ...CONTINUE, flex: 1 }}
+                          textStyle={CONTINUE_TEXT}
+                          text="ACCEPT"
+                          // ref: https://reactnavigation.org/docs/params/
+                          onPress={() => {
+                            planAccepterOrRejecter.acceptOrReject(plan.id, requesterUser, JoinPlanRequestStatus.ACCEPT)
+                          }
+                          }
+                        />
+                        <Button
+                          testID="next-screen-button-5"
+                          style={{ ...CONTINUE, flex: 1 }}
+                          textStyle={CONTINUE_TEXT}
+                          text="REJECT"
+                          // ref: https://reactnavigation.org/docs/params/
+                          onPress={() => {
+                            planAccepterOrRejecter.acceptOrReject(plan.id, requesterUser, JoinPlanRequestStatus.REJECT)
+                          }
+                          }
+                        />
+                      </View>
+                    </View>
                   )
                 })
               }
-             
+
             </Section>
           );
         })}
@@ -132,5 +132,6 @@ export default AcceptOrRejectJoinPlanRequest;
 const styles = StyleSheet.create({
   highlight: {
     fontWeight: "700",
+    color: "white"
   },
 });

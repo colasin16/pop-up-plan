@@ -78,7 +78,7 @@ export const CreatePlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> 
     const goBack = () => navigation.goBack();
 
     return (
-      <View testID="DemoScreen" style={FULL}>
+      <View testID="CreatePlanScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Header

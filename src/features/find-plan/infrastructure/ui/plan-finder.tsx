@@ -106,7 +106,7 @@ const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
       <ScrollView>
         {searchPlansStore.plans.map(plan => {
           return (
-            <Pressable onPress={() =>
+            <Pressable key={plan.id} onPress={() =>
               props.navigation.navigate({
                 name: "joinPlanRequest",
                 params: { planId: plan.id },

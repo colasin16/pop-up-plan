@@ -43,7 +43,7 @@ export const AuthenticateUser: FC<Props> = observer(({ onFinish }: Props) => {
     return !!email && !!password;
   };
 
-  const validateForm = () => {};
+  const validateForm = () => { };
 
   const submit = async (): Promise<void> => {
     const userAuthenticator = containerDI.resolve(UserAuthenticator);
@@ -110,7 +110,7 @@ export const AuthenticateUser: FC<Props> = observer(({ onFinish }: Props) => {
           text="HC Submit"
           onPress={submit}
         />
-        <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
+        {/* <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} /> */}
       </View>
     </View>
   );

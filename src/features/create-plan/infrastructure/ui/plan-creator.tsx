@@ -157,7 +157,7 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
           text="HC Submit"
           onPress={submit}
         />
-        <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
+        {/* <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} /> */}
       </View>
     </View>
   );

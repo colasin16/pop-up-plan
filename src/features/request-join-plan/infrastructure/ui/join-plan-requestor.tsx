@@ -4,10 +4,8 @@ import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import { Button, Text } from "../../../../../app/components";
 import { useStores } from "../../../../../app/models";
 import { color, spacing } from "../../../../../app/theme";
-import { Plan } from "../../../../core/domain/plan";
 import { Id } from "../../../../core/domain/types/id";
 import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
-import { PlanCreator } from "../../../create-plan/application/plan-creator";
 import { PlanFinder } from "../../../find-plan/application/plan-finder";
 import { JoinPlanRequester } from "../../application/join-plan-requester";
 
