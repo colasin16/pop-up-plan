@@ -40,6 +40,8 @@ const CONTINUE_TEXT: TextStyle = {
 // export const PlanList: FC<StackScreenProps<NavigatorParamList, "welcome">> = observer(
 // ({ navigation }) => {
 const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: PlanListProps) => {
+  const goBack = () => props.navigation.goBack();
+
   const { searchPlansStore, userStore } = useStores();
   const planAccepterOrRejecter = containerDI.resolve(RequestChecker);
   // const { /*searchPlansStore,*/ userStore, userPlansStore } = useStores();
@@ -64,6 +66,7 @@ const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: 
 
 
   useEffect(() => {
+    console.log("useeffect")
     const getOwnedPlans = async () => {
       return await findLoggedInUserOwnedPlans()
     }
@@ -79,45 +82,56 @@ const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: 
     <>
       {/* TODO: revise this component */}
       <ScrollView>
-        {ownedPlans.map(plan => {
+        {ownedPlans?.map(plan => {
           return (
-            <Section title={plan.title} key={plan.id}>
+            <>
               {
-                plan.pendingAttendeesId.map(requesterUser => {
-                  return (
-                    <View key={plan.id}>
-                      <Text style={styles.highlight}>The user {requesterUser} asks to join.</Text>
+                plan.pendingAttendeesId.length > 0 && <Section title={plan.title} key={plan.id}>
+                  {
+                    plan.pendingAttendeesId.map(requesterUser => {
+                      return (
+                        <View key={plan.id}>
+                          <Text style={styles.highlight}>The user {requesterUser} asks to join.</Text>
 
-                      <View style={{ flexDirection: 'column' }}>
-                        <Button
-                          testID="next-screen-button-5"
-                          style={{ ...CONTINUE, flex: 1 }}
-                          textStyle={CONTINUE_TEXT}
-                          text="ACCEPT"
-                          // ref: https://reactnavigation.org/docs/params/
-                          onPress={() => {
-                            planAccepterOrRejecter.acceptOrReject(plan.id, requesterUser, JoinPlanRequestStatus.ACCEPT)
-                          }
-                          }
-                        />
-                        <Button
-                          testID="next-screen-button-5"
-                          style={{ ...CONTINUE, flex: 1 }}
-                          textStyle={CONTINUE_TEXT}
-                          text="REJECT"
-                          // ref: https://reactnavigation.org/docs/params/
-                          onPress={() => {
-                            planAccepterOrRejecter.acceptOrReject(plan.id, requesterUser, JoinPlanRequestStatus.REJECT)
-                          }
-                          }
-                        />
-                      </View>
-                    </View>
-                  )
-                })
+                          <View style={styles.container}>
+                            {/* <View style={styles.square} />
+                        <View style={styles.square} />
+                        <View style={styles.square} /> */}
+                            <Button
+                              testID="next-screen-button-5"
+                              style={{ ...CONTINUE, ...styles.square }}
+                              textStyle={CONTINUE_TEXT}
+                              text="ACCEPT"
+                              // ref: https://reactnavigation.org/docs/params/
+                              onPress={async () => {
+                                await planAccepterOrRejecter.acceptOrReject(plan.id, requesterUser, JoinPlanRequestStatus.ACCEPT)
+                                goBack()
+                              }
+                              }
+                            />
+                            <Button
+                              testID="next-screen-button-5"
+                              style={{ ...CONTINUE, ...styles.square }}
+                              textStyle={CONTINUE_TEXT}
+                              text="REJECT"
+                              // ref: https://reactnavigation.org/docs/params/
+                              onPress={async () => {
+                                await planAccepterOrRejecter.acceptOrReject(plan.id, requesterUser, JoinPlanRequestStatus.REJECT)
+                                goBack()
+                              }
+                              }
+                            />
+                          </View>
+
+                        </View>
+                      )
+                    })
+                  }
+
+                </Section>
               }
+            </>
 
-            </Section>
           );
         })}
       </ScrollView>
@@ -134,4 +148,16 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "white"
   },
+  container: {
+    // backgroundColor: "#7CA1B4",
+    flex: 1,
+    alignItems: "center", // ignore this - we'll come back to it
+    justifyContent: "center", // ignore this - we'll come back to it
+    flexDirection: "row",
+  },
+  square: {
+    // backgroundColor: "#7cb48f",
+    margin: 4,
+  },
 });
+
