@@ -4,10 +4,10 @@ import { Pressable, ScrollView, StyleSheet, Text, TextStyle, ViewStyle } from "r
 import { useStores } from "../../../../../app/models";
 import { PlanSnapshot } from "../../../../../app/models/plan/plan";
 import { color, spacing, typography } from "../../../../../app/theme";
-import { Category } from "../../../../core/domain/plan";
 import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
 import { PlanFinder } from "../../application/plan-finder";
 import { Section } from "./section";
+import { useIsFocused } from '@react-navigation/native';
 
 
 
@@ -41,8 +41,14 @@ interface PlanListProps extends PropsWithChildren<any> {
 // ({ navigation }) => {
 const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
   const { searchPlansStore } = useStores();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
+    // https://stackoverflow.com/a/68068492/5377615
+    if (!isFocused) {
+      return
+    }
+
     async function getData() {
       const planFinder = containerDI.resolve(PlanFinder);
       const { data: plans } = await planFinder.findAll();
@@ -50,19 +56,19 @@ const PlanList: React.FC<PlanListProps> = observer((props: PlanListProps) => {
     }
 
     getData().catch();
-  }, []);
+  }, [isFocused]);
 
-  const findWalkPlans = async (): Promise<void> => {
-    const planFinder = containerDI.resolve(PlanFinder);
-    const { data: plans } = await planFinder.findByCategory(Category.WALK);
-    searchPlansStore.savePlans(plans as PlanSnapshot[]);
-  };
+  // const findWalkPlans = async (): Promise<void> => {
+  //   const planFinder = containerDI.resolve(PlanFinder);
+  //   const { data: plans } = await planFinder.findByCategory(Category.WALK);
+  //   searchPlansStore.savePlans(plans as PlanSnapshot[]);
+  // };
 
-  const findRunPlans = async (): Promise<void> => {
-    const planFinder = containerDI.resolve(PlanFinder);
-    const { data: plans } = await planFinder.findByCategory(Category.RUN);
-    searchPlansStore.savePlans(plans as PlanSnapshot[]);
-  };
+  // const findRunPlans = async (): Promise<void> => {
+  //   const planFinder = containerDI.resolve(PlanFinder);
+  //   const { data: plans } = await planFinder.findByCategory(Category.RUN);
+  //   searchPlansStore.savePlans(plans as PlanSnapshot[]);
+  // };
 
   // const findRunPlansByOwner = async (): Promise<void> => {
   //   const planFinder = containerDI.resolve(PlanFinder);

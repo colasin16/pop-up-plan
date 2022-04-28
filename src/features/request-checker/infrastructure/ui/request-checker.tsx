@@ -10,6 +10,7 @@ import { PlanFinder } from "../../../find-plan/application/plan-finder";
 import { RequestChecker } from "../../application/request-checker";
 import { JoinPlanRequestStatus } from "../../domain/request-checker-repository";
 import { Section } from "./section";
+import { useIsFocused } from '@react-navigation/native';
 
 interface PlanListProps extends PropsWithChildren<any> {
   navigation?: any;
@@ -41,7 +42,7 @@ const CONTINUE_TEXT: TextStyle = {
 // ({ navigation }) => {
 const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: PlanListProps) => {
   const goBack = () => props.navigation.goBack();
-
+  const isFocused = useIsFocused();
   const { searchPlansStore, userStore } = useStores();
   const planAccepterOrRejecter = containerDI.resolve(RequestChecker);
   // const { /*searchPlansStore,*/ userStore, userPlansStore } = useStores();
@@ -64,8 +65,14 @@ const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: 
 
   const [ownedPlans, setownedPlans] = useState([] as Plan[])
 
+  // TODO: remove me
+  const [tmpRerender, setTmpRerender] = useState(true)
 
   useEffect(() => {
+    if (!isFocused) {
+      return
+    }
+
     console.log("useeffect")
     const getOwnedPlans = async () => {
       return await findLoggedInUserOwnedPlans()
@@ -75,7 +82,7 @@ const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: 
 
     }).catch()
 
-  }, [])
+  }, [isFocused, tmpRerender])
 
 
   return (
@@ -94,30 +101,29 @@ const AcceptOrRejectJoinPlanRequest: React.FC<PlanListProps> = observer((props: 
                           <Text style={styles.highlight}>The user {requesterUser} asks to join.</Text>
 
                           <View style={styles.container}>
-                            {/* <View style={styles.square} />
-                        <View style={styles.square} />
-                        <View style={styles.square} /> */}
                             <Button
                               testID="next-screen-button-5"
-                              style={{ ...CONTINUE, ...styles.square }}
+                              style={{ ...CONTINUE, ...styles.button }}
                               textStyle={CONTINUE_TEXT}
                               text="ACCEPT"
                               // ref: https://reactnavigation.org/docs/params/
                               onPress={async () => {
                                 await planAccepterOrRejecter.acceptOrReject(plan.id, requesterUser, JoinPlanRequestStatus.ACCEPT)
-                                goBack()
+                                // goBack()
+                                setTmpRerender(!tmpRerender)
                               }
                               }
                             />
                             <Button
                               testID="next-screen-button-5"
-                              style={{ ...CONTINUE, ...styles.square }}
+                              style={{ ...CONTINUE, ...styles.button }}
                               textStyle={CONTINUE_TEXT}
                               text="REJECT"
                               // ref: https://reactnavigation.org/docs/params/
                               onPress={async () => {
                                 await planAccepterOrRejecter.acceptOrReject(plan.id, requesterUser, JoinPlanRequestStatus.REJECT)
-                                goBack()
+                                // goBack()
+                                setTmpRerender(!tmpRerender)
                               }
                               }
                             />
@@ -149,13 +155,13 @@ const styles = StyleSheet.create({
     color: "white"
   },
   container: {
-    // backgroundColor: "#7CA1B4",
+    // backgroundColor: "#7CA1B401",
     flex: 1,
     alignItems: "center", // ignore this - we'll come back to it
     justifyContent: "center", // ignore this - we'll come back to it
     flexDirection: "row",
   },
-  square: {
+  button: {
     // backgroundColor: "#7cb48f",
     margin: 4,
   },

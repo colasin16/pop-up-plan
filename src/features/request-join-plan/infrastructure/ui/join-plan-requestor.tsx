@@ -161,7 +161,7 @@ export const JoinPlanRequest: FC<Props> = observer(({ onFinish, planId }: Props)
       // const { plan } = await planCreator.create(user, planData);
       await joinPlanRequester.join(planId, userStore.id);
 
-      // onFinish();
+      onFinish();
     } catch (error) {
       console.log("🚀 ~ file: join-plan-requester.tsx ~ line 137 ~ submit ~ error", error);
     }

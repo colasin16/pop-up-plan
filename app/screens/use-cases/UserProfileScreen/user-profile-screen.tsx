@@ -24,6 +24,7 @@ import { color, spacing, typography } from "../../../theme";
 import { CurrentTabContext } from "./current-tab-context";
 import { TABS } from "./enums";
 import { TaskTab } from "./tab-component";
+import { useIsFocused } from '@react-navigation/native';
 
 // TODO: attending plans using API
 const ATTENDING_PLANS = [AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
@@ -84,6 +85,8 @@ const FLAT_LIST: ViewStyle = {
 export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userProfile">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
+    const isFocused = useIsFocused();
+
     const { /*searchPlansStore,*/ userStore, userPlansStore } = useStores();
     const store = useStores();
 
@@ -107,9 +110,13 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
     };
 
     useEffect(() => {
+      if (!isFocused) {
+        return
+      }
+      console.log('user profile screen useEffect')
       findPlansByOwner();
       findPlansByAttendee();
-    }, []);
+    }, [isFocused]);
 
     const renderPlanItem = ({ item }) => (
       <Pressable style={LIST_CONTAINER} onPress={() => {
