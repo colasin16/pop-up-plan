@@ -1,8 +1,8 @@
 import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { loginUserScreen } from "../screens/use-cases/login-user";
+import { loginUserScreen } from "../screens/use-cases/login-user-screen";
 import MyTabs from "./tab-navigator";
-import { CreateUserScreen } from "../screens/use-cases/create-user";
+import { CreateUserScreen } from "../screens/use-cases/create-user-screen";
 
 export type MainNavigatorParamList = {
     tab: undefined;

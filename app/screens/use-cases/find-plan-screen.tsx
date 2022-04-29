@@ -7,8 +7,6 @@ import { GradientBackground, Header, Screen, Text } from "../../components";
 import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
 
-export const logoIgnite = require("../demo/logo-ignite.png");
-export const heart = require("../demo/heart.png");
 
 const FULL: ViewStyle = { flex: 1, paddingBottom: 20 };
 const CONTAINER: ViewStyle = {

@@ -2,15 +2,12 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
 import React, { FC, useState } from "react";
 import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
-import { Plan } from "../../../src/core/domain/plan";
 import { JoinPlanRequest } from "../../../src/features/request-join-plan/infrastructure/ui/join-plan-requestor";
 import { GradientBackground, Header, Screen, Text } from "../../components";
 import { useStores } from "../../models";
 import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
 
-export const logoIgnite = require("../demo/logo-ignite.png");
-export const heart = require("../demo/heart.png");
 
 const FULL: ViewStyle = { flex: 1 };
 const CONTAINER: ViewStyle = {
@@ -133,7 +130,7 @@ export const JoinPlanRequestScreen: FC<
         <Text style={TAGLINE} text="Join the plan" />
 
         {/* <JoinPlanRequest onFinish={goBack} plan={plan} /> */}
-        <JoinPlanRequest onFinish={goBack} planId={planId}/>
+        <JoinPlanRequest onFinish={goBack} planId={planId} />
 
 
         {/* <CreatePlan onFinish={goBack} /> */}

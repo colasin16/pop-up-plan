@@ -7,8 +7,6 @@ import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
 import { CreatePlan } from "../../../src/features/create-plan/infrastructure/ui/plan-creator";
 
-export const logoIgnite = require("../demo/logo-ignite.png");
-export const heart = require("../demo/heart.png");
 
 const FULL: ViewStyle = { flex: 1, paddingBottom: 10 };
 const CONTAINER: ViewStyle = {

@@ -4,21 +4,20 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { useColorScheme } from "react-native";
-import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens";
-import { navigationRef, useBackButtonHandler } from "./navigation-utilities";
-import { CreatePlanScreen } from "../screens/use-cases/create-plan-screen";
-import { FindPlanScreen } from "../screens/use-cases/find-plan-screen";
-import { CreateUserScreen } from "../screens/use-cases/create-user";
-import { UserProfileScreen } from "../screens/use-cases/UserProfileScreen";
-import { loginUserScreen } from "../screens/use-cases/login-user";
-import { JoinPlanRequestScreen } from "../screens/use-cases/join-plan-request-screen";
-import { checkRequestsScreen } from "../screens/use-cases/check-requests-screen";
-import MyTabs from "./tab-navigator";
+import {
+  checkRequestsScreen,
+  CreatePlanScreen,
+  CreateUserScreen,
+  FindPlanScreen,
+  JoinPlanRequestScreen,
+  UserProfileScreen
+} from "../screens";
 import { MainAppStack } from "./main-navigator";
+import { navigationRef, useBackButtonHandler } from "./navigation-utilities";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -65,8 +64,6 @@ export const AppStack = () => {
       <Stack.Screen name="checkRequests" component={checkRequestsScreen} />
       <Stack.Screen name="joinPlanRequest" component={JoinPlanRequestScreen} />
       <Stack.Screen name="userProfile" component={UserProfileScreen} />
-      <Stack.Screen name="demo" component={DemoScreen} />
-      <Stack.Screen name="demoList" component={DemoListScreen} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   );

@@ -1,16 +1,14 @@
+import React, { FC } from "react";
+import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
-import React, { FC, useEffect } from "react";
-import { ImageStyle, Pressable, TextStyle, Touchable, View, ViewStyle } from "react-native";
-import { AuthenticateUser } from "../../../src/features/authenticate-user/infrastructure/ui/user-authenticator";
-import { Button, GradientBackground, Header, Screen, Text } from "../../components";
-import { useStores } from "../../models";
-import { MainNavigatorParamList } from "../../navigators/main-navigator";
+import { Header, Text, Screen, AutoImage as Image, GradientBackground } from "../../components";
+import { NavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
+import { CreateUser } from "../../../src/features/create-user/infrastructure/ui/user-creator";
 import { palette } from "../../theme/palette";
+import { useStores } from "../../models";
 
-export const logoIgnite = require("../demo/logo-ignite.png");
-export const heart = require("../demo/heart.png");
 
 const FULL: ViewStyle = { flex: 1 };
 const CONTAINER: ViewStyle = {
@@ -82,59 +80,33 @@ const HEART: ImageStyle = {
   resizeMode: "contain",
 };
 
-export const loginUserScreen: FC<StackScreenProps<MainNavigatorParamList, "loginUser">> = observer(
+export const CreateUserScreen: FC<StackScreenProps<NavigatorParamList, "createUser">> = observer(
   ({ navigation }) => {
-    // const goBack = () => navigation.goBack();
+    const goBack = () => navigation.goBack();
     const store = useStores();
 
-
-    useEffect(() => {
-      if (store.isAuthenticated()) {
-        navigation.navigate("tab")
-      }
-
-    }, [])
-
-    const onFinish = () => {
-      navigation.navigate("tab")
-    }
-
-
     return (
-      <View testID="loginScreen" style={FULL}>
+      <View testID="CreateUserScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Header
-            headerText="LOGIN"
+            headerText="REGISTRATION"
             leftIcon="back"
-            onLeftPress={onFinish}
+            onLeftPress={goBack}
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <Text
-            style={TITLE}
-            preset="header"
-            text="HC Are you willing to have a great experience?"
-          />
+          <Text style={TITLE} preset="header" text="HC What do you feel like doing today?" />
 
           {store.isAuthenticated() ? (
             <Text style={TAGLINE_Error} text="You are already authenticated, please logout first" />
-
           ) : (
             <>
-              <Text style={TAGLINE} text="HC Login to your account" />
-              <AuthenticateUser onFinish={onFinish} />
-              <Pressable>
-
-                <Text style={TAGLINE} tx={`loginScreen.RegisterHint` as const} onPress={() => {
-                  store.setUser(undefined);
-                  navigation.navigate("registerUser");
-                }} />
-
-              </Pressable>
-
+              <Text style={TAGLINE} text="HC Create a new plan" />
+              <CreateUser onFinish={goBack} />
             </>
           )}
+
         </Screen>
       </View>
     );
