@@ -12,7 +12,7 @@ export class PlanListHttpRepository extends Repository implements PlanListReposi
   async findAll() {
     try {
       const response = await axios.get<undefined, { data: { success: boolean; data: Plan[] } }>(
-        `${this.repositorRoot}`,
+        `${this.repositorRoot}`, await this.getConfig()
       );
       return response.data;
     } catch (error) {
@@ -24,7 +24,7 @@ export class PlanListHttpRepository extends Repository implements PlanListReposi
   async findByCategory(category: Category) {
     try {
       const response = await axios.get<undefined, { data: { success: boolean; data: Plan[] } }>(
-        `${this.repositorRoot}/${category}`,
+        `${this.repositorRoot}/${category}`, await this.getConfig()
       );
       return response.data;
     } catch (error) {
@@ -36,7 +36,7 @@ export class PlanListHttpRepository extends Repository implements PlanListReposi
   async findByTime(time: number) {
     try {
       const response = await axios.get<undefined, { data: { success: boolean; data: Plan[] } }>(
-        `${this.repositorRoot}/time/${time}`,
+        `${this.repositorRoot}/time/${time}`, await this.getConfig()
       );
       return response.data;
     } catch (error) {
@@ -48,7 +48,7 @@ export class PlanListHttpRepository extends Repository implements PlanListReposi
   async findByLocation(location: CustomLocation) {
     try {
       const response = await axios.get<undefined, { data: { success: boolean; data: Plan[] } }>(
-        `${this.repositorRoot}/location/${location}`,
+        `${this.repositorRoot}/location/${location}`, await this.getConfig()
       );
       return response.data;
     } catch (error) {
