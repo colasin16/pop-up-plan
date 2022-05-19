@@ -1,9 +1,11 @@
 import { observer } from "mobx-react-lite";
 import React, { FC, useState } from "react";
-import { Platform, TextStyle, View, ViewStyle } from "react-native";
-import { Button, Text, TextField } from "../../../../../app/components";
+import { TextStyle, View, ViewStyle } from "react-native";
+import { Button, TextField } from "../../../../../app/components";
 import { useStores } from "../../../../../app/models";
 import { color, spacing } from "../../../../../app/theme";
+import { save as saveOnStorage } from "../../../../../app/utils/storage";
+import { STORE_ITEMS_KEYS } from "../../../../../app/utils/storage/keys";
 import { Email } from "../../../../core/domain/types/email";
 import { Password } from "../../../../core/domain/types/password";
 import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
@@ -35,6 +37,7 @@ interface Props {
 
 export const AuthenticateUser: FC<Props> = observer(({ onFinish }: Props) => {
   const store = useStores();
+
 
   const [email, setEmail] = useState<Email>("");
   const [password, setPassword] = useState<Password>();
@@ -70,6 +73,11 @@ export const AuthenticateUser: FC<Props> = observer(({ onFinish }: Props) => {
           ...user,
           image: "",
         });
+
+        // TODO: add remember me checkbox
+        // saveKeyChain(email, password)
+
+        await saveOnStorage(STORE_ITEMS_KEYS.TOKEN, token)
         // TODO: check how can we validate that the user has been created successfully
 
         // const { plans } = await planFinder.findAll();
