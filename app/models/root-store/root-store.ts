@@ -1,6 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
 import { PlanStoreModel } from "../plan-store/plan-store";
-import { TokenModel } from "../token/token";
 import { User, UserModel } from "../user/user";
 
 /**
@@ -10,8 +9,6 @@ import { User, UserModel } from "../user/user";
 export const RootStoreModel = types.model("RootStore").props({
   // Store for current authenticated user ???
   userStore: types.maybe(UserModel),
-
-  tokenStore: types.maybe(TokenModel),
 
   // Store for current user owned plans ???
   userPlansStore: types.optional(PlanStoreModel, {} as any),
@@ -29,7 +26,7 @@ export const RootStoreModel = types.model("RootStore").props({
   },
   isAuthenticated: () => {
     // we have null here to use it for logout
-    return self.userStore !== undefined && self.tokenStore !== undefined
+    return self.userStore !== undefined
   },
 }))
 
