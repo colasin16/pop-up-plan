@@ -38,6 +38,9 @@
     "field": "Field"
   },
   "loginScreen": {
-    "RegisterHint": "Are you a new user?"
+    "Title": "LOGIN",
+    "Header": "Are you willing to have a great experience?",
+    "RegisterHint": "Are you a new user? Click here.",
+    "SubHeader": "Login to your account"
   }
 }

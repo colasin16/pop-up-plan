@@ -17,10 +17,8 @@ export class UserAuthenticatorHttpRepository extends Repository implements UserL
         },
       );
 
-      const { success, data } = response.data;
-      const { token, user } = data;
+      const { success, token, user } = response.data;
 
-      console.debug(`response.data: ${JSON.stringify(response.data)}`);
       console.debug(`async login, token: ${token}`);
 
       return { success, token, user };

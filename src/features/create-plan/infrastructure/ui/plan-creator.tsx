@@ -40,8 +40,11 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState<CustomLocation>("");
   const [time, setTime] = useState<Timestamp>(0);
-  const [category, setCategory] = useState<Category>();
-  const [privacy, setPrivacy] = useState<Privacy>();
+
+
+  // TODO: now we only have category:walk and privacy:private plans
+  const [category, setCategory] = useState<Category>(Category.WALK);
+  const [privacy, setPrivacy] = useState<Privacy>(Privacy.PRIVATE);
 
   const isReadyToSubmit = () => {
     return !!title && !!location && !!time && !!category && !!privacy;
@@ -113,8 +116,10 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
         label="Time"
         placeholder="Plan time"
       />
+
+      {/*       
       <View>
-        <Text preset="fieldLabel">Select the plan type:</Text>
+        
         <View style={{ flexDirection: "row" }}>
           {Object.values(Category).map((cat, index) => (
             <Button
@@ -150,7 +155,7 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
             />
           ))}
         </View>
-      </View>
+      </View> */}
 
       <View>
         <Button

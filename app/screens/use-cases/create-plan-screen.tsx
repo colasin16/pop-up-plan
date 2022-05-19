@@ -1,11 +1,11 @@
-import React, { FC } from "react";
-import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
-import { Header, Text, Screen, AutoImage as Image, GradientBackground } from "../../components";
-import { NavigatorParamList } from "../../navigators";
-import { color, spacing } from "../../theme";
+import React, { FC } from "react";
+import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import { CreatePlan } from "../../../src/features/create-plan/infrastructure/ui/plan-creator";
+import { GradientBackground, Header, Screen, Text } from "../../components";
+import { BottomTabNavigatorParamList, ExploreTabNavigatorParamList } from "../../navigators";
+import { color, spacing } from "../../theme";
 
 
 const FULL: ViewStyle = { flex: 1, paddingBottom: 10 };
@@ -71,7 +71,7 @@ const HEART: ImageStyle = {
   resizeMode: "contain",
 };
 
-export const CreatePlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
+export const CreatePlanScreen: FC<StackScreenProps<BottomTabNavigatorParamList, "createPlan">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
 
@@ -86,9 +86,10 @@ export const CreatePlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> 
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <Text style={TITLE} preset="header" text="HC What do you feel like doing today?" />
-          <Text style={TAGLINE} text="HC Create a new plan" />
 
+          <Text style={TITLE} preset="header" text="What do you feel like doing today?" />
+          <Text style={TAGLINE} text="Create a new plan" />
+          {/* <Text preset="fieldLabel" style={{ fontSize: 24, color: color.palette.offWhite, marginBottom: 10 }}>Now we only have category:walk and privacy:private plans</Text> */}
           <CreatePlan onFinish={goBack} />
 
         </Screen>

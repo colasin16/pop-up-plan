@@ -1,11 +1,12 @@
+import { useIsFocused } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
 import React, { FC, useEffect } from "react";
-import { ImageStyle, Pressable, TextStyle, View, ViewStyle } from "react-native";
+import { BackHandler, ImageStyle, Pressable, TextStyle, View, ViewStyle } from "react-native";
 import { AuthenticateUser } from "../../../src/features/authenticate-user/infrastructure/ui/user-authenticator";
 import { GradientBackground, Header, Screen, Text } from "../../components";
 import { useStores } from "../../models";
-import { MainNavigatorParamList } from "../../navigators/main-navigator";
+import { AppNavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
 import { palette } from "../../theme/palette";
 
@@ -80,18 +81,24 @@ const HEART: ImageStyle = {
   resizeMode: "contain",
 };
 
-export const loginUserScreen: FC<StackScreenProps<MainNavigatorParamList, "loginUser">> = observer(
+export const loginUserScreen: FC<StackScreenProps<AppNavigatorParamList, "loginUser">> = observer(
   ({ navigation }) => {
     // const goBack = () => navigation.goBack();
     const store = useStores();
 
+    const isFocused = useIsFocused();
 
     useEffect(() => {
+      if (!isFocused) {
+        return
+      }
       if (store.isAuthenticated()) {
-        navigation.navigate("tab")
+        // TODO: Temprorary, fix this line later, when a user is in Explore tab and press back button
+        // how can we handle app to exist withouth this line of code?
+        BackHandler.exitApp();
       }
 
-    }, [])
+    }, [isFocused])
 
     const onFinish = () => {
       navigation.navigate("tab")
@@ -102,37 +109,38 @@ export const loginUserScreen: FC<StackScreenProps<MainNavigatorParamList, "login
       <View testID="loginScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <Header
-            headerText="LOGIN"
-            leftIcon="back"
-            onLeftPress={onFinish}
-            style={HEADER}
-            titleStyle={HEADER_TITLE}
-          />
-          <Text
-            style={TITLE}
-            preset="header"
-            text="HC Are you willing to have a great experience?"
-          />
+          {
+            store.isAuthenticated() ?
+              // <Text style={TAGLINE_Error} text="You are already authenticated, please logout first" />
+              <></> :
+              <>
+                <Header
+                  headerTx={`loginScreen.Title` as const}
+                  // leftIcon="back"
+                  // onLeftPress={onFinish}
+                  style={HEADER}
+                  titleStyle={HEADER_TITLE}
+                />
+                <Text
+                  style={TITLE}
+                  preset="header"
+                  tx={`loginScreen.Header` as const}
+                />
 
-          {store.isAuthenticated() ? (
-            <Text style={TAGLINE_Error} text="You are already authenticated, please logout first" />
+                <Text style={TAGLINE} tx={`loginScreen.SubHeader` as const} />
+                <AuthenticateUser onFinish={onFinish} />
+                <Pressable>
 
-          ) : (
-            <>
-              <Text style={TAGLINE} text="HC Login to your account" />
-              <AuthenticateUser onFinish={onFinish} />
-              <Pressable>
+                  <Text style={TAGLINE} tx={`loginScreen.RegisterHint` as const} onPress={() => {
+                    store.setUser(undefined);
+                    navigation.navigate("createUser");
+                  }} />
 
-                <Text style={TAGLINE} tx={`loginScreen.RegisterHint` as const} onPress={() => {
-                  store.setUser(undefined);
-                  navigation.navigate("registerUser");
-                }} />
+                </Pressable>
 
-              </Pressable>
+              </>
+          }
 
-            </>
-          )}
         </Screen>
       </View>
     );

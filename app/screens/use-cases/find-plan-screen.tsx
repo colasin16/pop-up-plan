@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { TextStyle, View, ViewStyle } from "react-native";
 import PlanList from "../../../src/features/find-plan/infrastructure/ui/plan-finder";
 import { GradientBackground, Header, Screen, Text } from "../../components";
-import { NavigatorParamList } from "../../navigators";
+import { ExploreTabNavigatorParamList } from "../../navigators/explore-tab-navigator";
 import { color, spacing } from "../../theme";
 
 
@@ -45,7 +45,7 @@ const TAGLINE: TextStyle = {
   marginBottom: spacing[4] + spacing[1],
 };
 
-export const FindPlanScreen: FC<StackScreenProps<NavigatorParamList, "findPlan">> = observer(
+export const FindPlanScreen: FC<StackScreenProps<ExploreTabNavigatorParamList, "findPlan">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
 
@@ -55,9 +55,9 @@ export const FindPlanScreen: FC<StackScreenProps<NavigatorParamList, "findPlan">
         <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
           <Header
             headerText="HC FIND PLANS"
-            leftIcon="back"
+            // leftIcon="back"
             rightIcon="bullet"
-            onLeftPress={goBack}
+            // onLeftPress={goBack}
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />

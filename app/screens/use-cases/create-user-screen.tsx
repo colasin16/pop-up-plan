@@ -1,13 +1,13 @@
-import React, { FC } from "react";
-import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
-import { Header, Text, Screen, AutoImage as Image, GradientBackground } from "../../components";
-import { NavigatorParamList } from "../../navigators";
-import { color, spacing } from "../../theme";
+import React, { FC } from "react";
+import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import { CreateUser } from "../../../src/features/create-user/infrastructure/ui/user-creator";
-import { palette } from "../../theme/palette";
+import { GradientBackground, Header, Screen, Text } from "../../components";
 import { useStores } from "../../models";
+import { AppNavigatorParamList } from "../../navigators";
+import { color, spacing } from "../../theme";
+import { palette } from "../../theme/palette";
 
 
 const FULL: ViewStyle = { flex: 1 };
@@ -80,7 +80,7 @@ const HEART: ImageStyle = {
   resizeMode: "contain",
 };
 
-export const CreateUserScreen: FC<StackScreenProps<NavigatorParamList, "createUser">> = observer(
+export const CreateUserScreen: FC<StackScreenProps<AppNavigatorParamList, "createUser">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
     const store = useStores();
@@ -96,13 +96,13 @@ export const CreateUserScreen: FC<StackScreenProps<NavigatorParamList, "createUs
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
-          <Text style={TITLE} preset="header" text="HC What do you feel like doing today?" />
+          <Text style={TITLE} preset="header" text="Ready? Go!" />
 
           {store.isAuthenticated() ? (
             <Text style={TAGLINE_Error} text="You are already authenticated, please logout first" />
           ) : (
             <>
-              <Text style={TAGLINE} text="HC Create a new plan" />
+              <Text style={TAGLINE} text="Fill your information in the following fields" />
               <CreateUser onFinish={goBack} />
             </>
           )}

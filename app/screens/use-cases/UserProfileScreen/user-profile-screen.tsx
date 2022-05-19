@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
 import React, { FC, useEffect, useState } from "react";
@@ -19,12 +20,11 @@ import {
 } from "../../../components";
 import { useStores } from "../../../models";
 import { PlanSnapshot } from "../../../models/plan/plan";
-import { NavigatorParamList } from "../../../navigators";
+import { BottomTabNavigatorParamList } from "../../../navigators";
 import { color, spacing, typography } from "../../../theme";
 import { CurrentTabContext } from "./current-tab-context";
 import { TABS } from "./enums";
 import { TaskTab } from "./tab-component";
-import { useIsFocused } from '@react-navigation/native';
 
 // TODO: attending plans using API
 const ATTENDING_PLANS = [AmazingPlan, FarAwayWalkPlan, FarAwayRunPlan];
@@ -82,7 +82,7 @@ const FLAT_LIST: ViewStyle = {
   margin: 15,
 };
 
-export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userProfile">> = observer(
+export const UserProfileScreen: FC<StackScreenProps<BottomTabNavigatorParamList, "profile">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
     const isFocused = useIsFocused();
@@ -164,7 +164,7 @@ export const UserProfileScreen: FC<StackScreenProps<NavigatorParamList, "userPro
       letterSpacing: 2,
     };
     return (
-      <View testID="DemoListScreen" style={FULL}>
+      <View testID="UserProfileScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
           <Button

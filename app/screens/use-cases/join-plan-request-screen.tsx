@@ -5,7 +5,7 @@ import { ImageStyle, TextStyle, View, ViewStyle } from "react-native";
 import { JoinPlanRequest } from "../../../src/features/request-join-plan/infrastructure/ui/join-plan-requestor";
 import { GradientBackground, Header, Screen, Text } from "../../components";
 import { useStores } from "../../models";
-import { NavigatorParamList } from "../../navigators";
+import { ExploreTabNavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
 
 
@@ -92,7 +92,7 @@ const HINT: TextStyle = {
 };
 
 export const JoinPlanRequestScreen: FC<
-  StackScreenProps<NavigatorParamList, "joinPlanRequest">
+  StackScreenProps<ExploreTabNavigatorParamList, "joinPlanRequest">
 > = observer(({ route, navigation }) => {
   const goBack = () => navigation.goBack();
   const { searchPlansStore } = useStores();

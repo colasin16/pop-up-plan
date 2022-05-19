@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { TextStyle, View, ViewStyle } from "react-native";
 import AcceptOrRejectJoinPlanRequest from "../../../src/features/request-checker/infrastructure/ui/request-checker";
 import { GradientBackground, Header, Screen, Text } from "../../components";
-import { NavigatorParamList } from "../../navigators";
+import { BottomTabNavigatorParamList } from "../../navigators";
 import { color, spacing } from "../../theme";
 
 
@@ -45,7 +45,7 @@ const TAGLINE: TextStyle = {
   marginBottom: spacing[4] + spacing[1],
 };
 
-export const checkRequestsScreen: FC<StackScreenProps<NavigatorParamList, "checkRequests">> = observer(
+export const checkRequestsScreen: FC<StackScreenProps<BottomTabNavigatorParamList, "checkRequests">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
 
@@ -54,7 +54,7 @@ export const checkRequestsScreen: FC<StackScreenProps<NavigatorParamList, "check
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
           <Header
-            headerText="HC PENDING PLANS THAT YOU NEED TO CHECK"
+            headerText="PENDING PLANS THAT YOU NEED TO CHECK"
             leftIcon="back"
             rightIcon="bullet"
             onLeftPress={goBack}
@@ -64,9 +64,9 @@ export const checkRequestsScreen: FC<StackScreenProps<NavigatorParamList, "check
           <Text
             style={TITLE}
             preset="header"
-            text="HC See who wants to join your plan(s)!"
+            text="See who wants to join your plan(s)!"
           />
-          <Text style={TAGLINE} text="HC Look carefully! When you accept someone you cannot redo this operation." />
+          <Text style={TAGLINE} text="Look carefully! When you accept someone you cannot redo this operation." />
           <AcceptOrRejectJoinPlanRequest navigation={navigation} />
         </Screen>
       </View>

@@ -8,16 +8,10 @@ import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { useColorScheme } from "react-native";
-import {
-  checkRequestsScreen,
-  CreatePlanScreen,
-  CreateUserScreen,
-  FindPlanScreen,
-  JoinPlanRequestScreen,
-  UserProfileScreen
-} from "../screens";
-import { MainAppStack } from "./main-navigator";
+import { CreateUserScreen } from "../screens/use-cases/create-user-screen";
+import { loginUserScreen } from "../screens/use-cases/login-user-screen";
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities";
+import ButtomTabs from "./bottom-tab-navigator";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -31,43 +25,33 @@ import { navigationRef, useBackButtonHandler } from "./navigation-utilities";
  *   https://reactnavigation.org/docs/params/
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
-export type NavigatorParamList = {
-  createUser: undefined;
-  welcome: undefined;
-  createPlan: undefined;
-  joinPlanRequest: undefined;
-  checkRequests: undefined;
-  findPlan: undefined;
-  userProfile: undefined;
+
+export type AppNavigatorParamList = {
+  tab: undefined;
   loginUser: undefined;
-  demo: undefined;
-  demoList: undefined;
+  createUser: undefined;
   // 🔥 Your screens go here
 };
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<NavigatorParamList>();
+const mainStack = createNativeStackNavigator<AppNavigatorParamList>();
 
 export const AppStack = () => {
   return (
-    <Stack.Navigator
+    <mainStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="findPlan"
+      initialRouteName="loginUser"
     >
-      {/* <Stack.Screen name="welcome" component={WelcomeScreen} /> */}
-      {/* <Stack.Screen name="loginUser" component={loginUserScreen} /> */}
-      <Stack.Screen name="findPlan" component={FindPlanScreen} />
-      <Stack.Screen name="createPlan" component={CreatePlanScreen} />
-      <Stack.Screen name="createUser" component={CreateUserScreen} />
-      <Stack.Screen name="checkRequests" component={checkRequestsScreen} />
-      <Stack.Screen name="joinPlanRequest" component={JoinPlanRequestScreen} />
-      <Stack.Screen name="userProfile" component={UserProfileScreen} />
-      {/** 🔥 Your screens go here */}
-    </Stack.Navigator>
-  );
-};
+      <mainStack.Screen name="loginUser" component={loginUserScreen} />
+      <mainStack.Screen name="createUser" component={CreateUserScreen} />
+      <mainStack.Screen name="tab" component={ButtomTabs} />
+
+    </mainStack.Navigator>
+  )
+}
+
 
 interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> { }
 
@@ -80,14 +64,8 @@ export const AppNavigator = (props: NavigationProps) => {
         ref={navigationRef}
         theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         {...props}>
-        <MainAppStack />
-        {/* <MyTabs /> */}
-
-        {/* <AppStack /> */}
+        <AppStack />
       </NavigationContainer>
-      {/* <NavigationContainer>
-        <MyTabs />
-      </NavigationContainer> */}
     </>
 
   );
@@ -104,5 +82,5 @@ AppNavigator.displayName = "AppNavigator";
  *
  * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
  */
-const exitRoutes = ["welcome"];
+const exitRoutes = ["loginUser"];
 export const canExit = (routeName: string) => exitRoutes.includes(routeName);
