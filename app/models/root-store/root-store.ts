@@ -30,7 +30,6 @@ export const RootStoreModel = types.model("RootStore").props({
   isAuthenticated: () => {
     // we have null here to use it for logout
     return self.userStore !== undefined && self.tokenStore !== undefined
-
   },
 }))
 

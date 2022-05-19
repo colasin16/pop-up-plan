@@ -1,5 +1,4 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
-import { Id } from "../../../src/core/domain/types/id";
 import { withEnvironment } from "../extensions/with-environment";
 import { PlanModel, PlanSnapshot } from "../plan/plan";
 
@@ -20,7 +19,7 @@ export const PlanStoreModel = types
   }));;
 
 type PlanStoreType = Instance<typeof PlanStoreModel>;
-export interface PlanStore extends PlanStoreType {}
+export interface PlanStore extends PlanStoreType { }
 type PlanStoreSnapshotType = SnapshotOut<typeof PlanStoreModel>;
-export interface PlanStoreSnapshot extends PlanStoreSnapshotType {}
+export interface PlanStoreSnapshot extends PlanStoreSnapshotType { }
 export const createPlanStoreDefaultModel = () => types.optional(PlanStoreModel, {});
