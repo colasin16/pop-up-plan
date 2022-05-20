@@ -15,7 +15,8 @@ export class AcceptOrRejectJoinRequestPlanHttpRepository extends Repository impl
         {
           userId,
           status
-        }
+        },
+        await this.getConfig()
       );
       return response.data;
     } catch (error) {

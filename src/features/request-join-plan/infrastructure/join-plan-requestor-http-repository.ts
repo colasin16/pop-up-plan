@@ -11,12 +11,13 @@ export class JoinPlanRequestHttpRepository extends Repository implements JoinPla
 
   async join(planId: Id, loggedInUserId: Id) {
     try {
-      const response = await axios.patch<
-        JoinPlanRequestData,
-        { data: { success: boolean; data: Plan } }
-      >(`${this.repositoryRoot}/${planId}/join-request`, {
+      const requestUrl = `${this.repositoryRoot}/${planId}/join-request`
+      const requestData = {
         userId: loggedInUserId,
-      });
+      }
+
+      const response = await axios.patch<JoinPlanRequestData, { data: { success: boolean; data: Plan } }>
+        (requestUrl, requestData, await this.getConfig());
 
       return response.data;
     } catch (error) {
