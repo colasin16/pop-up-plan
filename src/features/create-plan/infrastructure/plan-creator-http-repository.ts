@@ -12,7 +12,7 @@ export class PlanCreatorHttpRepository extends Repository implements PlanCreator
     try {
       const response = await axios.post<PlanCreationData, { data: { success: boolean; data: Plan } }>(
         `${this.repositoryRoot}`,
-        planToCreate,
+        planToCreate, await this.getConfig()
       );
       return response.data;
 
