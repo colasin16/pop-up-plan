@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { UserCreationData } from "../domain/user-creation-data";
 import { UserCreatorRepository } from "../domain/user-creator-repository";
 import { User } from "../../../../app/models/user/user";
