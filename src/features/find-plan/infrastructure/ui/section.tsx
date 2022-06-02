@@ -4,11 +4,12 @@ import { palette } from "../../../../../app/theme/palette";
 
 interface Props {
   title: string;
+  style: any
 }
 
-export const Section = ({ children, title }: PropsWithChildren<Props>) => {
+export const Section = ({ children, title, style }: PropsWithChildren<Props>) => {
   return (
-    <View style={styles.sectionContainer}>
+    <View style={{ ...styles.sectionContainer, ...style }}>
       <Text style={[styles.sectionTitle, { color: palette.white }]}>{title}</Text>
       <Text style={[styles.sectionDescription, { color: palette.offWhite }]}>{children}</Text>
     </View>

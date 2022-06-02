@@ -1,0 +1,12 @@
+@startuml
+
+class PlanFinder
+class UserProfileStore
+class SearchPlansStore
+
+PlanFinder --> UserProfileStore
+PlanFinder --> SearchPlansStore
+SearchPlansStore --> ExploreScreen
+UserProfileStore --> ProfileScreen
+
+@enduml

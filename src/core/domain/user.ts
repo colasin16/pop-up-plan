@@ -1,10 +1,16 @@
+import { Email } from "./types/email";
 import { Entity } from "./types/entity";
+import { PhoneNumber } from "./types/phone-number";
 
-interface UserName {
+interface FullName {
   firstName: string;
   lastName: string;
 }
 
 export interface User extends Entity {
-  name: UserName;
+  name: FullName;
+  email: Email;
+  phoneNumber: PhoneNumber;
+  // password: Password;
+  image: string;
 }

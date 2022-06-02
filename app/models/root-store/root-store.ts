@@ -1,5 +1,4 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
-import { CharacterStoreModel } from "../character-store/character-store";
 import { PlanStoreModel } from "../plan-store/plan-store";
 import { User, UserModel } from "../user/user";
 
@@ -8,22 +7,35 @@ import { User, UserModel } from "../user/user";
  */
 // prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
-  characterStore: types.optional(CharacterStoreModel, {} as any),
-  user: types.maybe(UserModel),
+  // Store for current authenticated user ???
+  userStore: types.maybe(UserModel),
+
+  // Store for current user owned plans ???
   userPlansStore: types.optional(PlanStoreModel, {} as any),
+
+  // Store for listing all available plans for user which this user can join them
   searchPlansStore: types.optional(PlanStoreModel, {} as any),
+
+  // TODO:  Do we need a store for all attending plans??
 }).actions(self => ({
-  setUser: (user: User) => {
-    self.user = user;
+  // TODO: why this action is here?  Can we move it to 'UserModel' like what has been
+  // done in 'PlanStoreModel'?
+  setUser: (user: User | undefined) => {
+    // we have null here to use it for logout
+    self.userStore = user;
+  },
+  isAuthenticated: () => {
+    // we have null here to use it for logout
+    return self.userStore !== undefined
   },
 }))
 
 /**
  * The RootStore instance.
  */
-export interface RootStore extends Instance<typeof RootStoreModel> {}
+export interface RootStore extends Instance<typeof RootStoreModel> { }
 
 /**
  * The data of a RootStore.
  */
-export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> {}
+export interface RootStoreSnapshot extends SnapshotOut<typeof RootStoreModel> { }

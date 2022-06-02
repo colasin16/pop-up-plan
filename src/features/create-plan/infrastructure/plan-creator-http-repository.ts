@@ -1,21 +1,25 @@
 import axios from "axios";
-import { User } from "../../../core/domain/user";
+import { Repository } from "../../../../app/base/respository";
+import { Plan } from "../../../core/domain/plan";
 import { PlanCreationData } from "../domain/plan-creation-data";
 import { PlanCreatorRepository } from "../domain/plan-creator-repository";
 
 // The mock of this repository is the same as the mock because rightnow they do the same
-export class PlanCreatorHttpRepository implements PlanCreatorRepository {
-  private readonly repositoryRoot = "http://localhost:8080/plan";
+export class PlanCreatorHttpRepository extends Repository implements PlanCreatorRepository {
+  private readonly repositoryRoot = "http://localhost:8080/plans";
 
-  async create(owner: User, plan: PlanCreationData) {
-    const { success, planId } = await axios.post<
-      PlanCreationData,
-      { success: boolean; planId: string }
-    >(`${this.repositoryRoot}`, {
-      ...plan,
-      owner,
-    });
+  async create(planToCreate: PlanCreationData) {
+    try {
+      const response = await axios.post<PlanCreationData, { data: { success: boolean; data: Plan } }>(
+        `${this.repositoryRoot}`,
+        planToCreate, await this.getConfig()
+      );
+      return response.data;
 
-    return { success, planId };
+    } catch (error) {
+      this.handleAxiosError(error)
+    }
+
+    return Promise.resolve({ success: false, data: null })
   }
 }

@@ -1,18 +1,15 @@
-import { ObjectId } from "bson";
-import React, { FC, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { ViewStyle, TextStyle, Platform, View } from "react-native";
-
+import React, { FC, useState } from "react";
+import { Platform, TextStyle, View, ViewStyle } from "react-native";
+import { Button, Text, TextField } from "../../../../../app/components";
 import { useStores } from "../../../../../app/models";
-import { spacing, color } from "../../../../../app/theme";
+import { color, spacing } from "../../../../../app/theme";
+import { Category, Privacy } from "../../../../core/domain/plan";
 import { CustomLocation } from "../../../../core/domain/types/location";
 import { Timestamp } from "../../../../core/domain/types/timestamp";
+import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
 import { PlanCreator } from "../../application/plan-creator";
 import { PlanCreationData } from "../../domain/plan-creation-data";
-import { containerDI } from "../../../../core/infrastructure/dependency-injection/container";
-import { Button, TextField, Text } from "../../../../../app/components";
-import { PlanFinder } from "../../../find-plan/application/plan-finder";
-import { Category, Privacy } from "../../../../core/domain/plan";
 
 const DEMO: ViewStyle = {
   paddingVertical: spacing[4],
@@ -33,32 +30,36 @@ const HINT: TextStyle = {
   marginVertical: spacing[2],
 };
 
-const user = { id: new ObjectId().toHexString(), name: { firstName: "Jordi", lastName: "Colas" } };
-
 interface Props {
   onFinish(): void;
 }
 
 export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
-  const { userPlansStore } = useStores();
+  const { userPlansStore, userStore } = useStores();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState<CustomLocation>("");
   const [time, setTime] = useState<Timestamp>(0);
-  const [category, setCategory] = useState<Category>();
-  const [privacy, setPrivacy] = useState<Privacy>();
+
+
+  // TODO: now we only have category:walk and privacy:private plans
+  const [category, setCategory] = useState<Category>(Category.WALK);
+  const [privacy, setPrivacy] = useState<Privacy>(Privacy.PRIVATE);
 
   const isReadyToSubmit = () => {
     return !!title && !!location && !!time && !!category && !!privacy;
   };
 
   const submit = async (): Promise<void> => {
+    console.debug("submit")
     const planCreator = containerDI.resolve(PlanCreator);
-    const planFinder = containerDI.resolve(PlanFinder);
 
     if (isReadyToSubmit()) {
+      console.debug("submitting")
+
+      const loggedInUserId = userStore.id;
       const planData: PlanCreationData = {
-        owner: user,
+        ownerId: loggedInUserId,
         title,
         location,
         time,
@@ -68,15 +69,19 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
       };
 
       try {
-        const { planId } = await planCreator.create(user, planData);
-        const { plans } = await planFinder.findAll();
-        const plan = plans.find(p => p.id === planId);
-        if (plan) {
-          userPlansStore.savePlans([...userPlansStore.plans, plan]);
+        // TODO: if PlanCreatorRepository returns plan obj instead of planId
+        // The three following lines will be converted to this:
+        // const { plan } = await planCreator.create(user, planData);
+        const { data } = await planCreator.create(planData);
+        if (data) {
+          // TODO: everytime when a plan is created, fetch all the plans from server again,
+          // maybe other users added a plan and we need to have them?
+          // or we can have a refresh mechanism (auto or manual)
+          userPlansStore.savePlans([...userPlansStore.plans, data]);
         }
         onFinish();
       } catch (error) {
-        console.log("🚀 ~ file: plan-creator.tsx ~ line 72 ~ submit ~ error", error);
+        console.log("🚀 ~ file: plan-creator.tsx ~ line 77 ~ submit ~ error", error);
       }
     }
   };
@@ -111,8 +116,10 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
         label="Time"
         placeholder="Plan time"
       />
+
+      {/*       
       <View>
-        <Text preset="fieldLabel">Select the plan type:</Text>
+        
         <View style={{ flexDirection: "row" }}>
           {Object.values(Category).map((cat, index) => (
             <Button
@@ -148,7 +155,7 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
             />
           ))}
         </View>
-      </View>
+      </View> */}
 
       <View>
         <Button
@@ -158,7 +165,7 @@ export const CreatePlan: FC<Props> = observer(({ onFinish }: Props) => {
           text="HC Submit"
           onPress={submit}
         />
-        <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} />
+        {/* <Text style={HINT} tx={`demoScreen.${Platform.OS}ReactotronHint` as const} /> */}
       </View>
     </View>
   );

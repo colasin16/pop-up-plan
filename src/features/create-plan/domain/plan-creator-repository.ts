@@ -1,6 +1,6 @@
-import { User } from "../../../core/domain/user";
+import { Plan } from "../../../core/domain/plan";
 import { PlanCreationData } from "./plan-creation-data";
 
 export interface PlanCreatorRepository {
-  create(owner: User, plan: PlanCreationData): Promise<{ success: boolean; planId: string }>;
+  create(plan: PlanCreationData): Promise<{ success: boolean; data: Plan }>;
 }

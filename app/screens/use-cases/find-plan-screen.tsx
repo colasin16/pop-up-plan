@@ -1,16 +1,14 @@
-import React, { FC } from "react";
-import { TextStyle, View, ViewStyle } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { observer } from "mobx-react-lite";
-import { Header, Text, Screen, GradientBackground } from "../../components";
-import { NavigatorParamList } from "../../navigators";
+import React, { FC } from "react";
+import { TextStyle, View, ViewStyle } from "react-native";
+import PlanList from "../../../src/features/find-plan/infrastructure/ui/plan-finder";
+import { GradientBackground, Header, Screen, Text } from "../../components";
+import { ExploreTabNavigatorParamList } from "../../navigators/explore-tab-navigator";
 import { color, spacing } from "../../theme";
-import PlanList from "../../../src/features/find-plan/infrastructure/ui/plan-list-react";
 
-export const logoIgnite = require("../demo/logo-ignite.png");
-export const heart = require("../demo/heart.png");
 
-const FULL: ViewStyle = { flex: 1 };
+const FULL: ViewStyle = { flex: 1, paddingBottom: 20 };
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
   paddingHorizontal: spacing[4],
@@ -47,29 +45,29 @@ const TAGLINE: TextStyle = {
   marginBottom: spacing[4] + spacing[1],
 };
 
-export const FindPlanScreen: FC<StackScreenProps<NavigatorParamList, "demo">> = observer(
+export const FindPlanScreen: FC<StackScreenProps<ExploreTabNavigatorParamList, "findPlan">> = observer(
   ({ navigation }) => {
     const goBack = () => navigation.goBack();
 
     return (
-      <View testID="DemoScreen" style={FULL}>
+      <View testID="FindPlanScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
           <Header
             headerText="HC FIND PLANS"
-            leftIcon="back"
+            // leftIcon="back"
             rightIcon="bullet"
-            onLeftPress={goBack}
+            // onLeftPress={goBack}
             style={HEADER}
             titleStyle={HEADER_TITLE}
           />
           <Text
             style={TITLE}
             preset="header"
-            text="HC Explore what others are planning for today!"
+            text="Explore what others are planning for today!"
           />
-          <Text style={TAGLINE} text="HC Look for a plan that fits you and join them!" />
-          <PlanList />
+          <Text style={TAGLINE} text="Look for a plan that fits you and join them!" />
+          <PlanList navigation={navigation} />
         </Screen>
       </View>
     );

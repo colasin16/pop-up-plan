@@ -4,15 +4,14 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
+import { DarkTheme, DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { useColorScheme } from "react-native";
-import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { WelcomeScreen, DemoScreen, DemoListScreen } from "../screens";
+import { CreateUserScreen } from "../screens/use-cases/create-user-screen";
+import { loginUserScreen } from "../screens/use-cases/login-user-screen";
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities";
-import { CreatePlanScreen } from "../screens/use-cases/create-plan-screen";
-import { FindPlanScreen } from "../screens/use-cases/find-plan-screen";
-import { UserProfileScreen } from "../screens/use-cases/user-profile-screen";
+import ButtomTabs from "./bottom-tab-navigator";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -26,49 +25,49 @@ import { UserProfileScreen } from "../screens/use-cases/user-profile-screen";
  *   https://reactnavigation.org/docs/params/
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
-export type NavigatorParamList = {
-  welcome: undefined;
-  createPlan: undefined;
-  findPlan: undefined;
-  userProfileScreen: undefined;
-  demo: undefined;
-  demoList: undefined;
+
+export type AppNavigatorParamList = {
+  tab: undefined;
+  loginUser: undefined;
+  createUser: undefined;
   // 🔥 Your screens go here
 };
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<NavigatorParamList>();
+const mainStack = createNativeStackNavigator<AppNavigatorParamList>();
 
-const AppStack = () => {
+export const AppStack = () => {
   return (
-    <Stack.Navigator
+    <mainStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="welcome">
-      <Stack.Screen name="welcome" component={WelcomeScreen} />
-      <Stack.Screen name="createPlan" component={CreatePlanScreen} />
-      <Stack.Screen name="findPlan" component={FindPlanScreen} />
-      <Stack.Screen name="userProfileScreen" component={UserProfileScreen} />
-      <Stack.Screen name="demo" component={DemoScreen} />
-      <Stack.Screen name="demoList" component={DemoListScreen} />
-      {/** 🔥 Your screens go here */}
-    </Stack.Navigator>
-  );
-};
+      initialRouteName="loginUser"
+    >
+      <mainStack.Screen name="loginUser" component={loginUserScreen} />
+      <mainStack.Screen name="createUser" component={CreateUserScreen} />
+      <mainStack.Screen name="tab" component={ButtomTabs} />
 
-interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+    </mainStack.Navigator>
+  )
+}
+
+
+interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> { }
 
 export const AppNavigator = (props: NavigationProps) => {
   const colorScheme = useColorScheme();
   useBackButtonHandler(canExit);
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-      {...props}>
-      <AppStack />
-    </NavigationContainer>
+    <>
+      <NavigationContainer
+        ref={navigationRef}
+        theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        {...props}>
+        <AppStack />
+      </NavigationContainer>
+    </>
+
   );
 };
 
@@ -83,5 +82,5 @@ AppNavigator.displayName = "AppNavigator";
  *
  * `canExit` is used in ./app/app.tsx in the `useBackButtonHandler` hook.
  */
-const exitRoutes = ["welcome"];
+const exitRoutes = ["loginUser"];
 export const canExit = (routeName: string) => exitRoutes.includes(routeName);

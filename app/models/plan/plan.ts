@@ -1,16 +1,20 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree";
 import { Category, Privacy } from "../../../src/core/domain/plan";
-import { UserModel } from "../user/user";
 
 export const PlanModel = types.model("Plan").props({
   id: types.identifier,
   title: types.string,
   category: types.enumeration(Object.values(Category)),
   privacy: types.enumeration(Object.values(Privacy)),
-  owner: UserModel,
+  // owner: UserModel,
+  // TODO: Check whether this type is ok
+  ownerId: types.string,
   location: types.string,
   time: types.number,
-  attendees: types.array(UserModel),
+  // attendees: types.array(UserModel),
+  // TODO: Check whether this type is ok
+  attendeesId: types.array(types.string),
+  pendingAttendeesId: types.array(types.string),
 });
 
 type PlanType = Instance<typeof PlanModel>;
